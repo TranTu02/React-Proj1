@@ -1,0 +1,33 @@
+.SearchBar{
+    display: flex;
+    height: 40rem;
+    margin:5rem;
+    min-height: 32px;
+}
+
+.SearchBar input{
+    border-radius:0 20px 20px 0;
+    border: 0rem;
+    width: 300rem;
+    min-width: 220px;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+}
+.SearchBar input:focus{
+    outline: none;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+.SearchBar button{
+    border-radius:  20px 0 0 20px;
+    border: 0rem;
+    width: 50rem;
+    cursor: pointer;
+    min-width: 40px;
+}
+.SearchBar button img{
+    width:25rem;
+    min-width: 20px;
+}

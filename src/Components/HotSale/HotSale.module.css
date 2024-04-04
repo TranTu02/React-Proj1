@@ -1,0 +1,79 @@
+.HotSaleContainer{
+    display: flex;
+    width: 100%;
+    min-width: 1360px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.HotSaleBanner{
+    display: flex;
+    justify-content: space-between;
+    width: 1344rem;
+    height: 60rem;
+    min-width: 920px;
+    min-height: 45px;  
+    background-image: linear-gradient(to right, #FF4500, #FFA500);
+    margin: 10px auto;   
+    align-items: center; 
+}
+
+.HotSaleBanner .CDContainer{
+    display: flex;    
+}
+.HotSaleBanner .CDContainer ul{
+    display: flex;    
+    padding: 0;
+}
+
+.HotSaleBanner .CDContainer ul li{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35rem;
+    height: 35rem;
+    min-width: 30px;
+    min-height: 30px;
+    background-color: #FF0000;
+    margin-right: 10px;
+    font-size: 18px;
+    color: white;
+}
+
+.HotSaleBanner h3{
+    font-size: 22px;
+    color: white;    
+    margin: auto 10px;
+}
+
+.HotSaleItem{
+    width: 1344rem;
+    min-width: 920px;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 10px;
+    align-items: center;
+    position: relative;
+}
+
+.Prev, .Next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 16rem;
+  }
+  
+  .Prev {
+    left: 0;
+  }
+  
+  .Next {
+    right: 0;
+  }
+  

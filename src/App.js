@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Header from './Components/Header/Header.jsx';
+import NavBar from './Components/Navbar/NavBar.jsx';
+import Banner from './Components/Banner/Banner.jsx';
+import Footer from './Components/Footer/Footer.jsx';
+import HotSale from './Components/HotSale/HotSale.jsx'
+import SetRem from './Contexts/SetRem.jsx';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <SetRem/>
+      <Header/>
+      <NavBar/>
+      <Banner/>
+      <HotSale/>
+      <Footer/>        
     </div>
   );
 }

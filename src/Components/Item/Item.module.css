@@ -1,0 +1,94 @@
+.ItemContainer{
+    display: flex;
+    flex-direction: column;
+    width: 200rem;
+    height: 420rem;
+    min-width: 140px;
+    min-height: 330px;
+    align-items:flex-start;
+    justify-content: space-between;
+    border: 2px solid black;
+    margin: 10px;
+    padding: 10px;
+}
+.ItemContainer:hover{
+    border: 2px solid red;
+}
+
+.ItemContainer .Infor{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.ItemContainer img{
+    width: 200rem;
+    height: 260rem;
+    min-width: 140px;
+    min-height: 182px;
+    cursor: pointer;    
+}
+
+.ItemContainer h2{
+    font-size: 18px;
+    width: 200rem;
+    height: auto;
+    max-height: 70rem;
+    min-height:60px;
+    min-width: 140px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.ItemContainer h2:hover{
+    color: red;
+}
+.ItemContainer .price{
+    display: flex;
+    align-items:baseline;
+    width: 90%;
+    justify-content: flex-start;
+}
+
+.ItemContainer .price .original{
+    color: #808080;
+    font-size: 14px;
+    text-decoration: line-through;
+    margin: 5px;
+}
+.ItemContainer .price h3{
+    color: red;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.ItemContainer h4{
+    color: orange;
+    font-size: 14px;
+    font-weight: lighter;
+    margin: 5px;
+    height: 16px;
+}
+
+.ItemContainer button{
+    width: 80%;
+    height: 35rem;
+    min-height: 28px;
+    background-color: white ;
+    border:darkorange 2px solid;
+    color: darkorange;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: auto;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.ItemContainer button:hover{
+    border: 2px solid #FF0000;
+}

@@ -1,0 +1,61 @@
+.Banner{
+  display: flex;
+  justify-content:space-between;
+  padding: 0rem;
+  margin-top: 20px;
+  margin-bottom: 40rem;
+  align-items: center;
+  width: 100%;
+  min-width: 1360px;
+  z-index: 1;
+}
+.ImgBanner{
+  width: 1344rem;
+  height: 672rem;
+  min-width: 920px;
+  min-height: 476px;
+}
+.SlideShowContainer {
+  width: 1344rem;
+  height: 672rem;
+  min-width: 920px;
+  min-height: 476px;
+  position: relative;
+  margin:auto;
+  }
+  
+  .BtnSlideContainer{
+    display: flex;
+    position:absolute;
+    bottom: 10rem;
+    justify-content: center;
+    width: 100%;
+  }
+  .BtnSlide{
+    width: 20rem;
+    height: 20rem;
+    display: block;
+    border-radius: 50%;
+    margin: 5rem;
+    cursor: pointer;
+  }
+
+  .Prev, .Next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 16rem;
+  }
+  
+  .Prev {
+    left: 0;
+  }
+  
+  .Next {
+    right: 0;
+  }
+  
