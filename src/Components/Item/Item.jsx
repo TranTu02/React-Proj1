@@ -1,15 +1,15 @@
 import React from "react";
 import style from './Item.module.css';
 
-const Item = ({imgSrc,productName,price,discont,present}) => {
+const Item = ({product}) => {
     return(
         <div className={style.ItemContainer}>
-            <img src={imgSrc} />
+            <img src={product.Image} />
             <div className={style.Infor}>
-                <h2>{productName}</h2>
-                <h4>{present!==''?'Mua để nhận quà':''}</h4>
+                <h2>{product.ProductName}</h2>
+                <h4>{product.PresentID!==undefined?'Mua để nhận quà':''}</h4>
                 <div className={style.price}>
-                    {discont===0?<h3>{price} đ</h3> :<><h3>{price*(1-discont)}đ</h3><h3 className={style.original}>{price}</h3></> }
+                    {product.Reduce===undefined?<h3>{product.Price} đ</h3> : <><h3>{(product.Price*(1-product.Reduce)).toFixed(0)}đ</h3><h3 className={style.original}>{product.Price}</h3></> }
                 </div>
                 <button >Thêm vào giỏ</button>
             </div>

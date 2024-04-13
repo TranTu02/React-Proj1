@@ -1,15 +1,17 @@
 .ItemContainer{
     display: flex;
     flex-direction: column;
-    width: 200rem;
-    height: 420rem;
+    width: 17%;
     min-width: 140px;
-    min-height: 330px;
+    height: max-content;
     align-items:flex-start;
     justify-content: space-between;
-    border: 2px solid black;
-    margin: 10px;
-    padding: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid white;
 }
 .ItemContainer:hover{
     border: 2px solid red;
@@ -21,10 +23,9 @@
     flex-direction: column;
 }
 .ItemContainer img{
-    width: 200rem;
-    height: 260rem;
-    min-width: 140px;
-    min-height: 182px;
+    width: 100%;
+    height:fit-content ;
+    margin: 0;
     cursor: pointer;    
 }
 
@@ -47,6 +48,7 @@
 .ItemContainer h2:hover{
     color: red;
 }
+
 .ItemContainer .price{
     display: flex;
     align-items:baseline;
@@ -58,24 +60,25 @@
     color: #808080;
     font-size: 14px;
     text-decoration: line-through;
-    margin: 5px;
+    margin: 2px;
 }
+
 .ItemContainer .price h3{
     color: red;
-    font-size: 16px;
-    margin: 5px;
+    font-size: 18px;
+    margin: 2px;
 }
 
 .ItemContainer h4{
     color: orange;
     font-size: 14px;
     font-weight: lighter;
-    margin: 5px;
+    margin: 2px;
     height: 16px;
 }
 
 .ItemContainer button{
-    width: 80%;
+    width: 86%;
     height: 35rem;
     min-height: 28px;
     background-color: white ;
@@ -83,10 +86,9 @@
     color: darkorange;
     cursor: pointer;
     border-radius: 8px;
-    margin: auto;
+    margin: 2px auto;
     font-size: 16px;
     font-weight: 600;
-    font-family: 'Times New Roman', Times, serif;
 }
 
 .ItemContainer button:hover{

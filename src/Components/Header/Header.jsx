@@ -21,7 +21,7 @@ function Header() {
         </div>
         <div className={styles.Cart}>
           <img src={Cart} />
-          <p>Giao hàng(0)</p>
+          <p>Giỏ hàng(0)</p>
         </div>
         <div className={styles.User}>
           <img src={User} />

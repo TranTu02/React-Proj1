@@ -4,6 +4,7 @@
 
 body {
   margin: 0;
+  background-color:whitesmoke;
   opacity: var(--opacity);
   transition: opacity 0.3s ease;
   font-family: 'Times New Roman', Times, serif;

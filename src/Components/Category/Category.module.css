@@ -1,0 +1,292 @@
+.CategoryContainer{
+    display: flex;
+    width: 100%;
+    min-width: 1400px;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    background-color: unset;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+
+.FilterContainer{
+    display: flex;
+    flex-direction: column;   
+    width: fit-content;
+    height: fit-content;
+    position: sticky;
+    top: 80px;
+}
+
+.FilterContainer .Category{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: aliceblue;
+    width: 320rem;
+    height: fit-content;
+    min-width: 230px;
+    margin: 10px;
+}
+
+.FilterContainer  ul {
+    padding-left: 10px;
+}
+
+.FilterContainer ul li{
+    font-size: 18px;
+    height: 35px;
+    text-decoration: none;
+    list-style: none;
+    cursor: pointer;
+}
+
+.FilterContainer .Category .CategoryTitle{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.FilterContainer .Category .CategoryTitle h3{
+    margin: 0;
+    font-size: 20px;
+}
+
+.FilterContainer .Brand{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: aliceblue;
+    width: 320rem;
+    height: fit-content;
+    min-width: 250px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.FilterContainer .Brand .BrandTitle{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.FilterContainer .Brand .BrandTitle h3{
+    margin: 0;
+    font-size: 20px;
+}
+
+.ProductContainer{
+    display: flex;
+    width: 1030rem;
+    min-width: 780px;
+    height: auto;
+    margin: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center ;
+}
+
+.ProductContainer .Banner{
+    width: 1010rem;
+    min-width: 780px;
+    height: 450rem;
+    min-height: 340px;
+}
+
+.ProductContainer .Title{
+    display: flex;
+    width: 1010rem;
+    min-width: 780px;
+    height: 50px;
+    margin: 10px 0;
+    justify-content: space-between;
+    align-items:start;
+}
+
+.ProductContainer .Title .HeadingBox{
+    width: fit-content;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ProductContainer .Title .HeadingBox .Count{
+    font-size: 16px;
+    margin-left: 30px;
+}
+
+.ProductContainer .Title .HeadingBox h2{
+    font-size: 30px;
+    margin: 0 ;
+    color: #a52a2a;
+}
+
+.ProductContainer .Title .FilterBox {
+    
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 220px;
+    background-color: white;
+    position: relative;
+    border: 1px solid beige;
+    z-index:1;
+}
+
+.ProductContainer .Title .FilterBox .FilterTitle{
+    display: flex;
+    height: 40px;
+    width: 220px;
+    align-items: center;
+    padding-left: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid beige;
+}
+
+/* .ProductContainer .Title .FilterBox:hover ul{
+    display: block;
+} */
+
+.ProductContainer .Title .FilterBox  ul {
+    padding-left: 10px;
+}
+
+.ProductContainer .Title .FilterBox ul li{
+    font-size: 18px;
+    height: 35px;
+    text-decoration: none;
+    list-style: none;
+    cursor: pointer;
+}
+.ProductContainer .Title .FilterBox p{
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.ProductContainer .Title .FilterBox img:last-child{
+    right: 10px;
+    position: absolute;
+}
+
+
+.ProductContainer .Products{
+    width: 1030rem;
+    min-width: 780px;
+    height: fit-content;
+    display: flex;
+    justify-content:left;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+
+/* 
+.ProductContainer .Products .Product{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 192rem;
+    height: 370rem;
+    min-width: 138px;
+    min-height: 285px;
+    border-radius: 5px;
+    background-color: aqua;
+    margin:0 10px 10px 0;
+    
+}
+.ProductContainer .Products .Product img{
+    width: 186rem;
+    height: 202rem;
+    min-width: 132px;
+    min-height: 143px;
+    margin: 1px;
+}
+
+.ProductContainer .Products .Product h3{    
+    font-size: 16px;
+    width: 190rem;
+    height: auto;
+    max-height: 45rem;
+    min-height:35px;
+    min-width: 135px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    margin: 7px 0;
+    cursor: pointer;
+}
+
+.ProductContainer .Products .Product .price{
+    display: flex;
+    align-items:baseline;
+    width: 90%;
+    justify-content: flex-start;
+}
+
+.ProductContainer .Products .Product h4{
+    color: orange;
+    font-size: 14px;
+    font-weight: lighter;
+    margin: 2px;
+    height: 16px;
+}
+
+.ProductContainer .Products .Product .price{
+    display: flex;
+    align-items:baseline;
+    width: 90%;
+    justify-content: flex-start;
+}
+
+.ProductContainer .Products .Product .price .original{
+    color: #808080;
+    font-size: 14px;
+    text-decoration: line-through;
+    margin: 2px;
+}
+
+.ProductContainer .Products .Product button{
+    width: 80%;
+    height: 35rem;
+    min-height: 28px;
+    background-color: white ;
+    border:darkorange 2px solid;
+    color: darkorange;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 2px auto;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.ProductContainer .Products .Product button:hover{
+    border: 2px solid #FF0000;
+} */
+
+.ProductContainer .BtnMore{
+    display: flex;
+    width: 260px;
+    height: 50px;   
+    cursor: pointer;    
+    border-radius: 10px;
+    margin: auto;
+    border: 1px solid black;
+}
+
+.ProductContainer .BtnMore a{
+    text-decoration: none;
+    font-size: 20px;
+    margin: auto;
+    height: 25px;
+}
+

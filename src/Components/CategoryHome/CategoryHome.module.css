@@ -1,0 +1,57 @@
+.ListContainer{
+    display: flex;
+    width: 100%;
+    min-width: 1360px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ListContainer .ListTitle{
+    display: flex;
+    justify-content: space-between;
+    width: 1344rem;
+    height: 60rem;
+    min-width: 920px;
+    min-height: 45px;  
+    margin: 10px auto;   
+    align-items: center; 
+}
+
+.ListContainer .ListTitle h3{
+    font-size: 36px;
+    color: black;    
+    margin: auto 10px;
+    cursor: pointer;
+}
+
+.ListItem{
+    width: 1344rem;
+    min-width: 920px;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 10px;
+    align-items: center;
+    position: relative;
+}
+
+.Prev, .Next {    
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  }
+  
+  .Prev {
+    left: 0;
+  }
+  
+  .Next {
+    right: 0;
+  }
+  
