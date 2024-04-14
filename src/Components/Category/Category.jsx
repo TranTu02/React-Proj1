@@ -68,7 +68,8 @@ function Category({CategoryID}){
                 </div>
             </div>
             <div className={style.ProductContainer}>
-                <img className={style.Banner} src={DATA.listCategories.find(obj => obj.CategoryID===CategoryID).CategoryIllustration} />
+                {/* Fix */}
+                <img className={style.Banner} src={CategoryID !== undefined ? DATA.listCategories.find(obj => obj.CategoryID===CategoryID).CategoryIllustration : "#"} />
                 <div className={style.Title}>
                     <div className={style.HeadingBox}>
                         <h2>{CategoryID === undefined ? 'TẤT CẢ SẢN PHẨM' : DATA.listCategories.find(obj => obj.CategoryID === CategoryID).CategoryName}</h2>

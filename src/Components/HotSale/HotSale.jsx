@@ -29,7 +29,7 @@ const CountDown = (ExpirationDate) => {
 
 function HotSale({DiscountID}){
     const timeRemaining = CountDown(DATA.listSaleEvents.find(obj => obj.DiscountID === DiscountID).End);
-    const arrProduct = DATA.ListHostSale().filter(obj => obj.DiscountID === DiscountID);
+    const arrProduct = DATA.ListHotSale().filter(obj => obj.DiscountID === DiscountID);
     const data = arrProduct.slice(0,20);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;

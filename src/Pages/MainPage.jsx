@@ -9,15 +9,12 @@ import Brand from '../Components/Brand/Brand.jsx';
 function MainPage() {
   return (
     <div>
-      <Header/>
-      <NavBar/>
       <Banner/>
       <HotSale DiscountID={10}/>
       <CategoryHome CategoryID={'C1'}/>
       <CategoryHome CategoryID={'C3'}/>
       <CategoryHome CategoryID={'C5'}/>
       <Brand/>
-      <Footer/>        
     </div>
   );
 }

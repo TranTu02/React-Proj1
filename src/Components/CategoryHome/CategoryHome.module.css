@@ -4,36 +4,37 @@
     min-width: 1360px;
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
 }
 
 .ListContainer .ListTitle{
     display: flex;
     justify-content: space-between;
-    width: 1344rem;
+    width: 1410rem;
     height: 60rem;
-    min-width: 920px;
+    min-width: 1050px;
     min-height: 45px;  
     margin: 10px auto;   
     align-items: center; 
+    position: relative;
 }
 
 .ListContainer .ListTitle h3{
-    font-size: 36px;
+    font-size: 28px;
     color: black;    
     margin: auto 10px;
     cursor: pointer;
 }
 
 .ListItem{
-    width: 1344rem;
-    min-width: 920px;
+    width: 1430rem;
+    min-width: 1064px;
     height: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    margin: 10px;
+    justify-content: space-between;
+    margin: 0px 0 10px 0;
     align-items: center;
-    position: relative;
 }
 
 .Prev, .Next {    
@@ -42,16 +43,20 @@
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 24px;
+  width: 20px;
+  height: 20px;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  }
+  border-radius:25px;  
+}
   
   .Prev {
-    left: 0;
+    right: 60px;
+    padding: 3px 7px 17px 13px;
   }
   
   .Next {
-    right: 0;
+    right: 10px;
+    padding: 3px 5px 17px 15px;
   }
   

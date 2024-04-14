@@ -3,7 +3,7 @@ import style from './CategoryHome.module.css';
 import Item from "../Item/Item.jsx";
 import * as DATA from '../Assets/data.js';
 
-function CategoryHome({CategoryID}){
+function CategoryHome({CategoryID,CategoryName}){
     const in4 = DATA.ListeProductsByCategory(CategoryID);
     const data = in4.Products.slice(0,20);
     const [currentPage, setCurrentPage] = useState(1);
@@ -28,11 +28,13 @@ function CategoryHome({CategoryID}){
     return(
         <div className={style.ListContainer}>
             <div className={style.ListTitle}>
-                <h3>{in4.Name}</h3>
+                <h3>{CategoryName || in4.Name}</h3>
+                <div>                
+                    <div className={style.Prev} onClick={prevPage}>&#10094;</div>
+                    <div className={style.Next} onClick={nextPage}>&#10095;</div>
+                </div>
             </div>
             <div className={style.ListItem}>
-                <div className={style.Prev} onClick={prevPage}>&#10094;</div>
-                <div className={style.Next} onClick={nextPage}>&#10095;</div>
                 {currentItems.map((item, index) => (
                     <Item product={item} key={index}/>
                 ))}
