@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import styles from './SearchBar.module.css'
-import SearchIcon from '../Assets/search.png'
-
+import styles from './SearchBar.module.css';
+import SearchIcon from '../Assets/search.png';
+import * as DATA from "../Assets/data.js";
 
 function SearchBar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
-
+  const data = DATA.listProducts.filter(item => {      // Kiểm tra xem ProductName của mỗi đối tượng có chứa từ khóa không
+    return item.ProductName.toLowerCase().includes(searchTerm.toLowerCase());
+});
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -24,7 +26,19 @@ function SearchBar({ onSearch }) {
         placeholder='Nhập từ khóa tìm kiếm'
         value={searchTerm}
         onChange={handleChange}
-      />
+      />{
+        searchTerm !== '' &&
+          <div className={styles.Related}>
+            {data.slice(0,5).map( (item,index) => <div className={styles.Product} key={index}>
+              <span><p>{item.ProductName}</p>
+              <br/>
+                <p>{item.Price}</p>
+              </span>
+              <img src={item.Image}/>
+            </div>)}
+            {data.length > 5 && <span className={styles.BtnMore}><p>Xem thêm</p></span>}
+          </div>
+      }
     </form>
   );
 }

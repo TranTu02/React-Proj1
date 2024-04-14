@@ -1,14 +1,15 @@
 .SearchBar{
     display: flex;
-    height: 40rem;
+    height: 45rem;
     margin:5rem;
-    min-height: 32px;
+    min-height: 35px;
+    position: relative;
 }
 
 .SearchBar input{
-    border-radius:0 20px 20px 0;
+    border-radius:0 5px 5px 0;
     border: 0rem;
-    width: 300rem;
+    width: 400rem;
     min-width: 220px;
     font-size: 18px;
     font-family: 'Times New Roman', Times, serif;
@@ -21,7 +22,7 @@
 
 
 .SearchBar button{
-    border-radius:  20px 0 0 20px;
+    border-radius:  5px 0 0 5px;
     border: 0rem;
     width: 50rem;
     cursor: pointer;
@@ -30,4 +31,44 @@
 .SearchBar button img{
     width:25rem;
     min-width: 20px;
+}
+
+.SearchBar .Related{
+    position: absolute;
+    top: 100%;
+    width: 94%;
+    padding: 0 3%;
+    height: fit-content;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.SearchBar .Related .Product{
+    border-bottom: 1px solid #eee;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.SearchBar .Related .Product img{
+    width: 40px;
+    height: 40px;
+    margin: auto 0px;
+}
+.SearchBar .Related .Product span{
+    margin: auto 0px;
+}
+
+.SearchBar .Related .Product span p{
+    font-size: 14px;
+    margin: 0;
+}
+
+.SearchBar .Related .BtnMore{
+    width: 100%;
+    text-align: center;
+    margin: 10px auto 10px auto;
+    font-size: 14px;
+    cursor: pointer;
 }

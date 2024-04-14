@@ -5,6 +5,8 @@ import Footer from './Components/Footer/Footer.jsx';
 import MainPage from './Pages/MainPage';
 import CategoryPage from './Pages/CategoryPage.jsx';
 import DetailPage from './Pages/DetailPage.jsx';
+import SearchPage from './Pages/SearchPage.jsx';
+
 function App() {
   return (
     <div>
@@ -12,7 +14,8 @@ function App() {
       <Header/>
       <NavBar/>
       {/* <DetailPage ProductID={31}/> */}
-      <CategoryPage />
+      {/* <CategoryPage /> */}
+      <SearchPage/>
       <Footer/>
     </div>
   );
