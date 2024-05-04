@@ -4,6 +4,8 @@ import SearchIcon from '../Assets/search.png';
 import * as DATA from "../Assets/data.js";
 
 function SearchBar({ onSearch }) {
+  // định dạng tiền tệ
+  let formatter = new Intl.NumberFormat('en-US');
   const [searchTerm, setSearchTerm] = useState('');
   const data = DATA.listProducts.filter(item => {      // Kiểm tra xem ProductName của mỗi đối tượng có chứa từ khóa không
     return item.ProductName.toLowerCase().includes(searchTerm.toLowerCase());
@@ -30,9 +32,9 @@ function SearchBar({ onSearch }) {
         searchTerm !== '' &&
           <div className={styles.Related}>
             {data.slice(0,5).map( (item,index) => <div className={styles.Product} key={index}>
-              <span><p>{item.ProductName}</p>
+              <span><p><b>{item.ProductName}</b></p>
               <br/>
-                <p>{item.Price}</p>
+                <p>{formatter.format(item.Price)} ₫</p>
               </span>
               <img src={item.Image}/>
             </div>)}

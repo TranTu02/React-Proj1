@@ -4,6 +4,8 @@ import CategoryHome from "../CategoryHome/CategoryHome.jsx";
 import * as DATA from '../Assets/data.js';
 
 function Detail({ProductID}){
+    // định dạng tiền tệ
+    let formatter = new Intl.NumberFormat('en-US');
     // đổi product id khi xem loại khác
     const [prdID,setPrdID] = useState(undefined);
     // Tạo dữ liệu cho sản phẩm 
@@ -106,10 +108,10 @@ function Detail({ProductID}){
                         <div className={style.DetailBox}>           
                             <div className={style.PriceBox}>
                                 <span className={style.Title}>Giá:</span>
-                                <span className={style.Price}>{discount === undefined ? data.Price : (data.Price * (1 - discount)).toFixed(0) }₫</span>
+                                <span className={style.Price}>{formatter.format(discount === undefined ? data.Price : (data.Price * (1 - discount)).toFixed(0) )} ₫</span>
                                 {discount !== undefined ?
                                     <>
-                                        <span className={style.Original}>{data.Price}</span>
+                                        <span className={style.Original}>{formatter.format(data.Price)} ₫</span>
                                         <span className={style.Recent}>-{discount * 100}%</span>
                                     </>
                                     :

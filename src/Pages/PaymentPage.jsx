@@ -1,4 +1,4 @@
-import Cart from "../Components/Cart/Cart"; 
+import Pay from "../Components/Cart/Cart"; 
 import BreadCrumb from '../Components/BreadCrumb/BreadCrumb.jsx'; 
 
 function CartPage(){

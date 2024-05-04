@@ -3,6 +3,7 @@
 }
 
 body {
+  display: block;
   margin: 0;
   background-color:#f5f5f5;
   opacity: var(--opacity);
@@ -16,3 +17,4 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+ 

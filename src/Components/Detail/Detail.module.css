@@ -1,5 +1,5 @@
 .DetailPage{
-    width: 1920rem;
+    width: 100%;
     min-width: 1360px;
     display: flex;
     flex-direction: column;

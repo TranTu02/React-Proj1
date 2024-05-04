@@ -4,7 +4,7 @@ import Item from "../Item/Item.jsx";
 import * as DATA from '../Assets/data.js';
 
 function CategoryHome({CategoryID,CategoryName}){
-    const in4 = DATA.ListeProductsByCategory(CategoryID);
+    const in4 = DATA.ListProductsByCategory(CategoryID);
     const data = in4.Products.slice(0,20);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;

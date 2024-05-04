@@ -1,7 +1,7 @@
 import img from './camera.png';
 
 export const listProducts=[
-{ProductID:	1	,ProductName: "San pham 1",CategoryID:"C1",	Image:	img,	Price:	100000	,Description:"description",Stock:	100	,Date:	new Date('2024-4-10')	,Overview:"Product introduction",CalculationUnit:"500 gram",Weight:	400	},
+{ProductID:	1	,ProductName: "San pham 1",CategoryID:"C1",	Image:	img,	Price:	80000	,Description:"description",Stock:	100	,Date:	new Date('2024-4-10')	,Overview:"Product introduction",CalculationUnit:"500 gram",Weight:	400	},
 {ProductID:	2	,ProductName: "San pham 2",CategoryID:"C1",	Image:	img,	Price:	100001	,Description:"description",Stock:	101	,Date:	new Date('2024-4-10')	,Overview:"Product introduction",CalculationUnit:"500 gram",Weight:	401	},
 {ProductID:	3	,ProductName: "San pham 3",CategoryID:"C1",	Image:	img,	Price:	100002	,Description:"description",Stock:	102	,Date:	new Date('2024-4-10')	,Overview:"Product introduction",CalculationUnit:"500 gram",Weight:	402	},
 {ProductID:	4	,ProductName: "San pham 4",CategoryID:"C1",	Image:	img,	Price:	100003	,Description:"description",Stock:	103	,Date:	new Date('2024-4-10')	,Overview:"Product introduction",CalculationUnit:"500 gram",Weight:	403	},
@@ -585,7 +585,7 @@ export function ListHotSale(){
     return arrSaleProducts;
 }
 
-export function ListeProductsByCategory(CategoryID){
+export function ListProductsByCategory(CategoryID){
     var arrID = [];
     var arrProducts=[];
     var categoryName = '' ;
@@ -605,4 +605,41 @@ export function ListeProductsByCategory(CategoryID){
     result.Illustation = categoryIllustration;
     result.Products = arrProducts;
     return result;
+}
+
+export function ListProductsDetail(){
+    const FindIndex = (array, productId) => {
+        return array.findIndex(item => item.ProductID === productId);
+      };      
+    var allProducts = listProducts;
+    // Duyệt sản phẩm đang có khuyến mãi
+    var arrSaleEvents=[];
+    listSaleEvents.map( obj => {
+        if(new Date() < obj.End) arrSaleEvents.push(obj.DiscountID);
+    });
+    
+    // Duyệt sản phẩm có giảm giá
+    var arrSaleProducts = listDiscountProduct.filter(obj => arrSaleEvents.includes(obj.DiscountID));
+    arrSaleProducts.map(obj => {
+        const index = FindIndex(allProducts,obj.ProductID);
+        allProducts[index] = {...allProducts[index], Reduce:obj.Reduce};
+    })
+
+    // Duyệt sản phẩm đang có quà tặng
+    listPresentProduct.map( obj => {
+        const index = FindIndex(allProducts,obj.ProductID);
+        const present = listPresentEvents.find(obj => obj.PresentID === obj.PresentID);
+        allProducts[index] = {...allProducts[index], present }
+    });
+
+    const getDefaultCart = () => {
+        return listProducts.reduce((cart, product) => {
+            cart[product.ProductID] = 0;
+            return cart;
+        }, {});
+    };
+    console.log(getDefaultCart());
+    
+
+    return allProducts;
 }

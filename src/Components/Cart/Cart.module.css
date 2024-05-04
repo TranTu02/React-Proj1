@@ -1,0 +1,273 @@
+.BodyCart{
+    width: 100%;
+    height: fit-content;
+}
+
+.CartContainer{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+}
+
+.CartContainer .ContentCartDetail{
+    width: 900rem;
+    height: fit-content;
+    background-color: white;
+    margin: 10px ;
+    
+}
+
+.CartContainer .ContentCartDetail .Heading{
+    font-size: 30px;
+    color: #862227;
+    padding: 20px;
+    margin: 0;
+    border-bottom: 1px solid #eee;
+}
+
+.CartContainer .ContentCartDetail .TitleNumberCart{
+    font-size: 20px;
+    color: #000000;
+    padding: 0 20px;
+}
+
+.CartContainer .ContentCartDetail .Table {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+
+.CartContainer .ContentCartDetail .Table .Item{
+    border: 2px solid #eee;
+    border-radius: 10px;
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 10px;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .Illustration{
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .NameBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .NameBox h2{
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+    font-size: 20px;
+    color: #862227;
+    margin: 0;
+    padding: 0;
+    width: 400px;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .NameBox p{
+    font-size: 16px;
+    margin: 0;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .NameBox span{
+    display: flex;
+    padding: 10px;
+    width: 100%;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .NameBox span p{
+    width: 300px;
+    margin-left: 10px;
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+    color: chocolate;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .PriceBox{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    width: 230px;
+    align-items: center;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .PriceBox .Price{
+    margin: 0;
+    color: #878C8F;
+    font-size: 20px;
+    width: 100px;
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+    text-decoration: line-through;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .PriceBox .Price:last-of-type{
+    color: #000000;
+    text-decoration: none   ;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .PriceBox .Quantity{
+    display: flex;
+    align-items: center;
+}
+
+
+.CartContainer .ContentCartDetail .Table .Item .PriceBox .Quantity button{
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    padding: 0;
+    border: 1px solid #f3f4f4;
+    color: #878C8F;
+    cursor: pointer;
+}
+.CartContainer .ContentCartDetail .Table .Item .PriceBox .Quantity button:first-of-type{
+    padding-bottom: 5px;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .PriceBox .Quantity button:hover{
+    color: black;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .PriceBox .Quantity input{
+    width: 40px;
+    height: 38px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0;
+    border: 1px solid #f3f4f4;
+    text-align: center;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .PriceBox .Quantity input[type="text"]:focus{
+    outline: none;
+}
+
+.CartContainer .ContentCartDetail .Table .Item .DelBox{
+    margin: 10px;
+    font-size: 20px;
+    border: 1px solid #eee;
+    width: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+}
+.CartContainer .ContentCartDetail .DelCart{
+    margin: 20px;
+    width: 300px;
+    height: 40px;
+    border: #eee 1px solid;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.CartContainer .ContentCartDetail .DelCart p{
+    font-size: 20px;
+    text-align: center;
+    margin: 10px;  
+    height: 40px;
+    font-weight: 600;
+    color: red;
+}
+
+.CartContainer .ContentCartDetail .NoteBox{
+
+}
+
+.CartContainer .ContentCartDetail .NoteBox .Label{
+
+}
+
+.CartContainer .ContentCartDetail .NoteBox .Content{
+
+}
+
+.CartContainer .ContentCartDetail .InvoiceBlock{
+
+}
+
+.CartContainer .ContentCartDetail .InvoiceBlock .CheckBox{
+
+}
+
+.CartContainer .ContentCartDetail .InvoiceBlock .Label{
+
+}
+
+.CartContainer .ContentCartDetail .InvoiceBlock .BillField{
+
+}
+
+.CartContainer .ContentCartDetail .InvoiceBlock .BillField{
+
+}
+
+.CartContainer .ContentCartDetail .InvoiceBlock .BillField input{
+
+}
+
+.CartContainer .ContentCartDetail .InvoiceBlock .BillField .Btn{
+
+}
+
+
+.CartContainer .OrderSummaryBox{
+    width: 400rem;
+    height: fit-content;
+    background-color: white;
+    margin: 10px ;
+}
+
+.CartContainer .OrderSummaryBox .Title{
+    padding: 20px;
+    font-size: 30px;
+    color: #862227;
+    margin: 0;
+    border-bottom: 1px solid #eee;
+}
+
+.CartContainer .OrderSummaryBox .Infor{
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+}
+.CartContainer .OrderSummaryBox .Infor p{
+    font-style: normal;
+}
+
+.CartContainer .OrderSummaryBox p{
+    font-size: 16px;
+    padding: 0px 30px;
+    font-style: italic;
+}
+
+.CartContainer .OrderSummaryBox .Btn{
+    display: flex;
+    flex-direction: column;
+    background-color: #FF0000;
+    margin: 10px;
+    height: 50px;
+    border-radius: 3px;
+    align-items: center;
+    justify-content: space-evenly;
+    cursor: pointer;
+}
+
+.CartContainer .OrderSummaryBox .Btn p{
+    color: white;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    font-weight: bold;
+}
