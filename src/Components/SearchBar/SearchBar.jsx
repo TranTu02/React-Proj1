@@ -25,7 +25,10 @@ function SearchBar() {
         navigate("/SearchPage/"+ searchTerm);
       }
   };
-
+  const handleDetail = (itemID) => {
+    navigate("/Detail/"+itemID);
+    setSearchTerm(null);
+  }
   return (
     
     <form onSubmit={handleSubmit} className={styles.SearchBar}>
@@ -38,14 +41,14 @@ function SearchBar() {
       />{
         searchTerm !== '' &&
           <div className={styles.Related}>
-            {data.slice(0,5).map( (item,index) => <div className={styles.Product} key={index}>
+            {data.slice(0,5).map( (item,index) => <div className={styles.Product} key={index} onClick={()=>handleDetail(item.ProductID)}>
               <span><p><b>{item.ProductName}</b></p>
               <br/>
                 <p>{formatter.format(item.Price)} ₫</p>
               </span>
               <img src={item.Image}/>
             </div>)}
-            {data.length > 5 && <span className={styles.BtnMore}><p>Xem thêm</p></span>}
+            {data.length > 5 && <span className={styles.BtnMore} onClick={handleSubmit}><p>Xem thêm</p></span>}
           </div>
       }
       <Routes>

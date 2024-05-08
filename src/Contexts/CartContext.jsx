@@ -46,7 +46,7 @@ const ShopContextProvider = (props) => {
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
                 let itemInfo = allProduct.find((product) => product.ProductID === Number(item))
-                totalAmount += itemInfo.Price * cartItems[item];
+                totalAmount += itemInfo.Price * cartItems[item] * ( 1 -  (itemInfo.Reduce === undefined ? 0 : itemInfo.Reduce));
             }
         }
         if(shipCost === undefined) shipCost = 0;
@@ -62,9 +62,10 @@ const ShopContextProvider = (props) => {
         }
         return totalItems;
     }
+    
+    const [currentLocation,setCurrentLocation] = useState(DATA.listLocations[1]);
 
-
-    const contextValue = { allProduct, cartItems, addToCart, removeFromCart, deleteCart, getTotalCartAmount, getTotalCartItems }
+    const contextValue = { allProduct, cartItems, addToCart, removeFromCart, deleteCart, getTotalCartAmount, getTotalCartItems ,currentLocation}
 
     return (
         <ShopContext.Provider value={contextValue}>

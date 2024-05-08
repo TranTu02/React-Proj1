@@ -2,10 +2,12 @@ import React,{useState,useEffect, useContext} from "react";
 import style from './Detail.module.css';
 import CategoryHome from "../CategoryHome/CategoryHome.jsx";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Contexts/CartContext.jsx";
 import * as DATA from '../Assets/data.js';
 
 function Detail({ProductID}){
+    const navigate = useNavigate();
     // định dạng tiền tệ
     let formatter = new Intl.NumberFormat('en-US');
     // đổi product id khi xem loại khác
@@ -84,6 +86,11 @@ function Detail({ProductID}){
     }    
     const handleDown = () =>{
         if (quantity > 1)        setQuantity(prev => prev - 1);
+    }
+
+    const routeCart = () => {
+        addToCart(data.ProductID,quantity);
+        navigate('/CartPage');
     }
 
     return(
@@ -170,7 +177,7 @@ function Detail({ProductID}){
                                         THÊM VÀO GIỎ
                                     </span>
                                 </div>
-                                <div className={style.Buy}>
+                                <div className={style.Buy} onClick={routeCart}>
                                     <span>
                                         MUA NGAY
                                     </span>

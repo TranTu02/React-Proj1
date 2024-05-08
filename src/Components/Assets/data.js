@@ -571,6 +571,13 @@ export const listComment = [
     {ProductID: 83, Title: "Title 1" , Time: new Date('2024-4-4') , Comment:'Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài' }
 ]
 
+export const listLocations = [
+    {LocaitonID : 1 , Location: "Nhổn, Nam Từ Liêm, Hà Nội", Distance: 7.7},
+    {LocaitonID : 1 , Location: "Trung Hòa, Cầu Giấy, Hà Nội", Distance: 4},
+    {LocaitonID : 1 , Location: "Hồ Tùng Mậu, Cầu Giấy, Hà Nội", Distance: 1.2 },
+    {LocaitonID : 1 , Location: "Lai Xá, Hoài Đức, Hà Nội", Distance: 9.2},
+]
+
 export function ListHotSale(){
     var arrSales=[];
     var arrSaleEvents=[];    
@@ -659,15 +666,18 @@ export function ListCartInfor(cartItems){
     let totalCart = 0;
     let totalPresent = 0;
     let totalReduce = 0;
+    let listItems =[];
     for(const key in cartItems){
         if(cartItems[key] > 0){
             let itemInfo = ListProductsDetail().find((product) => product.ProductID === Number(key));
             itemInfo = {...itemInfo,Cart: cartItems[key]};
+            listItems.push({...listProducts.find(obj => obj.ProductID === itemInfo.ProductID), Quantity : cartItems[key]});
             totalCart = totalCart + itemInfo.Price * cartItems[key];
             if(itemInfo.present !== undefined){
                 const quantityPresent = Math.floor(itemInfo.Cart / itemInfo.Require);
                 if(quantityPresent > 0) {
-                    totalPresent = totalPresent + quantityPresent * listProducts.find(obj => obj.ProductID === itemInfo.ProductID).Price;
+                    totalPresent = totalPresent + quantityPresent * listProducts.find(obj => obj.ProductID === itemInfo.present.ProductID).Price;
+                    listItems.push({...listProducts.find(obj => obj.ProductID === itemInfo.present.ProductID), Quantity : quantityPresent});
                 } 
             }
             if(itemInfo.Reduce > 0){
@@ -675,5 +685,5 @@ export function ListCartInfor(cartItems){
             }
         }
     }
-    return {totalCart: totalCart, totalPresent: totalPresent, totalReduce: totalReduce}
+    return {totalCart: totalCart, totalPresent: totalPresent, totalReduce: totalReduce, listItems : listItems}
 }

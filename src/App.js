@@ -10,6 +10,7 @@ import SearchPage from './Pages/SearchPage.jsx';
 import CartPage from './Pages/CartPage.jsx';
 import PaymentPage from './Pages/PaymentPage.jsx';
 import LoginSignUp from './Pages/Login-SignUp.jsx';
+
 function App() {
   // // Bắt sự kiện cuộn của trang
   // window.addEventListener('scroll', () => {
@@ -31,7 +32,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div>               
+      <div>            
           <Routes>        
             <Route path='/' element={<MainPage />} />
             <Route path="/SearchPage/:searchTerm" element={<SearchPage />} />   

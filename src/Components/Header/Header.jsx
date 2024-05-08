@@ -1,15 +1,17 @@
 import styles from './Header.module.css';
-import React, { useContext, useState } from 'react';
+import React, {  useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import PinMapIcon from '../Assets/pin-map.png';
 import Cart from '../Assets/shopping-cart.png';
 import User from '../Assets/user.png';
 import { ShopContext } from "../../Contexts/CartContext.jsx";
+import { listLocations } from '../Assets/data.js';
+
 
 function Header() {
   const navigate = useNavigate();
-  const {getTotalCartItems} = useContext(ShopContext);
+  const {getTotalCartItems,currentLocation} = useContext(ShopContext);
   const routeLogin = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     navigate("/Login");
@@ -33,7 +35,7 @@ function Header() {
           <img src={PinMapIcon} />
           <div className={styles.LocationAddress}>
             <h2>Giao hàng</h2>
-            <h3>Trung Hòa - Cầu giấy - Hà Nội</h3>
+            <h3>{currentLocation.Location}</h3>
           </div>
         </div>
         <div className={styles.Cart} onClick = {routeCart}>

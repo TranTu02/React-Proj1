@@ -115,7 +115,7 @@ function Cart(){
                 </div>
                 <div className={style.Infor}>
                     <p>Thành Tiền</p>
-                    <p>{formatter.format(getTotalCartAmount())} ₫</p>
+                    <p>{formatter.format(getTotalCartAmount(shipCost))} ₫</p>
                 </div>
                 <p>(Giá đã bao gồm VAT)</p>
                 <p>Mua thêm để miễn phí giao hàng từ <b>{formatter.format(300000)} ₫</b></p>

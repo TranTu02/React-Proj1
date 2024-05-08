@@ -54,6 +54,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
 }
 .SearchBar .Related .Product:first-of-type{
     border-top: 1px solid #eee;

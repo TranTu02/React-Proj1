@@ -29,7 +29,7 @@
 }
 
 .ItemContainer h2{
-    font-size: 18px;
+    font-size: 16px;
     width: 200rem;
     height: auto;
     max-height: 70rem;
@@ -57,20 +57,20 @@
 
 .ItemContainer .price .original{
     color: #808080;
-    font-size: 14px;
+    font-size: 12px;
     text-decoration: line-through;
     margin: 2px;
 }
 
 .ItemContainer .price h3{
     color: red;
-    font-size: 18px;
+    font-size: 16px;
     margin: 2px;
 }
 
 .ItemContainer h4{
     color: orange;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: lighter;
     margin: 2px;
     height: 16px;
