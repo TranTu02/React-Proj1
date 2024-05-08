@@ -1,4 +1,4 @@
-import React,{createContext,useState} from "react";
+import React,{createContext,useState,useEffect} from "react";
 import * as DATA from "../Components/Assets/data.js";
 
 
@@ -15,33 +15,42 @@ const getDefaultCart = () => {
 
 const ShopContextProvider = (props) => {
 
-    const [cartItems, setCartItems] = useState(getDefaultCart())
+    const [cartItems, setCartItems] = useState(getDefaultCart());
 
-    const addToCart = (itemId,quantity) => {
+    // useEffect (() => {
+    //     const storeCart = JSON.parse(localStorage.getItem("cartItems"));
+    //     if(storeCart){
+    //         setCartItems(storeCart);
+    //     }
+    // },[]);
+    
+    const addToCart = (itemId,quantity) => {   
         setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + quantity }));
     }
 
     const removeFromCart = (itemId,quantity) => {  
-        if(quantity === undefined){
-                setCartItems((prev) => {
-                const updatedCart = { ...prev };
-                delete updatedCart[itemId];
-                return updatedCart;
-            });
+        
+        if(quantity === undefined || cartItems[itemId] <= quantity){
+            setCartItems((prev) => ({ ...prev, [itemId]: 0 }));
         }else{            
-            setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + quantity }));
+            setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - quantity }));
         }
     }
 
-    const getTotalCartAmount = () => {
+    const deleteCart = () =>{
+        setCartItems(getDefaultCart());
+    }
+
+    const getTotalCartAmount = (shipCost) => {
         let totalAmount = 0;
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
-                let itemInfo = all_product.find((product) => product.id === Number(item))
-                totalAmount += itemInfo.new_price * cartItems[item];
+                let itemInfo = allProduct.find((product) => product.ProductID === Number(item))
+                totalAmount += itemInfo.Price * cartItems[item];
             }
         }
-        return totalAmount;
+        if(shipCost === undefined) shipCost = 0;
+        return totalAmount + shipCost;
     }
 
     const getTotalCartItems = () => {
@@ -55,7 +64,7 @@ const ShopContextProvider = (props) => {
     }
 
 
-    const contextValue = { allProduct, cartItems, addToCart, removeFromCart, getTotalCartAmount, getTotalCartItems }
+    const contextValue = { allProduct, cartItems, addToCart, removeFromCart, deleteCart, getTotalCartAmount, getTotalCartItems }
 
     return (
         <ShopContext.Provider value={contextValue}>

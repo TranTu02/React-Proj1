@@ -1,6 +1,8 @@
-import React,{useState,useEffect} from "react";  
+import React,{useState,useEffect, useContext} from "react";  
 import style from './Detail.module.css';
 import CategoryHome from "../CategoryHome/CategoryHome.jsx";
+import { useParams } from "react-router-dom";
+import { ShopContext } from "../../Contexts/CartContext.jsx";
 import * as DATA from '../Assets/data.js';
 
 function Detail({ProductID}){
@@ -56,6 +58,9 @@ function Detail({ProductID}){
         )
         },[data,active]
     ) ;
+    //Cart context
+    const {allProduct,cartItems,addToCart,getTotalCartAmount} = useContext(ShopContext);
+    const product =allProduct.find(obj => obj.ProductID === data.ProductID);
 
     // handle
     const handleMainImg =(index) => {
@@ -134,7 +139,10 @@ function Detail({ProductID}){
                                             <label htmlFor={type.ProductID} onClick={()=>handleType(type.ProductID)} >{type.CalculationUnit}</label>
                                         </>
                                         ):
-                                        <></>
+                                        <>
+                                            <input type="radio" id={data.ProductID} name="options" value={data.ProductID} checked={true}/>
+                                            <label htmlFor={data.ProductID} onClick={()=>handleType(data.ProductID)} >{data.CalculationUnit}</label>
+                                        </>
                                     }
                                 </div>
                             </form>
@@ -155,7 +163,9 @@ function Detail({ProductID}){
                                 </div>
                             }
                             <div className={style.Action}>
-                                <div className={style.AddCart}>
+                                <div className={style.AddCart} onClick={()=>{
+                                    addToCart(data.ProductID,quantity);
+                                }}>
                                     <span>
                                         THÊM VÀO GIỎ
                                     </span>

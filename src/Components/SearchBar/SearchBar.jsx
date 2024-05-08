@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate,BrowserRouter ,Routes,Route, Link } from 'react-router-dom';
 import styles from './SearchBar.module.css';
 import SearchIcon from '../Assets/search.png';
+import SearchPage from '../../Pages/SearchPage.jsx';
 import * as DATA from "../Assets/data.js";
 
-function SearchBar({ onSearch }) {
-  // định dạng tiền tệ
+function SearchBar() {
+  const navigate = useNavigate();
+  // định dạng tiền tệ  
   let formatter = new Intl.NumberFormat('en-US');
   const [searchTerm, setSearchTerm] = useState('');
   const data = DATA.listProducts.filter(item => {      // Kiểm tra xem ProductName của mỗi đối tượng có chứa từ khóa không
@@ -13,14 +16,18 @@ function SearchBar({ onSearch }) {
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
-
   const handleSubmit = (event) => {
-    event.preventDefault();
-    // Gọi hàm onSearch và truyền giá trị searchTerm vào
-    onSearch(searchTerm);
+    if(searchTerm.trim()==="" || undefined) 
+      {
+        navigate("/SearchPage/undefined");
+      }
+      else{
+        navigate("/SearchPage/"+ searchTerm);
+      }
   };
 
   return (
+    
     <form onSubmit={handleSubmit} className={styles.SearchBar}>
       <button type="submit"><img src={SearchIcon}/></button>
       <input
@@ -41,8 +48,12 @@ function SearchBar({ onSearch }) {
             {data.length > 5 && <span className={styles.BtnMore}><p>Xem thêm</p></span>}
           </div>
       }
+      <Routes>
+        <Route path='/SearchPage' element={<SearchPage searchTerm={searchTerm}/>}/>
+      </Routes>
     </form>
   );
+  
 }
 
 export default SearchBar;

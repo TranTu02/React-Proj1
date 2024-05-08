@@ -1,0 +1,301 @@
+.PayContainer{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.PayContainer .CheckoutBox{
+    width: 1000px;
+    height: fit-content;
+    padding: 10px 30px;
+    background-color: white;
+    margin: 10px;
+}
+
+.PayContainer .CheckoutBox .Heading{
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.PayContainer .CheckoutBox .InputForm{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.PayContainer .CheckoutBox .InputForm p{
+    width: 200px;
+    font-size: 18px;
+}
+
+.PayContainer .CheckoutBox .InputForm input{
+    width: 780px;
+    height: 22px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 6px 10px;
+}
+
+.PayContainer .CheckoutBox .InputForm .ChooseLocation{
+    display: flex;
+    width: 800px;
+    justify-content: space-between;
+}
+
+.PayContainer .CheckoutBox .InputForm .ChooseLocation input{
+    width: 600px;
+    height: 22px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 6px 12px;    
+}
+
+.PayContainer .CheckoutBox .InputForm .ChooseLocation .Btn{
+    width: 150px;
+    background-color: #FF0000;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.PayContainer .CheckoutBox .InputForm .ChooseLocation p{
+    font-size: 18px;
+    color: white;
+    margin: 0;
+    padding: 6px 0;
+}
+
+.PayContainer .CheckoutBox .Title{
+    font-size: 18px;
+    margin: 6px 10px;
+}
+
+.PayContainer .CheckoutBox .DeliveryDay{
+    display: flex;
+}
+
+.PayContainer .CheckoutBox .DeliveryDay label{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 80px;
+    border: 1px solid #eee;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.PayContainer .CheckoutBox .DeliveryDay input[type="radio"]{
+    display: none;
+}
+
+.PayContainer .CheckoutBox .DeliveryDay input[type="radio"]:checked + label{
+    border-color: #FF0000;
+}
+
+.PayContainer .CheckoutBox .DeliveryDay label p{
+    font-size: 15px;
+    margin: 0;
+}
+
+.PayContainer .CheckoutBox .DeliveryTime{
+    display: flex;
+    flex-direction: column;
+}
+
+.PayContainer .CheckoutBox .DeliveryTime .SelectForm{
+    display: flex;
+    margin: 5px 10px;
+}
+
+.PayContainer .CheckoutBox .DeliveryTime .SelectForm .Label{
+    font-size: 16px;
+    font-weight: bolder;
+    width: 100px;
+}
+
+.PayContainer .CheckoutBox .DeliveryTime .SelectForm label{
+    display: block;
+    width: 100px;
+    height: fit-content;
+    border: 1px solid #eee;
+    text-align: center;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.PayContainer .CheckoutBox .DeliveryTime .SelectForm input[type="radio"]{
+    display: none;
+}
+
+.PayContainer .CheckoutBox .DeliveryTime .SelectForm input[type="radio"]:checked + label{
+    border-color: #FF0000;
+}
+
+.PayContainer .CheckoutBox .DeliveryTime .SelectForm label p{
+    font-size: 16px;
+}
+
+.PayContainer .PaymentMethod{    
+    width: 1000px;
+    height: fit-content;
+    padding: 10px 30px;
+    background-color: white;
+    margin: 10px;
+}
+
+.PayContainer .PaymentMethod h2{
+    font-size: 20px;
+    margin: 10px;   
+}
+
+.PayContainer .PaymentMethod .Method{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.PayContainer .PaymentMethod .Method input[type="radio"]{
+    display: none;
+}
+
+.PayContainer .PaymentMethod .Method input[type="radio"]:checked + label{
+    border-color: red; /* Thay đổi màu viền thành màu đỏ khi input radio được chọn */
+}
+
+.PayContainer .PaymentMethod .Method label {
+    display: inline-block; /* Hiển thị nhãn như là một khối để có thể áp dụng chiều rộng và chiều cao */
+    width: 280px; /* Đặt chiều rộng của nhãn */
+    height: fit-content; /* Đặt chiều cao của nhãn */
+    border: 2px solid #878C8F; /* Đặt viền đen cho nhãn */
+    cursor: pointer; /* Hiển thị con trỏ tay khi di chuột qua nhãn */
+    text-align: center; /* Căn giữa văn bản trong nhãn */
+    line-height: 30px; /* Căn giữa theo chiều dọc */
+    padding: 18px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 18px;    
+    background-image: url(https://www.wealthmanagement.com/sites/wealthmanagement.com/files/styles/article_featured_retina/public/loan-money-transfer-illo-getty_1.jpg?itok=7lapOlPD);
+    background-size: cover;
+}
+
+.PayContainer .PaymentMethod .Method label:first-of-type{
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs6t2twryN1azSe-xlxt32Uxj6IdCAs0FecitUEAaR5EyT_0YD9KHSWHFq4aGAgr6t01c&usqp=CAU  );
+    background-size: cover;
+}
+.PayContainer .PaymentMethod .Note{
+    margin: 5px 10px;
+    align-items: start;
+    width: 95%;
+    font-size: 16px;
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 10px;
+    padding: 5px;
+    border-color: #878C8F;
+}
+.PayContainer .PaymentMethod .Note:focus{
+    box-shadow: 0px 0px 5px 6px rgba(153, 202, 221, 0.4);
+}
+
+.PayContainer .InvoiceField{
+    width: 1040px;
+    height: fit-content;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.PayContainer .InvoiceField input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
+}
+
+.PayContainer .InvoiceField p{
+    font-size: 18px;
+    margin: 0 10px;
+}
+
+.PayContainer .ConfirmBox{    
+    width: 1000px;
+    height: fit-content;
+    padding: 10px 30px;
+    background-color: white;
+    margin: 10px;
+    align-items: center;
+}
+
+.PayContainer .ConfirmBox .Infor{
+    display: flex;
+    width: 500px;
+    height: fit-content;
+    justify-content: space-between;
+    margin: 15px 10px;
+}
+
+.PayContainer .ConfirmBox .Infor p{
+    margin: 0;
+    font-size: 18px;
+    width: 200px;
+    color: #0000008A;
+}
+.PayContainer .ConfirmBox .Infor p:last-of-type{
+    text-align: end;
+}
+
+.PayContainer .ConfirmBox .Infor .Total{
+    font-size: 24px;
+    color: #FF0000;
+}
+
+.PayContainer .ConfirmBox .AcceptBox{
+    display: flex;
+    align-items: center;
+    background-color: #FFFBE1;
+    width: 500px;
+    height: fit-content;
+    margin: 10px;
+}
+
+.PayContainer .ConfirmBox .AcceptBox input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+}
+
+.PayContainer .ConfirmBox .AcceptBox p{
+    width: 450px;
+    font-size: 16px;
+}
+
+.PayContainer .ConfirmBox .AcceptBox a{
+    font-size: 16px;
+    color: red;
+    text-decoration: underline;
+}
+
+.PayContainer .ConfirmBox .Btn{
+    width: 400px;
+    height: fit-content;
+    background-color: #FF0000;
+    border-radius: 10px;
+    margin: 0 50px;
+    cursor: pointer;
+}
+
+.PayContainer .ConfirmBox .Btn p{
+    color: white;
+    font-size: 20px;    
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+}

@@ -1,0 +1,196 @@
+.Body{
+    display: flex;
+    width: 100%;
+    height: 800rem;
+    min-height: 800px;
+    justify-content: center;
+}
+
+.Body .Form{
+    width: 450rem;
+    min-width: 450px;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Body .Form h2{
+    font-size: 40px;
+    color: red;
+}
+
+.Body .Form .Input{
+    display: flex;
+    width: 350px;
+    height: 70px;
+    position: relative;
+    align-items: center;
+}
+
+.Body .Form .Input input{
+    width: 310px;
+    padding: 14px 20px;
+    font-size: 18px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid grey;
+    position: relative;
+    z-index: 2;
+}
+.Body .Form .Input input::placeholder{
+    color: #474747;
+}
+
+.Body .Form .Input label{
+    position: absolute;
+    margin-left: 20px;
+}
+
+
+.Body .Form .Input input:focus{
+    outline:none;
+    box-shadow: 0px 0px 5px 6px rgba(153, 202, 221, 0.4);
+}
+
+.Body .Form .Input input:focus::placeholder{
+    color: gray;
+}
+@keyframes MoveUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+        z-index: -4;
+    }
+    100% {
+        transform: translateY(-35px);
+        opacity: 1;
+        font-size: 12px;
+        border-bottom: 1px solid white;
+        z-index:8;
+    }
+}
+
+@keyframes MoveDown {
+    from {
+        transform: translateY(-35px);
+        opacity: 1;
+        font-size: 12px;
+        z-index: 8;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+        font-size: 18px;
+        border-bottom: none;
+        z-index: -4;
+    }
+}
+
+.Body .Form .Input input:valid + label {
+    transform: translateY(-35px);
+    opacity: 1;
+    font-size: 12px;
+    z-index: 8;
+}
+
+.Body .Form .Input input:not(:valid):focus + label {
+    animation: MoveUp 0.2s ease-in-out forwards;
+    font-size: 12px;
+}
+
+
+
+.Body .Form .Input input:placeholder-shown + label {
+    z-index: 3;
+    animation: MoveDown 0.2s ease-in-out forwards;
+}
+
+.Body .Form .Input .BtnHide{
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 23px;
+    z-index: 4;
+    cursor: pointer;
+    background-image: url(https://cdn-icons-png.flaticon.com/128/11502/11502544.png);
+    background-size: cover;
+    border-radius: 50%;
+    background-color: #eeeeee;
+}
+
+.Body .Form .Input .BtnHide:hover{
+    box-shadow: 0px 0px 0px 6px #eee;
+}
+
+.Body .Form .Input .BtnLook{
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 23px;
+    z-index: 3;
+    cursor: pointer;
+    background-image: url(https://cdn-icons-png.flaticon.com/128/11502/11502541.png);
+    background-size: cover;
+    border-radius: 50%;
+    background-color: #eeeeee;
+}
+
+.Body .Form .Input .BtnLook:hover{
+    box-shadow: 0px 0px 0px 6px #eee;
+}
+.Body .Form a{
+    font-size: 18px;
+    text-decoration: none;
+    color: red;
+    margin: 10px;
+}
+
+.Body .Form p{
+    font-size: 16px;
+}
+
+.Body .Form .Line{
+    width: 340px;
+    margin: 10px;
+    position: relative;
+    border-top: 1px solid #eee;
+    align-items: center;
+}
+.Body .Form .Line p{
+    position: absolute;
+    transform: translateY(-60%);
+    background-color: white;
+    left: 153px;
+    margin: 0;
+}
+.Body .Form .Btn{
+    font-family: 'Times New Roman', Times, serif;
+    background-color: white;
+    color: red;
+    font-size: 18px;
+    width: 348px;
+    height: fit-content;
+    border: 1px solid red;
+    align-items: center;
+    margin: 10px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.Body .Form .BtnActive{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+    width: 348px;
+    height: fit-content;
+    border: 1px solid red;
+    align-items: center;
+    margin: 10px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+}

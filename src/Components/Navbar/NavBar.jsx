@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import style from './NavBar.module.css';
+import { useNavigate } from 'react-router-dom';
 import CategoryImage from '../Assets/category.png';
 import img from '../Assets/camera.png';
 import Contact from '../Assets/contacting.png';
 import News from '../Assets/email.png';
 
 function NavBar() {
-
+    const navigate = useNavigate();
+    const routeCategory = (param) =>{
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (param === undefined )navigate("/Category");
+    }
+    
     return (
         <div className={style.Navbar}>
             <div className={style.Category} >
                 <img src={CategoryImage} alt="Category" />
-                <h3>Danh mục sản phẩm</h3>
+                <h3 onClick={()=>routeCategory()}>Danh mục sản phẩm</h3>
                 <ul className={style.DropList1}>
                     <li><a href='#'>ABCD</a>
                         <div className={style.DropList2}>
