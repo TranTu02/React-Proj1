@@ -572,10 +572,10 @@ export const listComment = [
 ]
 
 export const listLocations = [
-    {LocaitonID : 1 , Location: "Nhổn, Nam Từ Liêm, Hà Nội", Distance: 7.7},
-    {LocaitonID : 1 , Location: "Trung Hòa, Cầu Giấy, Hà Nội", Distance: 4},
-    {LocaitonID : 1 , Location: "Hồ Tùng Mậu, Cầu Giấy, Hà Nội", Distance: 1.2 },
-    {LocaitonID : 1 , Location: "Lai Xá, Hoài Đức, Hà Nội", Distance: 9.2},
+    {LocationID : 1 , Location: "Nhổn, Nam Từ Liêm, Hà Nội", Distance: 7.7},
+    {LocationID : 2 , Location: "Trung Hòa, Cầu Giấy, Hà Nội", Distance: 4},
+    {LocationID : 3 , Location: "Hồ Tùng Mậu, Cầu Giấy, Hà Nội", Distance: 1.2 },
+    {LocationID : 4 , Location: "Lai Xá, Hoài Đức, Hà Nội", Distance: 9.2},
 ]
 
 export function ListHotSale(){
@@ -686,4 +686,21 @@ export function ListCartInfor(cartItems){
         }
     }
     return {totalCart: totalCart, totalPresent: totalPresent, totalReduce: totalReduce, listItems : listItems}
+}
+
+export const listTypesByCategory = (CategoryID) => {
+    let arrType = [];
+    listCategory_Type.map( obj => {
+        if(obj.CategoryID === CategoryID){
+            arrType.push(obj);
+        }
+    })
+    return arrType;
+}
+
+export const listProductsByBrand = (BrandID)=>{
+    let arrProduct=[];
+    let listProductID = listBrandProduct.filter(obj => obj.BrandID === BrandID);
+    listProductID.map( obj => arrProduct.push(ListProductsDetail().find(product => product.ProductID === obj.ProductID)));
+    return arrProduct;
 }

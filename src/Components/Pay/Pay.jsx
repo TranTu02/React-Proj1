@@ -3,9 +3,16 @@ import style from "./Pay.module.css";
 import { ShopContext } from "../../Contexts/CartContext";
 import * as DATA from "../Assets/data.js";
 import Bill from "../Bill/Bill.jsx";
+import Location from "../Location/Location.jsx";
 
 function Pay(){    
     let formatter = new Intl.NumberFormat('en-US');
+    // Thay đổi địa điểm
+    const [isDisplayPinMap, setIsDisplayPinMap] = useState(false); 
+    const handlePinMap = () => {
+        setIsDisplayPinMap(!isDisplayPinMap); 
+        console.log(isDisplayPinMap);
+    }
     const currentDate = new Date();
     // lấy thông tin thời gian
     const currentTime = currentDate.getHours();
@@ -54,9 +61,9 @@ function Pay(){
     const [isInvoice,setIsInvoice] = useState(false);
     const [isAccept,setIsAccept] = useState(false)
     // Giỏ hàng
-    const { cartItems,getTotalCartAmount } = useContext(ShopContext);
+    const { cartItems,getTotalCartAmount,currentLocation } = useContext(ShopContext);
     const cartInfor = DATA.ListCartInfor(cartItems);
-    const shipCost = getTotalCartAmount(0) >= 300000 ? 0 : 10000;
+    const shipCost = getTotalCartAmount(0) >= 300000 ? 0 : currentLocation.Distance * 5000;
 
     const [isDisplayBill,setIsDisplayBill] = useState(false)
 
@@ -70,6 +77,8 @@ function Pay(){
         alert('Đã hủy bỏ');
         }
     }
+
+    //Lựa chọn 
 
     // Lấy các thông tin
     const refName = useRef(null);
@@ -146,8 +155,8 @@ function Pay(){
                 <div className={style.InputForm}>
                     <p><b>Khu vực giao hàng</b></p>
                     <div className={style.ChooseLocation}>
-                        <input type="text" value={"abc, bcd , cde"} ref={refLocation}/>
-                        <div className={style.Btn}><p>Đổi khu vực</p></div>
+                        <input type="text" value={currentLocation.Location} ref={refLocation}/>
+                        <div className={style.Btn} onClick={handlePinMap}><p>Đổi địa điểm</p></div>
                     </div>
                 </div>
                 <div className={style.InputForm}>
@@ -292,7 +301,9 @@ function Pay(){
                     <Bill billInfor={billInfor} listCartItems={cartInfor.listItems}/>
                     <button onClick={handleDisplayBill} className={style.CloseBill}>Close</button>
                 </>
-
+            }
+            {                
+                isDisplayPinMap && <Location handleOnClick={handlePinMap}/>
             }
         </div>
     );

@@ -1,7 +1,7 @@
 .CategoryContainer{
     display: flex;
     width: 100%;
-    min-width: 1400px;
+    min-width: 1340px;
     height: fit-content;
     display: flex;
     justify-content: center;
@@ -28,20 +28,52 @@
     background-color: aliceblue;
     width: 320rem;
     height: fit-content;
-    min-width: 230px;
-    margin: 10px;
+    max-height: 500rem;
+    min-width: 255px;
+    margin: 10px 0;
+    padding: 0 10px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.FilterContainer .Category:hover{
+    overflow-y: auto;
 }
 
 .FilterContainer  ul {
     padding-left: 10px;
+    width: 100%;
 }
 
 .FilterContainer ul li{
     font-size: 18px;
-    height: 35px;
     text-decoration: none;
     list-style: none;
     cursor: pointer;
+    padding: 5px;
+}
+.FilterContainer ul li p{
+    margin: 0;
+}
+.FilterContainer ul li ul{
+    width: 90%;
+    display: none;
+}
+.FilterContainer ul li ul li{
+    font-size: 16px;
+    text-decoration: none;
+    list-style: none;
+    cursor: pointer;
+    border: 2px solid #eeeeee00;
+}
+.FilterContainer li:hover {
+    font-weight: 600;
+}
+.FilterContainer ul li:hover ul{
+    display: block;
+}
+.FilterContainer ul li ul li:hover{
+    color: red;
+    border-bottom: 2px solid #eee;
 }
 
 .FilterContainer .Category .CategoryTitle{
@@ -64,9 +96,15 @@
     background-color: aliceblue;
     width: 320rem;
     height: fit-content;
-    min-width: 250px;
+    min-width: 255px;
+    max-height: 500rem;
+    overflow-x: hidden;
+    overflow-y: hidden;
     margin: 10px;
     cursor: pointer;
+}
+.FilterContainer .Brand:hover{
+    overflow-y: auto;
 }
 
 .FilterContainer .Brand .BrandTitle{

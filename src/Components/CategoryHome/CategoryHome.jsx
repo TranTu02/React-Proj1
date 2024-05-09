@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import style from './CategoryHome.module.css';
 import Item from "../Item/Item.jsx";
 import * as DATA from '../Assets/data.js';
+import { useNavigate } from "react-router-dom"; 
 
 function CategoryHome({CategoryID,CategoryName}){
     const in4 = DATA.ListProductsByCategory(CategoryID);
@@ -25,10 +26,15 @@ function CategoryHome({CategoryID,CategoryName}){
             setCurrentPage(currentPage - 1);
         }
     };
+
+    const navigate = useNavigate();
+    const routeCategory = () =>{
+        navigate("/CategoryPage/"+ CategoryID + "/Brand/Type/Others");
+    }
     return(
         <div className={style.ListContainer}>
             <div className={style.ListTitle}>
-                <h3>{CategoryName || in4.Name}</h3>
+                <h3 onClick={routeCategory}>{CategoryName || in4.Name}</h3>
                 <div>                
                     <div className={style.Prev} onClick={prevPage}>&#10094;</div>
                     <div className={style.Next} onClick={nextPage}>&#10095;</div>

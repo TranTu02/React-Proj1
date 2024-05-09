@@ -3,7 +3,8 @@ import style from './HotSale.module.css';
 import Item from "../Item/Item.jsx";
 import img from '../Assets/camera.png';
 import * as DATA from '../Assets/data.js';
-
+import { useNavigate } from 'react-router-dom';
+import Category from '../Category/Category.jsx';
 const CountDown = (ExpirationDate) => {
     const [timeRemaining, setTimeRemaining] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   
@@ -50,12 +51,16 @@ function HotSale({DiscountID}){
             setCurrentPage(currentPage - 1);
         }
     };
+    const navigate = useNavigate();
+    const routeCategory = () =>{
+        navigate("/CategoryPage/Category/Brand/Type/Sale");
+    }
     if(timeRemaining.seconds < 0) return <></>
     else
     return(
         <div className={style.HotSaleContainer}>
-            <div className={style.HotSaleBanner}>
-                <h3>Hot sale tháng 4</h3>
+            <div onClick={routeCategory} className={style.HotSaleBanner}>
+                <h3>Hot sale trong tháng</h3>
                 <div className={style.CDContainer}>
                     <h3>Kết thúc sau</h3>
                     <ul>

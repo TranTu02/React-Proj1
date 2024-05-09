@@ -4,13 +4,14 @@ import * as DATA from "../Assets/data.js";
 import { ShopContext } from "../../Contexts/CartContext.jsx";
 import { useNavigate } from "react-router-dom";
 
+
 function Cart(){
     const navigate = useNavigate();
-    const { allProduct, cartItems,addToCart, removeFromCart,deleteCart ,getTotalCartAmount,getTotalCartItems } = useContext(ShopContext);
+    const { allProduct, cartItems,addToCart, removeFromCart,deleteCart ,getTotalCartAmount,getTotalCartItems,currentLocation } = useContext(ShopContext);
     var listProduct = DATA.listProducts;    
     console.log(listProduct);
     let formatter = new Intl.NumberFormat('en-US');
-    const shipCost = getTotalCartAmount(0) >= 300000 ? 0 : 10000;
+    const shipCost = getTotalCartAmount(0) >= 300000 ? 0 : currentLocation.Distance * 5000;
     const cartInfor = DATA.ListCartInfor(cartItems);
     const handleUp = (productID) =>{
         addToCart(productID,1);

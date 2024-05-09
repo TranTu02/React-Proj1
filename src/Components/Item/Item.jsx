@@ -20,7 +20,7 @@ const Item = ({product}) => {
             <img src={product.Image} onClick={routeDetail}/>
             <div className={style.Infor} >
                 <h2 onClick={routeDetail}>{product.ProductName}</h2>
-                <h4>{product.PresentID!==undefined?'Mua để nhận quà':''}</h4>
+                <h4>{product.PresentID!==undefined || product.present !== undefined ?'Mua để nhận quà':''}</h4>
                 <div className={style.price}>
                     {product.Reduce===undefined?<h3>{formatter.format(product.Price)} ₫</h3> : <><h3>{formatter.format((product.Price*(1-product.Reduce)).toFixed(0))} ₫</h3><h3 className={style.original}>{formatter.format(product.Price)} ₫</h3></> }
                 </div>

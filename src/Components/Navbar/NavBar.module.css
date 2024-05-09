@@ -45,7 +45,7 @@
     width: 100%;
     padding: 0;
     border: #a9a9a9 1px solid;    
-    z-index: 10;
+    z-index: 50;
 }
 
 .Category .DropList1 li {
@@ -85,6 +85,7 @@
     border: #a9a9a9 1rem solid ;
     height: 450rem;
     min-height: 300px;
+    z-index: 51;
 }
 .Category .DropList1 li .DropList2 ul{
     padding: 0 ;
@@ -171,6 +172,6 @@
 }
 .Contact p{
     color: #000000;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }

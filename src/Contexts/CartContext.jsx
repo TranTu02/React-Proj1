@@ -1,6 +1,5 @@
-import React,{createContext,useState,useEffect} from "react";
+import React,{ createContext, useState, useEffect } from "react";
 import * as DATA from "../Components/Assets/data.js";
-
 
 export const ShopContext = createContext(null);
 
@@ -14,64 +13,86 @@ const getDefaultCart = () => {
 };
 
 const ShopContextProvider = (props) => {
+    const [cartItems, setCartItems] = useState(() => {
+        const savedCart = localStorage.getItem("cartItems");
+        return savedCart ? JSON.parse(savedCart) : getDefaultCart();
+    });
 
-    const [cartItems, setCartItems] = useState(getDefaultCart());
+    useEffect(() => {
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }, [cartItems]);
 
-    // useEffect (() => {
-    //     const storeCart = JSON.parse(localStorage.getItem("cartItems"));
-    //     if(storeCart){
-    //         setCartItems(storeCart);
-    //     }
-    // },[]);
-    
-    const addToCart = (itemId,quantity) => {   
+    const addToCart = (itemId, quantity) => {
         setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + quantity }));
-    }
+    };
 
-    const removeFromCart = (itemId,quantity) => {  
-        
-        if(quantity === undefined || cartItems[itemId] <= quantity){
+    const removeFromCart = (itemId, quantity) => {
+        if (quantity === undefined || cartItems[itemId] <= quantity) {
             setCartItems((prev) => ({ ...prev, [itemId]: 0 }));
-        }else{            
+        } else {
             setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - quantity }));
         }
-    }
+    };
 
-    const deleteCart = () =>{
+    const deleteCart = () => {
         setCartItems(getDefaultCart());
-    }
+    };
 
     const getTotalCartAmount = (shipCost) => {
         let totalAmount = 0;
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
-                let itemInfo = allProduct.find((product) => product.ProductID === Number(item))
-                totalAmount += itemInfo.Price * cartItems[item] * ( 1 -  (itemInfo.Reduce === undefined ? 0 : itemInfo.Reduce));
+                let itemInfo = allProduct.find((product) => product.ProductID === Number(item));
+                totalAmount += itemInfo.Price * cartItems[item] * (1 - (itemInfo.Reduce === undefined ? 0 : itemInfo.Reduce));
             }
         }
-        if(shipCost === undefined) shipCost = 0;
+        if (shipCost === undefined) shipCost = 0;
         return totalAmount + shipCost;
-    }
+    };
 
     const getTotalCartItems = () => {
         let totalItems = 0;
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
-                totalItems += cartItems[item]
+                totalItems += cartItems[item];
             }
         }
         return totalItems;
-    }
-    
-    const [currentLocation,setCurrentLocation] = useState(DATA.listLocations[1]);
+    };
 
-    const contextValue = { allProduct, cartItems, addToCart, removeFromCart, deleteCart, getTotalCartAmount, getTotalCartItems ,currentLocation}
+    const [currentLocation, setCurrentLocation] = useState(DATA.listLocations[1]);
+    const setLocation = (locationID) => {
+        setCurrentLocation(DATA.listLocations.find(obj => obj.LocationID === locationID));
+    };
+    // Lấy dữ liệu từ LocalStorage
+    const localStorageData = localStorage.getItem('cartItems');
+
+    // Kiểm tra xem dữ liệu có tồn tại không
+    if (localStorageData) {
+        // Dữ liệu đã lưu trữ được trả về dưới dạng chuỗi, bạn có thể chuyển đổi nó thành đối tượng JavaScript nếu cần
+        const parsedData = JSON.parse(localStorageData);
+        console.log(parsedData); // Hiển thị dữ liệu trong console
+    } else {
+        console.log('Dữ liệu không tồn tại trong LocalStorage');
+    }
+
+    const contextValue = {
+        allProduct,
+        cartItems,
+        addToCart,
+        removeFromCart,
+        deleteCart,
+        getTotalCartAmount,
+        getTotalCartItems,
+        currentLocation,
+        setLocation
+    };
 
     return (
         <ShopContext.Provider value={contextValue}>
             {props.children}
         </ShopContext.Provider>
-    )
-}
+    );
+};
 
 export default ShopContextProvider;

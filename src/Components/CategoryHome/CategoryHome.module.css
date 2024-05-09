@@ -10,9 +10,9 @@
 .ListContainer .ListTitle{
     display: flex;
     justify-content: space-between;
-    width: 1410rem;
+    width: 1344rem;
     height: 60rem;
-    min-width: 1050px;
+    min-width: 920px;
     min-height: 45px;  
     margin: 10px auto;   
     align-items: center; 
@@ -27,8 +27,8 @@
 }
 
 .ListItem{
-    width: 1430rem;
-    min-width: 1064px;
+    width: 1360rem;
+    min-width: 930px;
     height: 100%;
     display: flex;
     flex-wrap: wrap;

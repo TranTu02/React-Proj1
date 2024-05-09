@@ -4,9 +4,37 @@ import down from '../Assets/down-arrow.png';
 import sort from '../Assets/sort.png';
 import * as DATA from '../Assets/data.js';
 import Item from "../Item/Item.jsx";
+import { useNavigate,Link } from "react-router-dom";
 
-function Category({CategoryID}){    
-    const data = CategoryID === undefined ? DATA.listProducts : DATA.listProducts.filter(obj => obj.CategoryID === CategoryID);
+function Category({CategoryID,BrandID,TypeID,Others}){
+    const navigate = useNavigate();
+    let title = "Tất cả sản phẩm";
+    const filterList = () =>{
+        if(Others !== "Others"){
+            if (Others ==="AllProducts" ) {
+                title = "Tất cả sản phẩm";
+                return DATA.ListProductsDetail(); 
+            }
+            else {                
+                title = "Sản phẩm khuyến mại";
+                return DATA.ListProductsDetail().filter(obj => obj.Reduce !== undefined );
+            }
+        }else if(TypeID !== "Type"){
+            title = DATA.listCategory_Type.find(obj => obj.ProductTypeID === parseInt(TypeID)).ProductType;
+            return DATA.ListProductsDetail().filter(obj => obj.ProductTypeID === parseInt(TypeID));
+        }else if (BrandID !== "Brand"){
+            console.log(BrandID);
+            title = DATA.listBrand().find(obj => obj.BrandID === parseInt(BrandID)).BrandName;
+            return DATA.listProductsByBrand(parseInt(BrandID));
+        }else if(CategoryID !== "Category"){
+            title = DATA.listCategories.find(obj => obj.CategoryID === CategoryID).CategoryName;
+            return DATA.ListProductsDetail().filter(obj => obj.CategoryID === CategoryID);
+        }else{
+            return DATA.ListProductsDetail();
+        }
+    }    
+    const data = filterList();
+    
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const indexOfLastItem = currentPage * itemsPerPage > data.length ? (currentPage - 1) * itemsPerPage + data.length % 5 : currentPage * itemsPerPage;
@@ -33,6 +61,33 @@ function Category({CategoryID}){
         setShowFilterList(!showFilterList);
     };
 
+    const [titleFilterSort,setTitleFilterSort] = useState('Sắp xếp');
+    const handleSortList = (props) =>{
+        switch(props){
+            case 'PriceAscending': 
+            setTitleFilterSort( 'Từ thấp - cao');
+                data.sort( (a,b) => a.Price - b.Price);
+                break;
+            case 'PriceDescending':
+                setTitleFilterSort( 'Từ cao - thấp');
+                data.sort( (a,b) => b.Price - a.Price);
+                break;
+            case 'NameDescending' :
+                setTitleFilterSort( 'Từ Z-A');
+                data.sort((a, b) => b.ProductName.localeCompare(a.ProductName));
+                break
+            default:
+                setTitleFilterSort( 'Từ A-Z');
+                data.sort((a, b) => a.ProductName.localeCompare(b.ProductName));
+                break;                
+        }
+        setShowFilterList(!showFilterList);
+    }
+    
+    const routeCategoryFilter = (C,B,T,O) =>{
+        console.log(C);
+        navigate(`/CategoryPage/${C!==''? C : "Category"}/${B!==''? B : 'Brand'}/${T!==''? T : 'Type'}/${O !== ''? O : "Others"}`);
+    }
     
     return (
         <div className={style.CategoryContainer}>
@@ -45,9 +100,20 @@ function Category({CategoryID}){
                     {
                         showCategoryList && (
                             <ul>
-                                <li>Tất cả sản phẩm</li>
+                                <li onClick={() => routeCategoryFilter('','','','AllProducts')}> Tất cả sản phẩm</li>
+                                <li onClick={() => routeCategoryFilter('','','','Sale')}>Sản phẩm khuyến mại</li>
                                 {DATA.listCategories.map( (item,index)=>
-                                <li>{item.CategoryName}</li>   
+                                    <li><p onClick={() => routeCategoryFilter(item.CategoryID,'','','Others')}>{item.CategoryName}</p>
+                                        <ul>
+                                            {
+                                                DATA.listTypesByCategory(item.CategoryID).map(type => {
+                                                    return(
+                                                        <li onClick={() => routeCategoryFilter('','',type.ProductTypeID,'Others')}>{type.ProductType}</li>
+                                                    );
+                                                })
+                                            }
+                                        </ul>
+                                    </li>   
                             )}
                             </ul>)
                     }
@@ -61,7 +127,7 @@ function Category({CategoryID}){
                         showBrandList && (
                             <ul>
                                 {DATA.listBrand().map( (item,index)=>
-                                <li>{item.BrandName}</li>   
+                                <li onClick={() => routeCategoryFilter('',item.BrandID,'','Others')}>{item.BrandName}</li>   
                             )}
                             </ul>)
                     }
@@ -69,10 +135,10 @@ function Category({CategoryID}){
             </div>
             <div className={style.ProductContainer}>
                 {/* Fix */}
-                <img className={style.Banner} src={CategoryID !== undefined ? DATA.listCategories.find(obj => obj.CategoryID===CategoryID).CategoryIllustration : "#"} />
+                <img className={style.Banner} src="#" />
                 <div className={style.Title}>
                     <div className={style.HeadingBox}>
-                        <h2>{CategoryID === undefined ? 'TẤT CẢ SẢN PHẨM' : DATA.listCategories.find(obj => obj.CategoryID === CategoryID).CategoryName}</h2>
+                        <h2>{title}</h2>
                         <span className={style.Count}>
                             <b>{data.length}</b> Sản phẩm
                         </span>
@@ -80,17 +146,15 @@ function Category({CategoryID}){
                     <div className={style.FilterBox}>
                         <div className={style.FilterTitle} onClick={handleFilterList} >
                             <img src={sort} height={25} />
-                            <p>Sắp xếp</p>
+                            <p>{titleFilterSort}</p>
                             <img src={down} height={16} className={showFilterList? style.rotate:''}/>
                         </div>
                         { showFilterList &&
                             <ul>
-                                <li>Từ A-Z</li>
-                                <li>Từ Z-A</li>
-                                <li>Từ cao-thấp</li>
-                                <li>Từ thấp-cao</li>
-                                <li>Từ mới-cũ</li>
-                                <li>Từ cũ-mới</li>
+                                <li onClick={()=>handleSortList('df')}>Từ A-Z</li>
+                                <li onClick={()=>handleSortList('NameDescending')}>Từ Z-A</li>
+                                <li onClick={()=>handleSortList('PriceDescending')}>Từ cao-thấp</li>
+                                <li onClick={()=>handleSortList('PriceAscending')}>Từ thấp-cao</li>
                             </ul>
                         }
                     </div>
