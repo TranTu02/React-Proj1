@@ -1,0 +1,132 @@
+.AdminContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 1360px;
+}
+h4 {
+  font-size: 16px;
+  margin: 5px;
+}
+.TableHead {
+  top: 165px;
+  position: sticky;
+}
+
+/* CSS cho bảng */
+table {
+  width: 90%;
+  border-collapse: collapse;
+}
+
+/* CSS cho tiêu đề cột */
+th {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+}
+
+/* CSS cho dòng chẵn */
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* CSS cho ô dữ liệu */
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  font-size: 12px;
+  padding-right: 12px;
+}
+
+/* CSS khi rê chuột qua dòng */
+tr:hover {
+  background-color: #f2f2f2;
+}
+td input {
+  width: 100%;
+  padding: 0;
+  font-size: 16px;
+}
+.Action {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.Action button {
+  padding: 10px;
+  font-size: 18px;
+  width: 200rem;
+  min-width: 200px;
+}
+
+.AdminContainer .Sidebar {
+  width: 100%;
+  padding: 10px 0;
+  height: fit-content;
+  display: flex;
+  justify-content: space-evenly;
+  position: sticky;
+  top: 61px;
+  background-color: #f5f5f5;
+  border-bottom: #878787 1px solid;
+}
+.AdminContainer .Sidebar h3 {
+  font-size: 18px;
+  margin: 0;
+  text-align: center;
+  align-content: center;
+  height: 40px;
+}
+.AdminContainer .Sidebar .Task {
+  min-width: 150rem;
+  height: 40px;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid #878787;
+}
+
+.AdminContainer .Main {
+  width: 100%;
+  min-width: 1000px;
+  height: fit-content;
+}
+.ProductManage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ProductManage h2 {
+  font-size: 30px;
+  width: fit-content;
+  border-bottom: 3px solid red;
+}
+
+.ProductManage h3 {
+  font-size: 20px;
+}
+.ProductManage .ImageChoose {
+  display: flex;
+  align-items: center;
+}
+.AccountManage {
+  display: flex;
+}
+.AdminContainer .Main .SaleManage {
+}
+.AdminContainer .Main .LocationManage {
+}
+.AdminContainer .Main .BannerManage {
+}
+.AdminContainer .Main .ListAccount {
+}
+.AdminContainer .Main .ListBill {
+}

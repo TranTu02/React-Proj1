@@ -1,0 +1,132 @@
+.AccountBody {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: fit-content;
+  min-width: 1330px;
+}
+.AccountBody .AccountContainer {
+  width: 800rem;
+  min-width: 800px;
+  min-height: 500px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 15px;
+  background-color: white;
+}
+.AccountBody .AccountContainer h2 {
+  font-size: 20px;
+}
+.AccountBody .AccountContainer .Title {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  height: fit-content;
+}
+
+.AccountBody .AccountContainer .Title .nonActive {
+  font-size: 24px;
+  color: #878787;
+  border-bottom: 2px solid #878787;
+  cursor: pointer;
+  text-align: center;
+  width: 35%;
+}
+
+.AccountBody .AccountContainer .Title .Active {
+  width: 35%;
+  font-size: 24px;
+  border-bottom: 2px solid red;
+  color: red;
+  cursor: default;
+  text-align: center;
+}
+
+.AccountBody .AccountContainer .Infor {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.AccountBody .AccountContainer .Infor .Label {
+  width: 25%;
+  margin: 0;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.AccountBody .AccountContainer .Infor input {
+  border-color: #878787;
+  font-size: 16px;
+  padding: 8px 5px;
+  border-radius: 5px;
+  width: 65%;
+  margin-right: 20px;
+}
+
+.AccountBody .AccountContainer .Infor .Btn {
+  border: #878787 solid 1.5px;
+  width: 200px;
+  height: fit-content;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 20px;
+  cursor: pointer;
+}
+.AccountBody .AccountContainer .Btn:hover {
+  border-color: red;
+}
+
+.AccountBody .AccountContainer .ListBills {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: fit-content;
+  margin: 10px 0;
+  border: 1px solid #eee;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.AccountBody .AccountContainer .TitleList {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: fit-content;
+  margin: 10px 0 0 0;
+  cursor: default;
+}
+.AccountBody .AccountContainer .ListBills:hover {
+  border-color: red;
+}
+
+.AccountBody .AccountContainer .ListBills .InforBox {
+  width: 22%;
+}
+.AccountBody .AccountContainer p:first-of-type {
+  width: 18%;
+}
+.AccountBody .AccountContainer p {
+  width: 24%;
+  font-size: 16px;
+}
+.AccountBody .CloseBill {
+  color: red;
+  width: 100px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  padding: 5px;
+  background-color: #eee;
+  cursor: pointer;
+  position: fixed;
+  top: 20%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
+  border-radius: 10px;
+}
