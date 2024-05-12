@@ -5,11 +5,11 @@
   min-width: 1360px;
 }
 h4 {
-  font-size: 16px;
-  margin: 5px;
+  font-size: 16rem;
+  margin: 5rem;
 }
 .TableHead {
-  top: 165px;
+  top: 165rem;
   position: sticky;
 }
 
@@ -22,10 +22,10 @@ table {
 /* CSS cho tiêu đề cột */
 th {
   background-color: #f2f2f2;
-  border: 1px solid #ddd;
-  padding: 8px;
+  border: 1rem solid #ddd;
+  padding: 8rem;
   text-align: left;
-  font-size: 14px;
+  font-size: 14rem;
 }
 
 /* CSS cho dòng chẵn */
@@ -35,83 +35,105 @@ tr:nth-child(even) {
 
 /* CSS cho ô dữ liệu */
 td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  border: 1rem solid #ddd;
+  padding: 8rem;
   text-align: left;
-  font-size: 12px;
-  padding-right: 12px;
+  font-size: 12rem;
+  padding-right: 12rem;
 }
 
 /* CSS khi rê chuột qua dòng */
 tr:hover {
   background-color: #f2f2f2;
 }
-td input {
+td input,
+textarea {
   width: 100%;
   padding: 0;
-  font-size: 16px;
+  font-size: 16rem;
+  height: fit-content;
+  overflow-wrap: break-word;
 }
 .Action {
   display: flex;
   justify-content: space-around;
-  width: 80%;
+  width: 90%;
   align-items: center;
-  margin: 20px 0;
+  margin: 20rem 0;
+}
+
+.Date {
+  display: flex;
+  justify-content: space-between;
+  width: 200rem;
+}
+.Date input {
+  width: 120rem;
 }
 
 .Action button {
-  padding: 10px;
-  font-size: 18px;
-  width: 200rem;
-  min-width: 200px;
+  padding: 10rem;
+  font-size: 18rem;
+  width: 150rem;
+  min-width: 150rem;
 }
 
+.ProductManage .Action h2 {
+  border-bottom: 3rem solid #878787;
+  font-size: 30rem;
+  width: fit-content;
+  cursor: pointer;
+}
+.ProductManage .Action .Active {
+  border-bottom: 3rem solid #ff0000;
+}
 .AdminContainer .Sidebar {
   width: 100%;
-  padding: 10px 0;
+  padding: 10rem 0;
   height: fit-content;
   display: flex;
   justify-content: space-evenly;
   position: sticky;
-  top: 61px;
+  top: 61rem;
   background-color: #f5f5f5;
-  border-bottom: #878787 1px solid;
+  border-bottom: #878787 1rem solid;
 }
 .AdminContainer .Sidebar h3 {
-  font-size: 18px;
+  font-size: 18rem;
   margin: 0;
   text-align: center;
   align-content: center;
-  height: 40px;
+  height: 40rem;
 }
 .AdminContainer .Sidebar .Task {
   min-width: 150rem;
-  height: 40px;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 10px;
+  height: 40rem;
+  margin: 10rem 0;
+  padding: 10rem;
+  border-radius: 10rem;
   cursor: pointer;
-  border: 2px solid #878787;
+  border: 2rem solid #878787;
 }
 
 .AdminContainer .Main {
   width: 100%;
-  min-width: 1000px;
+  min-width: 1000rem;
   height: fit-content;
 }
 .ProductManage {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 40%;
 }
 .ProductManage h2 {
-  font-size: 30px;
+  font-size: 30rem;
   width: fit-content;
-  border-bottom: 3px solid red;
+  border-bottom: 3rem solid red;
 }
 
 .ProductManage h3 {
-  font-size: 20px;
+  font-size: 20rem;
 }
 .ProductManage .ImageChoose {
   display: flex;
@@ -119,14 +141,4 @@ td input {
 }
 .AccountManage {
   display: flex;
-}
-.AdminContainer .Main .SaleManage {
-}
-.AdminContainer .Main .LocationManage {
-}
-.AdminContainer .Main .BannerManage {
-}
-.AdminContainer .Main .ListAccount {
-}
-.AdminContainer .Main .ListBill {
 }

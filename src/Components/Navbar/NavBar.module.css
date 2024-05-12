@@ -1,177 +1,159 @@
 .Navbar {
-    background-color: ghostwhite;
-    min-width: 1360px;
-    min-height: 30px;
-    width: 100%;
-    height: 40rem;
-    border-bottom: darkgray 2rem solid;
-    display: flex;
-    justify-content: space-around;
-    position:sticky;
-    top: 0px;
-    margin-top:0;
-    z-index: 10;
+  background-color: ghostwhite;
+  min-width: 1360px;
+  width: 100%;
+  height: 40rem;
+  border-bottom: darkgray 2rem solid;
+  display: flex;
+  justify-content: space-around;
+  position: sticky;
+  top: 0rem;
+  margin-top: 0;
+  z-index: 10;
 }
 
 .Category {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-    width: 250rem;
-    min-width: 200px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  width: 250rem;
 }
 
 .Category h3 {
-    margin: 5rem;
-    width: 250rem;
-    min-width: 180px;
-    font-size: 18px;
+  margin: 5rem;
+  width: 250rem;
+  font-size: 18rem;
 }
 
-.Category img{
-    width: 30rem;
-    height: 30rem;
-    min-width: 22px;
-    min-height: 22px;
+.Category img {
+  width: 30rem;
+  height: 30rem;
 }
 .Category .DropList1 {
-    display: none;
-    position: absolute;
-    margin: 0rem;
-    top: 100%;
-    left: 0;
-    background-color: white;
-    width: 100%;
-    padding: 0;
-    border: #a9a9a9 1px solid;    
-    z-index: 50;
+  display: none;
+  position: absolute;
+  margin: 0rem;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  width: 100%;
+  padding: 0;
+  border: #a9a9a9 1rem solid;
+  z-index: 50;
 }
 
 .Category .DropList1 li {
-    text-decoration: none;
-    text-align: left;
-    align-items: center;
-    list-style: none;
-    width: 100%;
-    font-weight: bold;
-    display: flex;
+  text-decoration: none;
+  text-align: left;
+  align-items: center;
+  list-style: none;
+  width: 100%;
+  font-weight: bold;
+  display: flex;
 }
-.Category .DropList1 li a{
-    text-decoration: none;
-    color: #000000;
-    margin: 5px 8px;
-    font-size: 14px;
+.Category .DropList1 li a {
+  text-decoration: none;
+  color: #000000;
+  margin: 5rem 8rem;
+  font-size: 14rem;
 }
 .Category:hover .DropList1 {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .Category .DropList1 li:hover {
-    background-color: #FF0000;
+  background-color: #ff0000;
 }
 
-.Category .DropList1 li .DropList2{
-    display: none;
-    position: absolute;
-    margin: 0rem;
-    top: -1rem;
-    left: 100%;
-    background-color: white;
-    width: 700rem;
-    min-width: 500px;
-    padding: 0 ;
-    border: #a9a9a9 1rem solid ;
-    height: 450rem;
-    min-height: 300px;
-    z-index: 51;
+.Category .DropList1 li .DropList2 {
+  display: none;
+  position: absolute;
+  margin: 0rem;
+  top: -1rem;
+  left: 100%;
+  background-color: white;
+  width: 700rem;
+  padding: 0;
+  border: #a9a9a9 1rem solid;
+  height: 450rem;
+  z-index: 51;
 }
-.Category .DropList1 li .DropList2 ul{
-    padding: 0 ;
-    width: 250rem;
-    min-width: 200px;
+.Category .DropList1 li .DropList2 ul {
+  padding: 0;
+  width: 250rem;
+  min-width: 200rem;
 }
 .Category .DropList1 li:hover .DropList2 {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-.Category .DropList1 li .DropList2 img{
-    padding: 0;
-    position: absolute;
-    right: 0;
-    width: 450rem;
-    height: 450rem;
-    min-width: 300px;
-    min-height: 300px;
+.Category .DropList1 li .DropList2 img {
+  padding: 0;
+  position: absolute;
+  right: 0;
+  width: 450rem;
+  height: 450rem;
 }
 
-.link{
-    display:flex;
+.link {
+  display: flex;
 }
 
 .News {
-    display: flex;
-    width: 250rem;
-    min-width: 200px;
-    height: 100%;
-    cursor: pointer;
-    align-items: center;
-    min-width: 160px;
+  display: flex;
+  width: 250rem;
+  height: 100%;
+  cursor: pointer;
+  align-items: center;
 }
 
-.News img{
-    margin: 5px;
-    width: 30rem;
-    height: 30rem;
-    min-width: 22px;
-    min-height: 22px;
+.News img {
+  margin: 5rem;
+  width: 30rem;
+  height: 30rem;
 }
-.News a{
-    text-decoration: none;
-    color: #000000;
-    font-size: 18px;
-    font-weight: bold;
+.News a {
+  text-decoration: none;
+  color: #000000;
+  font-size: 18rem;
+  font-weight: bold;
 }
 
-.Contact{    
-    display: flex;
-    width: 250rem;
-    min-width: 200px;
-    height: 100%;
-    cursor: pointer;
-    align-items: center;
-    position: relative;
+.Contact {
+  display: flex;
+  width: 250rem;
+  height: 100%;
+  cursor: pointer;
+  align-items: center;
+  position: relative;
 }
-.ContactDetail{
-    border: 1rem solid #a9a9a9;
-    width: 250rem;
-    min-width: 200px;
-    height: 60rem;
-    min-height: 50px;
-    display: none;
-    background-color: white;
+.ContactDetail {
+  border: 1rem solid #a9a9a9;
+  width: 250rem;
+  height: 60rem;
+  display: none;
+  background-color: white;
 }
-.ContactDetail p{
-    padding-left: 5rem;
+.ContactDetail p {
+  padding-left: 5rem;
 }
-.Contact:hover .ContactDetail{
-    display: block;
-    position: absolute;
-    top: 100%;
-    z-index: 10;
+.Contact:hover .ContactDetail {
+  display: block;
+  position: absolute;
+  top: 100%;
+  z-index: 10;
 }
 
-.Contact img{
-    margin: 5px;
-    width: 30rem;
-    height: 30rem;
-    min-width: 22px;
-    min-height: 22px;
+.Contact img {
+  margin: 5rem;
+  width: 30rem;
+  height: 30rem;
 }
-.Contact p{
-    color: #000000;
-    font-size: 16px;
-    font-weight: bold;
+.Contact p {
+  color: #000000;
+  font-size: 16rem;
+  font-weight: bold;
 }

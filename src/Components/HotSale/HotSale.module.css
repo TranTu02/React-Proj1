@@ -1,81 +1,77 @@
-.HotSaleContainer{
-    display: flex;
-    width: 100%;
-    min-width: 1360px;
-    flex-direction: column;
-    align-items: center;
+.HotSaleContainer {
+  display: flex;
+  width: 100%;
+  min-width: 1360rem;
+  flex-direction: column;
+  align-items: center;
 }
 
-.HotSaleContainer .HotSaleBanner{
-    display: flex;
-    justify-content: space-between;
-    width: 1344rem;
-    height: 60rem;
-    min-width: 920px;
-    min-height: 45px;  
-    background-image: linear-gradient(to right, #FF4500, #FFA500);
-    margin: 10px auto;   
-    align-items: center; 
-    cursor: pointer;
+.HotSaleContainer .HotSaleBanner {
+  display: flex;
+  justify-content: space-between;
+  width: 1344rem;
+  height: 60rem;
+  background-image: linear-gradient(to right, #ff4500, #ffa500);
+  margin: 10rem auto;
+  align-items: center;
+  cursor: pointer;
 }
 
-.HotSaleContainer .HotSaleBanner .CDContainer{
-    display: flex;    
+.HotSaleContainer .HotSaleBanner .CDContainer {
+  display: flex;
 }
-.HotSaleContainer .HotSaleBanner .CDContainer ul{
-    display: flex;    
-    padding: 0;
-}
-
-.HotSaleContainer .HotSaleBanner .CDContainer ul li{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 35rem;
-    height: 35rem;
-    min-width: 30px;
-    min-height: 30px;
-    background-color: #FF0000;
-    margin-right: 10px;
-    font-size: 18px;
-    color: white;
+.HotSaleContainer .HotSaleBanner .CDContainer ul {
+  display: flex;
+  padding: 0;
 }
 
-.HotSaleContainer .HotSaleBanner h3{
-    font-size: 22px;
-    color: white;    
-    margin: auto 10px;
+.HotSaleContainer .HotSaleBanner .CDContainer ul li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35rem;
+  height: 35rem;
+  min-width: 30rem;
+  min-height: 30rem;
+  background-color: #ff0000;
+  margin-right: 10rem;
+  font-size: 18rem;
+  color: white;
 }
 
-
-.HotSaleItem{
-    width: 1344rem;
-    min-width: 920px;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    margin: 10px;
-    align-items: center;
-    position: relative;
+.HotSaleContainer .HotSaleBanner h3 {
+  font-size: 22rem;
+  color: white;
+  margin: auto 10rem;
 }
 
-.Prev, .Next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 24px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-  }
-  
-  .Prev {
-    left: 0;
-  }
-  
-  .Next {
-    right: 0;
-  }
-  
+.HotSaleItem {
+  width: 1344rem;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 10rem;
+  align-items: center;
+  position: relative;
+}
+
+.Prev,
+.Next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 24rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10rem;
+}
+
+.Prev {
+  left: 0;
+}
+
+.Next {
+  right: 0;
+}

@@ -4,21 +4,18 @@
   padding: 0rem;
   margin: 0rem;
   min-width: 1360px;
-  min-height: 60px;
   width: 100%;
   height: 80rem;
   background-color: #ee0000;
   align-items: center;
   position: sticky;
-  top: 0px;
+  top: 0rem;
   z-index: 11;
 }
 
 .HeaderLogo {
   display: flex;
   flex-direction: column;
-  min-width: 300px;
-  min-height: 60px;
   width: 400rem;
   height: 80rem;
   justify-content: center;
@@ -26,7 +23,7 @@
 }
 .HeaderLogo h1 {
   font-family: "Times New Roman", Times, serif;
-  font-size: 40px;
+  font-size: 40rem;
   color: white;
   font-weight: bold;
   margin: 0rem;
@@ -34,10 +31,10 @@
 }
 .HeaderLogo h3 {
   font-family: "Times New Roman", Times, serif;
-  font-size: 16px;
+  font-size: 16rem;
   color: white;
   font-style: italic;
-  margin: 0 0 5px 40px;
+  margin: 0 0 5rem 40rem;
   cursor: default;
 }
 
@@ -45,21 +42,21 @@
   display: flex;
   width: 350rem;
   height: 50rem;
-  min-width: 250px;
-  min-height: 40px;
-  border-radius: 25px;
+  min-width: 250rem;
+  min-height: 40rem;
+  border-radius: 25rem;
   background-color: white;
   margin: 5rem;
   cursor: pointer;
 }
 
 .Location img {
-  margin: 5px;
+  margin: 5rem;
   margin-left: 10rem;
   width: 40rem;
   height: 40rem;
-  min-width: 30px;
-  min-height: 30px;
+  min-width: 30rem;
+  min-height: 30rem;
 }
 
 .LocationAddress {
@@ -71,13 +68,13 @@
 .LocationAddress h2 {
   color: red;
   margin: 0rem;
-  font-size: 18px;
+  font-size: 18rem;
   font-family: "Times New Roman", Times, serif;
 }
 .LocationAddress h3 {
   margin: 0rem;
   color: black;
-  font-size: 14px;
+  font-size: 14rem;
   font-family: "Times New Roman", Times, serif;
 }
 
@@ -87,20 +84,20 @@
   display: flex;
   margin: 5rem;
   width: 180rem;
-  min-width: 150px;
+  min-width: 150rem;
 }
 .Cart img {
-  margin: 10px;
+  margin: 10rem;
   width: 40rem;
   height: 40rem;
-  min-width: 30px;
-  min-height: 30px;
+  min-width: 30rem;
+  min-height: 30rem;
 }
 .Cart p {
-  margin-left: 5px;
+  margin-left: 5rem;
   font-family: "Times New Roman", Times, serif;
   color: white;
-  font-size: 18px;
+  font-size: 18rem;
   font-weight: bold;
 }
 
@@ -109,21 +106,21 @@
   margin: 5rem;
   display: flex;
   width: 200rem;
-  min-width: 170px;
+  min-width: 170rem;
   align-items: center;
 }
 .User img {
-  margin: 10px;
+  margin: 10rem;
   width: 40rem;
   height: 40rem;
-  min-width: 30px;
-  min-height: 30px;
+  min-width: 30rem;
+  min-height: 30rem;
 }
 .User p {
   margin: 0;
-  margin-left: 5px;
+  margin-left: 5rem;
   color: white;
   font-family: "Times New Roman", Times, serif;
-  font-size: 18px;
+  font-size: 18rem;
   font-weight: bold;
 }

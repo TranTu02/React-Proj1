@@ -2585,14 +2585,14 @@ export const listSaleEvents = [
   {
     DiscountID: 1,
     DiscountTitle: "Title of Discount",
-    Start: new Date("2024-1-1"),
-    End: new Date("2024-1-1"),
+    Start: new Date("2024-2-1"),
+    End: new Date("2024-3-1"),
   },
   {
     DiscountID: 2,
     DiscountTitle: "Title of Discount",
-    Start: new Date("2024-1-1"),
-    End: new Date("2024-1-1"),
+    Start: new Date("2024-2-1"),
+    End: new Date("2024-3-1"),
   },
   {
     DiscountID: 3,
@@ -2731,16 +2731,76 @@ export const listDiscountProduct = [
 ];
 
 export const listPresentEvents = [
-  { PresentID: 1, ProductID: 150, Quantity: 2 },
-  { PresentID: 2, ProductID: 151, Quantity: 1 },
-  { PresentID: 3, ProductID: 152, Quantity: 3 },
-  { PresentID: 4, ProductID: 153, Quantity: 4 },
-  { PresentID: 5, ProductID: 154, Quantity: 5 },
-  { PresentID: 6, ProductID: 155, Quantity: 2 },
-  { PresentID: 7, ProductID: 156, Quantity: 2 },
-  { PresentID: 8, ProductID: 157, Quantity: 2 },
-  { PresentID: 9, ProductID: 158, Quantity: 1 },
-  { PresentID: 10, ProductID: 159, Quantity: 1 },
+  {
+    PresentID: 1,
+    ProductID: 150,
+    Quantity: 2,
+    Start: new Date("2024-1-1"),
+    End: new Date("2024-3-18"),
+  },
+  {
+    PresentID: 2,
+    ProductID: 151,
+    Quantity: 1,
+    Start: new Date("2024-1-1"),
+    End: new Date("2024-2-18"),
+  },
+  {
+    PresentID: 3,
+    ProductID: 152,
+    Quantity: 3,
+    Start: new Date("2024-1-1"),
+    End: new Date("2024-1-18"),
+  },
+  {
+    PresentID: 4,
+    ProductID: 153,
+    Quantity: 4,
+    Start: new Date("2024-1-1"),
+    End: new Date("2024-3-18"),
+  },
+  {
+    PresentID: 5,
+    ProductID: 154,
+    Quantity: 5,
+    Start: new Date("2024-2-1"),
+    End: new Date("2024-4-18"),
+  },
+  {
+    PresentID: 6,
+    ProductID: 155,
+    Quantity: 2,
+    Start: new Date("2024-3-1"),
+    End: new Date("2024-5-18"),
+  },
+  {
+    PresentID: 7,
+    ProductID: 156,
+    Quantity: 2,
+    Start: new Date("2024-2-1"),
+    End: new Date("2024-5-18"),
+  },
+  {
+    PresentID: 8,
+    ProductID: 157,
+    Quantity: 2,
+    Start: new Date("2024-1-1"),
+    End: new Date("2024-5-18"),
+  },
+  {
+    PresentID: 9,
+    ProductID: 158,
+    Quantity: 1,
+    Start: new Date("2024-3-1"),
+    End: new Date("2024-5-18"),
+  },
+  {
+    PresentID: 10,
+    ProductID: 159,
+    Quantity: 1,
+    Start: new Date("2024-1-1"),
+    End: new Date("2024-5-18"),
+  },
 ];
 
 export const listPresentProduct = [
@@ -2774,6 +2834,15 @@ export const listPresentProduct = [
   { ProductID: 44, Require: 2, PresentID: 5 },
   { ProductID: 70, Require: 2, PresentID: 6 },
   { ProductID: 76, Require: 2, PresentID: 7 },
+];
+
+export const listStock = [
+  { StockID: 1, ProductID: 1, Quantity: 100, Date: new Date("2024-4-4"), Cost: 400000 },
+  { StockID: 2, ProductID: 3, Quantity: 100, Date: new Date("2024-2-12"), Cost: 400000 },
+  { StockID: 3, ProductID: 4, Quantity: 100, Date: new Date("2024-5-4"), Cost: 500000 },
+  { StockID: 4, ProductID: 3, Quantity: 30, Date: new Date("2024-2-4"), Cost: 400000 },
+  { StockID: 5, ProductID: 2, Quantity: 300, Date: new Date("2024-1-4"), Cost: 300000 },
+  { StockID: 6, ProductID: 1, Quantity: 200, Date: new Date("2024-3-4"), Cost: 400000 },
 ];
 
 export const listBrand = () => {
@@ -3024,6 +3093,45 @@ export const listGroupProducts = [
   { GroupID: 2, ProductID: 83 },
 ];
 
+export const listBanner = [
+  {
+    BannerID: 1,
+    ImgSrc: "#",
+    CategoryID: "Category",
+    BrandID: "Brand",
+    ProductTypeID: "Type",
+    Other: "AllProducts",
+    Order: 1,
+  },
+  {
+    BannerID: 2,
+    ImgSrc: "#",
+    CategoryID: "Category",
+    BrandID: "Brand",
+    ProductTypeID: "Type",
+    Other: "Sale",
+    Order: 0,
+  },
+  {
+    BannerID: 3,
+    ImgSrc: "#",
+    CategoryID: "Category",
+    BrandID: "1",
+    ProductTypeID: "Type",
+    Other: "Others",
+    Order: 2,
+  },
+  {
+    BannerID: 4,
+    ImgSrc: "#",
+    CategoryID: "C1",
+    BrandID: "Brand",
+    ProductTypeID: "Type",
+    Other: "Others",
+    Order: 3,
+  },
+];
+
 export const listPhoto = [
   { PhotoID: 1, ProductID: 1, ImgSrc: 1 },
   { PhotoID: 2, ProductID: 1, ImgSrc: 2 },
@@ -3037,6 +3145,8 @@ export const listPhoto = [
   { PhotoID: 10, ProductID: 80, ImgSrc: 12 },
   { PhotoID: 11, ProductID: 80, ImgSrc: 13 },
   { PhotoID: 12, ProductID: 80, ImgSrc: 14 },
+  { PhotoID: 13, ProductID: 80, ImgSrc: 14 },
+  { PhotoID: 14, ProductID: 2, ImgSrc: 14 },
 ];
 
 export const listComment = [
@@ -3044,78 +3154,67 @@ export const listComment = [
     ProductID: 1,
     Title: "Title 1",
     Time: new Date("2024-4-1"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 1,
     Title: "Title 1",
     Time: new Date("2024-4-2"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 1,
     Title: "Title 1",
     Time: new Date("2024-4-3"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 2,
     Title: "Title 1",
     Time: new Date("2024-4-4"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 2,
     Title: "Title 1",
     Time: new Date("2024-4-5"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 3,
     Title: "Title 1",
     Time: new Date("2024-4-6"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 80,
     Title: "Title 1",
     Time: new Date("2024-3-1"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 80,
     Title: "Title 1",
     Time: new Date("2024-2-1"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 81,
     Title: "Title 1",
     Time: new Date("2024-1-1"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 82,
     Title: "Title 1",
     Time: new Date("2024-2-2"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 83,
     Title: "Title 1",
     Time: new Date("2024-4-4"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
 ];
 
@@ -3174,6 +3273,14 @@ export const listAccount = [
     Password: "111",
     Birthday: "26/11/2002",
     Authorize: 3,
+  },
+  {
+    AccountID: 7,
+    PhoneNumber: "0964",
+    Name: "Tran Quang Tu",
+    Password: "111",
+    Birthday: "26/11/2002",
+    Authorize: 2,
   },
 ];
 
@@ -3277,14 +3384,10 @@ export function ListHotSale() {
   //     arrSales = arrSales.concat(filteredObjects);
   // });
 
-  arrSales = listDiscountProduct.filter((obj) =>
-    arrSaleEvents.includes(obj.DiscountID)
-  );
+  arrSales = listDiscountProduct.filter((obj) => arrSaleEvents.includes(obj.DiscountID));
   arrSales.map((item) => {
     var index = listProducts.find((obj) => obj.ProductID === item.ProductID);
-    var present = listPresentProduct.find(
-      (obj) => obj.ProductID === item.ProductID
-    );
+    var present = listPresentProduct.find((obj) => obj.ProductID === item.ProductID);
     arrSaleProducts.push({ ...index, ...present, ...item });
   });
 
@@ -3300,17 +3403,11 @@ export function ListProductsByCategory(CategoryID) {
   arrID = listProducts.filter((obj) => obj.CategoryID === CategoryID);
   arrID.map((item) => {
     var index = listProducts.find((obj) => obj.ProductID === item.ProductID);
-    var present = listPresentProduct.find(
-      (obj) => obj.ProductID === item.ProductID
-    );
+    var present = listPresentProduct.find((obj) => obj.ProductID === item.ProductID);
     arrProducts.push({ ...index, ...present, ...item });
   });
-  categoryName = listCategories.find(
-    (obj) => obj.CategoryID === CategoryID
-  ).CategoryName;
-  categoryIllustration = listCategories.find(
-    (obj) => obj.CategoryID === CategoryID
-  ).CategoryIllustration;
+  categoryName = listCategories.find((obj) => obj.CategoryID === CategoryID).CategoryName;
+  categoryIllustration = listCategories.find((obj) => obj.CategoryID === CategoryID).CategoryIllustration;
   result.Name = categoryName;
   result.Illustation = categoryIllustration;
   result.Products = arrProducts;
@@ -3329,9 +3426,7 @@ export function ListProductsDetail() {
   });
 
   // Duyệt sản phẩm có giảm giá
-  var arrSaleProducts = listDiscountProduct.filter((obj) =>
-    arrSaleEvents.includes(obj.DiscountID)
-  );
+  var arrSaleProducts = listDiscountProduct.filter((obj) => arrSaleEvents.includes(obj.DiscountID));
   arrSaleProducts.map((obj) => {
     const index = FindIndex(allProducts, obj.ProductID);
     allProducts[index] = { ...allProducts[index], Reduce: obj.Reduce };
@@ -3340,9 +3435,7 @@ export function ListProductsDetail() {
   // Duyệt sản phẩm đang có quà tặng
   listPresentProduct.map((obj) => {
     const index = FindIndex(allProducts, obj.ProductID);
-    const present = listPresentEvents.find(
-      (pre) => pre.PresentID === obj.PresentID
-    );
+    const present = listPresentEvents.find((pre) => pre.PresentID === obj.PresentID);
     allProducts[index] = {
       ...allProducts[index],
       Require: obj.Require,
@@ -3360,9 +3453,7 @@ export function ListCartInfor(cartItems) {
   let listItems = [];
   for (const key in cartItems) {
     if (cartItems[key] > 0) {
-      let itemInfo = ListProductsDetail().find(
-        (product) => product.ProductID === Number(key)
-      );
+      let itemInfo = ListProductsDetail().find((product) => product.ProductID === Number(key));
       itemInfo = { ...itemInfo, Cart: cartItems[key] };
       listItems.push({
         ...listProducts.find((obj) => obj.ProductID === itemInfo.ProductID),
@@ -3372,24 +3463,15 @@ export function ListCartInfor(cartItems) {
       if (itemInfo.present !== undefined) {
         const quantityPresent = Math.floor(itemInfo.Cart / itemInfo.Require);
         if (quantityPresent > 0) {
-          totalPresent =
-            totalPresent +
-            quantityPresent *
-              listProducts.find(
-                (obj) => obj.ProductID === itemInfo.present.ProductID
-              ).Price;
+          totalPresent = totalPresent + quantityPresent * listProducts.find((obj) => obj.ProductID === itemInfo.present.ProductID).Price;
           listItems.push({
-            ...listProducts.find(
-              (obj) => obj.ProductID === itemInfo.present.ProductID
-            ),
+            ...listProducts.find((obj) => obj.ProductID === itemInfo.present.ProductID),
             Quantity: quantityPresent,
           });
         }
       }
       if (itemInfo.Reduce > 0) {
-        totalReduce =
-          totalReduce +
-          Math.floor(cartItems[key] * itemInfo.Reduce * itemInfo.Price);
+        totalReduce = totalReduce + Math.floor(cartItems[key] * itemInfo.Reduce * itemInfo.Price);
       }
     }
   }
@@ -3414,12 +3496,6 @@ export const listTypesByCategory = (CategoryID) => {
 export const listProductsByBrand = (BrandID) => {
   let arrProduct = [];
   let listProductID = listBrandProduct.filter((obj) => obj.BrandID === BrandID);
-  listProductID.map((obj) =>
-    arrProduct.push(
-      ListProductsDetail().find(
-        (product) => product.ProductID === obj.ProductID
-      )
-    )
-  );
+  listProductID.map((obj) => arrProduct.push(ListProductsDetail().find((product) => product.ProductID === obj.ProductID)));
   return arrProduct;
 };

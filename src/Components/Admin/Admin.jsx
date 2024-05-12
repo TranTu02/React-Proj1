@@ -5,6 +5,9 @@ import { AdminProduct } from "./AdminProduct";
 import { AdminAccount } from "./AdminAccount";
 import { AdminLocation } from "./AdminLocation";
 import { AdminPhoto } from "./AdminPhoto";
+import { AdminCategory } from "./AdminCategory";
+import { AdminSale } from "./AdminSale";
+import { AdminPresent } from "./AdninPresent";
 export const Admin = () => {
   return (
     <div className={style.AdminContainer}>
@@ -28,7 +31,7 @@ export const Admin = () => {
           <h3>Hình ảnh</h3>
         </div>
         <div className={style.Task}>
-          <h3>Biểu ngữ</h3>
+          <h3>Nhập kho</h3>
         </div>
         <div className={style.Task}>
           <h3>Khu vực giao hàng</h3>
@@ -36,12 +39,19 @@ export const Admin = () => {
         <div className={style.Task}>
           <h3>Hóa đơn</h3>
         </div>
+        <div className={style.Task}>
+          <h3>Thống kê</h3>
+        </div>
       </div>
       <div className={style.Main}>
         {/* <AdminProduct /> */}
         {/* <AdminAccount /> */}
         {/* <AdminLocation /> */}
-        <AdminPhoto />
+        {/* <AdminPhoto /> */}
+        {/* <AdminCategory /> */}
+        {/* <AdminSale /> */}
+        {/* <AdminPresent /> */}
+        {/* <AdminLocation /> */}
       </div>
     </div>
   );

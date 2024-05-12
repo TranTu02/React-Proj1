@@ -21,15 +21,7 @@ function Pay() {
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
   // Lấy thứ hiện tại (từ 0 đến 6, 0 là Chủ Nhật, 6 là Thứ Bảy)
-  const daysOfWeek = [
-    "Chủ Nhật",
-    "Thứ Hai",
-    "Thứ Ba",
-    "Thứ Tư",
-    "Thứ Năm",
-    "Thứ Sáu",
-    "Thứ Bảy",
-  ];
+  const daysOfWeek = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
   // ngày hiện tại
   const dayName = daysOfWeek[currentDate.getDay()];
   // ngày kế tiếp
@@ -70,11 +62,9 @@ function Pay() {
   const [isInvoice, setIsInvoice] = useState(false);
   const [isAccept, setIsAccept] = useState(false);
   // Giỏ hàng
-  const { cartItems, deleteCart, getTotalCartAmount, currentLocation } =
-    useContext(ShopContext);
+  const { cartItems, deleteCart, getTotalCartAmount, currentLocation } = useContext(ShopContext);
   const cartInfor = DATA.ListCartInfor(cartItems);
-  const shipCost =
-    getTotalCartAmount(0) >= 300000 ? 0 : currentLocation.Distance * 5000;
+  const shipCost = getTotalCartAmount(0) >= 300000 ? 0 : currentLocation.Distance * 5000;
 
   const [isDisplayBill, setIsDisplayBill] = useState(false);
 
@@ -127,21 +117,12 @@ function Pay() {
     const Location = refLocation.current ? refLocation.current.value : "";
     const Address = refAddress.current ? refAddress.current.value : "";
     const Note = refNote.current ? refNote.current.value : "";
-    const CompanyName = refCompanyName.current
-      ? refCompanyName.current.value
-      : "";
+    const CompanyName = refCompanyName.current ? refCompanyName.current.value : "";
     const Email = refEmail.current ? refEmail.current.value : "";
     const TaxCode = refTaxCode.current ? refTaxCode.current.value : "";
-    const CompanyAddress = refCompanyAddress.current
-      ? refCompanyAddress.current.value
-      : "";
+    const CompanyAddress = refCompanyAddress.current ? refCompanyAddress.current.value : "";
 
-    if (
-      Name.trim() === "" ||
-      PhoneNumber.trim() === "" ||
-      Location.trim() === "" ||
-      Address.trim() === ""
-    ) {
+    if (Name.trim() === "" || PhoneNumber.trim() === "" || Location.trim() === "" || Address.trim() === "") {
       requireInfor1 = false;
     } else {
       requireInfor1 = true;
@@ -158,13 +139,7 @@ function Pay() {
       requireInfor3 = false;
     }
     if (isInvoice === true) {
-      if (
-        CompanyName.trim() === "" ||
-        Email.trim() === "" ||
-        TaxCode.trim() === "" ||
-        CompanyAddress.trim() === ""
-      )
-        requireInfor4 = false;
+      if (CompanyName.trim() === "" || Email.trim() === "" || TaxCode.trim() === "" || CompanyAddress.trim() === "") requireInfor4 = false;
       else requireInfor4 = true;
     } else {
       requireInfor4 = true;
@@ -213,11 +188,7 @@ function Pay() {
             <b>Khu vực giao hàng</b>
           </p>
           <div className={style.ChooseLocation}>
-            <input
-              type="text"
-              value={currentLocation.Location}
-              ref={refLocation}
-            />
+            <input type="text" value={currentLocation.Location} ref={refLocation} />
             <div className={style.Btn} onClick={handlePinMap}>
               <p>Đổi địa điểm</p>
             </div>
@@ -225,36 +196,19 @@ function Pay() {
         </div>
         <div className={style.InputForm}>
           <p>Địa chỉ</p>
-          <input
-            type="text"
-            placeholder="Nhập số nhà, tên đường, ..."
-            ref={refAddress}
-          />
+          <input type="text" placeholder="Nhập số nhà, tên đường, ..." ref={refAddress} />
         </div>
       </div>
       <div className={style.CheckoutBox}>
         <h2 className={style.Heading}>Chọn thời gian giao hàng</h2>
         <p className={style.Title}>Chọn ngày giao hàng</p>
         <div className={style.DeliveryDay}>
-          <input
-            type="radio"
-            id={3}
-            checked={isChecked()}
-            name="Day"
-            value={currentDate}
-            onChange={handleChangeSelectedDay}
-          />
+          <input type="radio" id={3} checked={isChecked()} name="Day" value={currentDate} onChange={handleChangeSelectedDay} />
           <label htmlFor={3}>
             <p>{dayName}</p>
             <p>{currentDay + "/" + currentMonth + "/" + currentYear}</p>
           </label>
-          <input
-            type="radio"
-            id={4}
-            name="Day"
-            value={nextDate}
-            onChange={handleChangeSelectedDay}
-          />
+          <input type="radio" id={4} name="Day" value={nextDate} onChange={handleChangeSelectedDay} />
           <label htmlFor={4}>
             <p>{nextDayName}</p>
             <p>{nextDay + "/" + nextMonth + "/" + nextYear}</p>
@@ -264,25 +218,13 @@ function Pay() {
         <div className={style.DeliveryTime}>
           <div className={style.SelectForm}>
             <p className={style.Label}>Sáng</p>
-            <input
-              type="radio"
-              id={8}
-              name="Time"
-              onChange={handleSelectedTime}
-              value={"08:00-10:00"}
-            />
+            <input type="radio" id={8} name="Time" onChange={handleSelectedTime} value={"08:00-10:00"} />
             {isDisplayDeliveryTime(8) && (
               <label htmlFor={8}>
                 <p>08:00-10:00</p>
               </label>
             )}
-            <input
-              type="radio"
-              id={10}
-              name="Time"
-              onChange={handleSelectedTime}
-              value={"10:00-12:00"}
-            />
+            <input type="radio" id={10} name="Time" onChange={handleSelectedTime} value={"10:00-12:00"} />
             {isDisplayDeliveryTime(10) && (
               <label htmlFor={10}>
                 <p>10:00-12:00</p>
@@ -291,37 +233,19 @@ function Pay() {
           </div>
           <div className={style.SelectForm}>
             <p className={style.Label}>Chiều</p>
-            <input
-              type="radio"
-              id={12}
-              name="Time"
-              onChange={handleSelectedTime}
-              value={"12:00-14:00"}
-            />
+            <input type="radio" id={12} name="Time" onChange={handleSelectedTime} value={"12:00-14:00"} />
             {isDisplayDeliveryTime(12) && (
               <label htmlFor={12}>
                 <p>12:00-14:00</p>
               </label>
             )}
-            <input
-              type="radio"
-              id={14}
-              name="Time"
-              onChange={handleSelectedTime}
-              value={"14:00-16:00"}
-            />
+            <input type="radio" id={14} name="Time" onChange={handleSelectedTime} value={"14:00-16:00"} />
             {isDisplayDeliveryTime(14) && (
               <label htmlFor={14}>
                 <p>14:00-16:00</p>
               </label>
             )}
-            <input
-              type="radio"
-              id={16}
-              name="Time"
-              onChange={handleSelectedTime}
-              value={"16:00-18:00"}
-            />
+            <input type="radio" id={16} name="Time" onChange={handleSelectedTime} value={"16:00-18:00"} />
             {isDisplayDeliveryTime(16) && (
               <label htmlFor={16}>
                 <p>16:00-18:00</p>
@@ -330,13 +254,7 @@ function Pay() {
           </div>
           <div className={style.SelectForm}>
             <p className={style.Label}>Tối</p>
-            <input
-              type="radio"
-              id={18}
-              name="Time"
-              onChange={handleSelectedTime}
-              value={"18:00-20:00"}
-            />
+            <input type="radio" id={18} name="Time" onChange={handleSelectedTime} value={"18:00-20:00"} />
             {isDisplayDeliveryTime(18) && (
               <label htmlFor={18}>
                 <p>18:00-20:00</p>
@@ -348,42 +266,16 @@ function Pay() {
       <div className={style.PaymentMethod}>
         <h2>Phương thức thanh toán</h2>
         <div className={style.Method}>
-          <input
-            type="radio"
-            id={1}
-            name="paymentMethod"
-            onChange={handleSelectedPayment}
-            value={"Online"}
-          />
+          <input type="radio" id={1} name="paymentMethod" onChange={handleSelectedPayment} value={"Online"} />
           <label htmlFor={1}>Thanh toán online</label>
-          <input
-            type="radio"
-            id={2}
-            name="paymentMethod"
-            onChange={handleSelectedPayment}
-            value={"COD"}
-          />
+          <input type="radio" id={2} name="paymentMethod" onChange={handleSelectedPayment} value={"COD"} />
           <label htmlFor={2}>Thanh toán khi nhận hàng (COD)</label>
         </div>
         <h2>Ghi chú</h2>
-        <textarea
-          rows="4"
-          aria-invalid="false"
-          autocomplete="off"
-          id="note"
-          name="note"
-          ref={refNote}
-          placeholder=""
-          className={style.Note}
-        ></textarea>
+        <textarea rows="4" aria-invalid="false" autocomplete="off" id="note" name="note" ref={refNote} placeholder="" className={style.Note}></textarea>
       </div>
       <div className={style.InvoiceField}>
-        <input
-          type="checkbox"
-          id="Invoice"
-          checked={isInvoice}
-          onClick={() => setIsInvoice(!isInvoice)}
-        />
+        <input type="checkbox" id="Invoice" checked={isInvoice} onClick={() => setIsInvoice(!isInvoice)} />
         <p>Yêu cầu xuất hóa đơn</p>
       </div>
       {isInvoice && (
@@ -391,19 +283,11 @@ function Pay() {
           <h2 className={style.Heading}>Thông tin đặt hàng</h2>
           <div className={style.InputForm}>
             <p>Tên công ty</p>
-            <input
-              type="text"
-              placeholder="Nhập tên công ty"
-              ref={refCompanyName}
-            />
+            <input type="text" placeholder="Nhập tên công ty" ref={refCompanyName} />
           </div>
           <div className={style.InputForm}>
             <p>Email</p>
-            <input
-              type="text"
-              placeholder="Nhập địa chỉ email"
-              ref={refEmail}
-            />
+            <input type="text" placeholder="Nhập địa chỉ email" ref={refEmail} />
           </div>
           <div className={style.InputForm}>
             <p>Mã số thuế</p>
@@ -411,11 +295,7 @@ function Pay() {
           </div>
           <div className={style.InputForm}>
             <p>Địa chỉ công ty</p>
-            <input
-              type="text"
-              placeholder="Nhập địa chỉ công ty"
-              ref={refCompanyAddress}
-            />
+            <input type="text" placeholder="Nhập địa chỉ công ty" ref={refCompanyAddress} />
           </div>
         </div>
       )}
@@ -434,23 +314,12 @@ function Pay() {
         </div>
         <div className={style.Infor}>
           <p>Tổng thanh toán</p>
-          <p className={style.Total}>
-            {formatter.format(getTotalCartAmount(shipCost))} ₫
-          </p>
+          <p className={style.Total}>{formatter.format(getTotalCartAmount(shipCost))} ₫</p>
         </div>
         <div className={style.AcceptBox}>
-          <input
-            type="checkbox"
-            id="Accept"
-            checked={isAccept}
-            onClick={() => setIsAccept(!isAccept)}
-          />
+          <input type="checkbox" id="Accept" checked={isAccept} onClick={() => setIsAccept(!isAccept)} />
           <p>
-            Bằng việc chọn vào Đặt Hàng, bạn đồng ý với{" "}
-            <a>Điều khoản và điều kiện giao dịch trên E'Mart</a> và đồng ý trở
-            thành Hội viên E'Mart theo{" "}
-            <a>Điều khoản và điều kiện của Chương trình Hội viên E'Mart</a> sẽ
-            được kích hoạt khi đơn hàng được giao thành công.
+            Bằng việc chọn vào Đặt Hàng, bạn đồng ý với <a>Điều khoản và điều kiện giao dịch trên E'Mart</a> và đồng ý trở thành Hội viên E'Mart theo <a>Điều khoản và điều kiện của Chương trình Hội viên E'Mart</a> sẽ được kích hoạt khi đơn hàng được giao thành công.
           </p>
         </div>
         <div onClick={handleSubmit} className={style.Btn}>
