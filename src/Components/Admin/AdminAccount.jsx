@@ -1,8 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import style from "./Admin.module.css";
-import { listCategory_Type, listAccount } from "../Assets/data";
+import { listCategory_Type, listAccount, updateApiAccount } from "../Assets/data";
+import axios from "axios";
 export const AdminAccount = () => {
   const [listColumnDisplay, setListColumnDisplay] = useState(listAccount);
+
+  useEffect(() => {
+    updateApiAccount();
+    setListColumnDisplay(listAccount);
+  }, [listAccount]);
   const currentAccount = listAccount.find((obj) => obj.AccountID === 5);
   const Title = () => {
     let arr = [];

@@ -1,5 +1,60 @@
 import img from "./camera.png";
+import axios from "axios";
 
+export const updateApi = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/api/products");
+    // Xử lý khi có kết quả trả về thành công
+    const products = response.data; // Mảng sản phẩm từ phản hồi
+    console.log(products);
+    return products;
+  } catch (error) {
+    // Xử lý khi có lỗi xảy ra
+    console.error("Lỗi khi lấy dữ liệu:", error);
+    throw error; // Để cho phép bên gọi xử lý lỗi nếu cần thiết
+  }
+};
+
+export let listProducts = [];
+
+// Gọi hàm updateApi để lấy dữ liệu và gán cho listProducts
+updateApi()
+  .then((products) => {
+    listProducts = products;
+  })
+  .catch((error) => {
+    // Xử lý lỗi nếu cần
+    console.error("Lỗi khi cập nhật dữ liệu:", error);
+  });
+updateApi();
+
+export const updateApiAccount = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/api/acounts");
+    // Xử lý khi có kết quả trả về thành công
+    const accounts = response.data; // Mảng sản phẩm từ phản hồi
+    console.log(accounts);
+    return accounts;
+  } catch (error) {
+    // Xử lý khi có lỗi xảy ra
+    console.error("Lỗi khi lấy dữ liệu:", error);
+    throw error; // Để cho phép bên gọi xử lý lỗi nếu cần thiết
+  }
+};
+
+export let listAccount = [];
+
+updateApiAccount()
+  .then((accounts) => {
+    listAccount = accounts;
+  })
+  .catch((error) => {
+    // Xử lý lỗi nếu cần
+    console.error("Lỗi khi cập nhật dữ liệu:", error);
+  });
+updateApiAccount();
+
+/*
 export const listProducts = [
   {
     ProductID: 1,
@@ -2552,7 +2607,7 @@ export const listProducts = [
     Weight: 434,
   },
 ];
-
+*/
 export const listCategories = [
   { CategoryID: "C1", CategoryName: "Danh muc 1", CategoryIllustration: img },
   { CategoryID: "C2", CategoryName: "Danh muc 2", CategoryIllustration: img },
@@ -2640,7 +2695,7 @@ export const listSaleEvents = [
     DiscountID: 10,
     DiscountTitle: "Title of Discount",
     Start: new Date("2024-1-1"),
-    End: new Date("2024-5-18"),
+    End: new Date("2024-5-29"),
   },
 ];
 
@@ -2837,12 +2892,48 @@ export const listPresentProduct = [
 ];
 
 export const listStock = [
-  { StockID: 1, ProductID: 1, Quantity: 100, Date: new Date("2024-4-4"), Cost: 400000 },
-  { StockID: 2, ProductID: 3, Quantity: 100, Date: new Date("2024-2-12"), Cost: 400000 },
-  { StockID: 3, ProductID: 4, Quantity: 100, Date: new Date("2024-5-4"), Cost: 500000 },
-  { StockID: 4, ProductID: 3, Quantity: 30, Date: new Date("2024-2-4"), Cost: 400000 },
-  { StockID: 5, ProductID: 2, Quantity: 300, Date: new Date("2024-1-4"), Cost: 300000 },
-  { StockID: 6, ProductID: 1, Quantity: 200, Date: new Date("2024-3-4"), Cost: 400000 },
+  {
+    StockID: 1,
+    ProductID: 1,
+    Quantity: 100,
+    Date: new Date("2024-4-4"),
+    Cost: 400000,
+  },
+  {
+    StockID: 2,
+    ProductID: 3,
+    Quantity: 100,
+    Date: new Date("2024-2-12"),
+    Cost: 400000,
+  },
+  {
+    StockID: 3,
+    ProductID: 4,
+    Quantity: 100,
+    Date: new Date("2024-5-4"),
+    Cost: 500000,
+  },
+  {
+    StockID: 4,
+    ProductID: 3,
+    Quantity: 30,
+    Date: new Date("2024-2-4"),
+    Cost: 400000,
+  },
+  {
+    StockID: 5,
+    ProductID: 2,
+    Quantity: 300,
+    Date: new Date("2024-1-4"),
+    Cost: 300000,
+  },
+  {
+    StockID: 6,
+    ProductID: 1,
+    Quantity: 200,
+    Date: new Date("2024-3-4"),
+    Cost: 400000,
+  },
 ];
 
 export const listBrand = () => {
@@ -2851,61 +2942,51 @@ export const listBrand = () => {
       BrandID: 1,
       BrandName: "Brand 1",
       Logo: img,
-      Description: "Description of Brand ",
     },
     {
       BrandID: 2,
       BrandName: "Brand 2",
       Logo: img,
-      Description: "Description of Brand ",
     },
     {
       BrandID: 3,
       BrandName: "Brand 3",
       Logo: img,
-      Description: "Description of Brand ",
     },
     {
       BrandID: 4,
       BrandName: "Brand 4",
       Logo: img,
-      Description: "Description of Brand ",
     },
     {
       BrandID: 5,
       BrandName: "Brand 5",
       Logo: img,
-      Description: "Description of Brand ",
     },
     {
       BrandID: 6,
       BrandName: "Brand 6",
       Logo: img,
-      Description: "Description of Brand ",
     },
     {
       BrandID: 7,
       BrandName: "Brand 7",
       Logo: img,
-      Description: "Description of Brand ",
     },
     {
       BrandID: 8,
       BrandName: "Brand 8",
       Logo: img,
-      Description: "Description of Brand ",
     },
     {
       BrandID: 9,
       BrandName: "Brand 9",
       Logo: img,
-      Description: "Description of Brand ",
     },
     {
       BrandID: 10,
       BrandName: "Brand 10",
       Logo: img,
-      Description: "Description of Brand ",
     },
   ];
 };
@@ -3154,77 +3235,90 @@ export const listComment = [
     ProductID: 1,
     Title: "Title 1",
     Time: new Date("2024-4-1"),
-    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment:
+      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 1,
     Title: "Title 1",
     Time: new Date("2024-4-2"),
-    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment:
+      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 1,
     Title: "Title 1",
     Time: new Date("2024-4-3"),
-    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment:
+      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 2,
     Title: "Title 1",
     Time: new Date("2024-4-4"),
-    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment:
+      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 2,
     Title: "Title 1",
     Time: new Date("2024-4-5"),
-    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment:
+      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 3,
     Title: "Title 1",
     Time: new Date("2024-4-6"),
-    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment:
+      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 80,
     Title: "Title 1",
     Time: new Date("2024-3-1"),
-    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment:
+      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 80,
     Title: "Title 1",
     Time: new Date("2024-2-1"),
-    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment:
+      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 81,
     Title: "Title 1",
     Time: new Date("2024-1-1"),
-    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment:
+      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 82,
     Title: "Title 1",
     Time: new Date("2024-2-2"),
-    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment:
+      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 83,
     Title: "Title 1",
     Time: new Date("2024-4-4"),
-    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment:
+      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
 ];
 
 export const listLocations = [
+  { LocationID: 0, Location: "Xuân Thủy, Cầu Giấy, Hà Nội", Distance: 0 },
   { LocationID: 1, Location: "Nhổn, Nam Từ Liêm, Hà Nội", Distance: 7.7 },
   { LocationID: 2, Location: "Trung Hòa, Cầu Giấy, Hà Nội", Distance: 4 },
   { LocationID: 3, Location: "Hồ Tùng Mậu, Cầu Giấy, Hà Nội", Distance: 1.2 },
   { LocationID: 4, Location: "Lai Xá, Hoài Đức, Hà Nội", Distance: 9.2 },
 ];
 
+/*
 export const listAccount = [
   {
     AccountID: 1,
@@ -3283,12 +3377,12 @@ export const listAccount = [
     Authorize: 2,
   },
 ];
-
+*/
 export const listBill = [
   {
     BillID: 1,
     Name: "Tran Quang Tu",
-    PhoneNumber: "0969504954",
+    PhoneNumber: "2",
     Location: "Ha Thuong, Dai Tu, Thai Nguyen",
     Address: "Xom Viet Thang",
     Date: "18/05/2024",
@@ -3309,14 +3403,15 @@ export const listBill = [
     ShipCost: 10000,
     totalReduce: 20000,
     totalCost: 90000,
+    Status: 0,
   },
   {
     BillID: 2,
     Name: "Tran Quang Tu",
-    PhoneNumber: "0969504954",
+    PhoneNumber: "1",
     Location: "Ha Thuong, Dai Tu, Thai Nguyen",
     Address: "Xom Viet Thang",
-    Date: "18/05/2024",
+    Date: "17/05/2024",
     Time: "10:00-12:00",
     Payment: "Online",
     Note: "None",
@@ -3325,15 +3420,19 @@ export const listBill = [
     TaxCode: "",
     CompanyAddress: "",
     listItems: [
-      { ...listProducts[1], Quantity: 3 },
-      { ...listProducts[2], Quantity: 2 },
-      { ...listProducts[80], Quantity: 11 },
+      { ...listProducts[2], Quantity: 3 },
+      { ...listProducts[3], Quantity: 2 },
+      { ...listProducts[81], Quantity: 11 },
+      { ...listProducts[84], Quantity: 2 },
+      { ...listProducts[85], Quantity: 1 },
+      { ...listProducts[88], Quantity: 8 },
     ],
     totalCart: 100000,
     totalPresent: 50000,
     ShipCost: 10000,
     totalReduce: 20000,
     totalCost: 90000,
+    Status: 1,
   },
   {
     BillID: 3,
@@ -3341,24 +3440,103 @@ export const listBill = [
     PhoneNumber: "0969504954",
     Location: "Ha Thuong, Dai Tu, Thai Nguyen",
     Address: "Xom Viet Thang",
-    Date: "18/05/2024",
+    Date: "16/05/2024",
     Time: "10:00-12:00",
     Payment: "Online",
     Note: "None",
-    CompanyName: "",
-    Email: "",
-    TaxCode: "",
-    CompanyAddress: "",
+    CompanyName: "B",
+    Email: "b@.com",
+    TaxCode: "2",
+    CompanyAddress: "b",
     listItems: [
-      { ...listProducts[1], Quantity: 4 },
-      { ...listProducts[2], Quantity: 1 },
-      { ...listProducts[80], Quantity: 22 },
+      { ...listProducts[3], Quantity: 4 },
+      { ...listProducts[4], Quantity: 1 },
+      { ...listProducts[82], Quantity: 22 },
     ],
     totalCart: 100000,
     totalPresent: 50000,
     ShipCost: 10000,
     totalReduce: 20000,
-    totalCost: 90000,
+    totalCost: 901000,
+    Status: 2,
+  },
+  {
+    BillID: 4,
+    Name: "Tran ",
+    PhoneNumber: "3",
+    Location: "Ha Thuong, Dai Tu, Thai Nguyen",
+    Address: "Xom Viet Thang",
+    Date: "16/05/2024",
+    Time: "10:00-12:00",
+    Payment: "Online",
+    Note: "None",
+    CompanyName: "A",
+    Email: "a@.com",
+    TaxCode: "1",
+    CompanyAddress: "a",
+    listItems: [
+      { ...listProducts[11], Quantity: 4 },
+      { ...listProducts[21], Quantity: 1 },
+      { ...listProducts[111], Quantity: 22 },
+    ],
+    totalCart: 100000,
+    totalPresent: 50000,
+    ShipCost: 10000,
+    totalReduce: 20000,
+    totalCost: 333300,
+    Status: 1,
+  },
+  {
+    BillID: 5,
+    Name: "Tran Quang ",
+    PhoneNumber: "0969504954",
+    Location: "Ha Thuong, Dai Tu, Thai Nguyen",
+    Address: "Xom Viet Thang",
+    Date: "16/05/2024",
+    Time: "10:00-12:00",
+    Payment: "Online",
+    Note: "None",
+    CompanyName: "A",
+    Email: "a@.com",
+    TaxCode: "1",
+    CompanyAddress: "a",
+    listItems: [
+      { ...listProducts[2], Quantity: 4 },
+      { ...listProducts[8], Quantity: 1 },
+      { ...listProducts[12], Quantity: 22 },
+    ],
+    totalCart: 100000,
+    totalPresent: 50000,
+    ShipCost: 10000,
+    totalReduce: 20000,
+    totalCost: 190000,
+    Status: 2,
+  },
+  {
+    BillID: 6,
+    Name: "Tran Quang ",
+    PhoneNumber: "0969504954",
+    Location: "Ha Thuong, Dai Tu, Thai Nguyen",
+    Address: "Xom Viet Thang",
+    Date: "16/05/2024",
+    Time: "10:00-12:00",
+    Payment: "Online",
+    Note: "None",
+    CompanyName: "A",
+    Email: "a@.com",
+    TaxCode: "3",
+    CompanyAddress: "a",
+    listItems: [
+      { ...listProducts[13], Quantity: 4 },
+      { ...listProducts[22], Quantity: 1 },
+      { ...listProducts[102], Quantity: 22 },
+    ],
+    totalCart: 100000,
+    totalPresent: 50000,
+    ShipCost: 10000,
+    totalReduce: 20000,
+    totalCost: 1290000,
+    Status: 1,
   },
 ];
 
@@ -3384,10 +3562,14 @@ export function ListHotSale() {
   //     arrSales = arrSales.concat(filteredObjects);
   // });
 
-  arrSales = listDiscountProduct.filter((obj) => arrSaleEvents.includes(obj.DiscountID));
+  arrSales = listDiscountProduct.filter((obj) =>
+    arrSaleEvents.includes(obj.DiscountID)
+  );
   arrSales.map((item) => {
     var index = listProducts.find((obj) => obj.ProductID === item.ProductID);
-    var present = listPresentProduct.find((obj) => obj.ProductID === item.ProductID);
+    var present = listPresentProduct.find(
+      (obj) => obj.ProductID === item.ProductID
+    );
     arrSaleProducts.push({ ...index, ...present, ...item });
   });
 
@@ -3403,11 +3585,17 @@ export function ListProductsByCategory(CategoryID) {
   arrID = listProducts.filter((obj) => obj.CategoryID === CategoryID);
   arrID.map((item) => {
     var index = listProducts.find((obj) => obj.ProductID === item.ProductID);
-    var present = listPresentProduct.find((obj) => obj.ProductID === item.ProductID);
+    var present = listPresentProduct.find(
+      (obj) => obj.ProductID === item.ProductID
+    );
     arrProducts.push({ ...index, ...present, ...item });
   });
-  categoryName = listCategories.find((obj) => obj.CategoryID === CategoryID).CategoryName;
-  categoryIllustration = listCategories.find((obj) => obj.CategoryID === CategoryID).CategoryIllustration;
+  categoryName = listCategories.find(
+    (obj) => obj.CategoryID === CategoryID
+  ).CategoryName;
+  categoryIllustration = listCategories.find(
+    (obj) => obj.CategoryID === CategoryID
+  ).CategoryIllustration;
   result.Name = categoryName;
   result.Illustation = categoryIllustration;
   result.Products = arrProducts;
@@ -3426,7 +3614,9 @@ export function ListProductsDetail() {
   });
 
   // Duyệt sản phẩm có giảm giá
-  var arrSaleProducts = listDiscountProduct.filter((obj) => arrSaleEvents.includes(obj.DiscountID));
+  var arrSaleProducts = listDiscountProduct.filter((obj) =>
+    arrSaleEvents.includes(obj.DiscountID)
+  );
   arrSaleProducts.map((obj) => {
     const index = FindIndex(allProducts, obj.ProductID);
     allProducts[index] = { ...allProducts[index], Reduce: obj.Reduce };
@@ -3435,7 +3625,9 @@ export function ListProductsDetail() {
   // Duyệt sản phẩm đang có quà tặng
   listPresentProduct.map((obj) => {
     const index = FindIndex(allProducts, obj.ProductID);
-    const present = listPresentEvents.find((pre) => pre.PresentID === obj.PresentID);
+    const present = listPresentEvents.find(
+      (pre) => pre.PresentID === obj.PresentID
+    );
     allProducts[index] = {
       ...allProducts[index],
       Require: obj.Require,
@@ -3453,7 +3645,9 @@ export function ListCartInfor(cartItems) {
   let listItems = [];
   for (const key in cartItems) {
     if (cartItems[key] > 0) {
-      let itemInfo = ListProductsDetail().find((product) => product.ProductID === Number(key));
+      let itemInfo = ListProductsDetail().find(
+        (product) => product.ProductID === Number(key)
+      );
       itemInfo = { ...itemInfo, Cart: cartItems[key] };
       listItems.push({
         ...listProducts.find((obj) => obj.ProductID === itemInfo.ProductID),
@@ -3463,15 +3657,24 @@ export function ListCartInfor(cartItems) {
       if (itemInfo.present !== undefined) {
         const quantityPresent = Math.floor(itemInfo.Cart / itemInfo.Require);
         if (quantityPresent > 0) {
-          totalPresent = totalPresent + quantityPresent * listProducts.find((obj) => obj.ProductID === itemInfo.present.ProductID).Price;
+          totalPresent =
+            totalPresent +
+            quantityPresent *
+              listProducts.find(
+                (obj) => obj.ProductID === itemInfo.present.ProductID
+              ).Price;
           listItems.push({
-            ...listProducts.find((obj) => obj.ProductID === itemInfo.present.ProductID),
+            ...listProducts.find(
+              (obj) => obj.ProductID === itemInfo.present.ProductID
+            ),
             Quantity: quantityPresent,
           });
         }
       }
       if (itemInfo.Reduce > 0) {
-        totalReduce = totalReduce + Math.floor(cartItems[key] * itemInfo.Reduce * itemInfo.Price);
+        totalReduce =
+          totalReduce +
+          Math.floor(cartItems[key] * itemInfo.Reduce * itemInfo.Price);
       }
     }
   }
@@ -3496,6 +3699,12 @@ export const listTypesByCategory = (CategoryID) => {
 export const listProductsByBrand = (BrandID) => {
   let arrProduct = [];
   let listProductID = listBrandProduct.filter((obj) => obj.BrandID === BrandID);
-  listProductID.map((obj) => arrProduct.push(ListProductsDetail().find((product) => product.ProductID === obj.ProductID)));
+  listProductID.map((obj) =>
+    arrProduct.push(
+      ListProductsDetail().find(
+        (product) => product.ProductID === obj.ProductID
+      )
+    )
+  );
   return arrProduct;
 };

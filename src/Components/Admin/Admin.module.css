@@ -66,9 +66,10 @@ textarea {
   display: flex;
   justify-content: space-between;
   width: 200rem;
+  align-items: center;
 }
 .Date input {
-  width: 120rem;
+  width: 100rem;
 }
 
 .Action button {
