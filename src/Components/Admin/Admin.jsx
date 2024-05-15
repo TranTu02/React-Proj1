@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import style from "./Admin.module.css";
 import { listCategory_Type, listProducts } from "../Assets/data";
 import { AdminProduct } from "./AdminProduct";
@@ -12,7 +12,11 @@ import { AdminStock } from "./AdminStock";
 import { AdminBill } from "./AdminBill";
 import { AdminBrand } from "./AdminBrand";
 export const Admin = () => {
-  const [adminPage, setAdminPage] = useState(0);
+  const initialAdminPage = parseInt(localStorage.getItem("adminPage")) || 0;
+  const [adminPage, setAdminPage] = useState(initialAdminPage);
+  useEffect(() => {
+    localStorage.setItem("adminPage", adminPage.toString());
+  }, [adminPage]);
   const display = useRef(<></>);
   const setDisplay = (page) => {
     display.current = page;
@@ -38,7 +42,7 @@ export const Admin = () => {
       setDisplay(<AdminPhoto />);
       break;
     case 6:
-      setDisplay(<AdminLocation />);
+      setDisplay(<AdminStock />);
       break;
     case 7:
       setDisplay(<AdminLocation />);

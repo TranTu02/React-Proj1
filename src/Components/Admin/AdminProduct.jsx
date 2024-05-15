@@ -76,26 +76,33 @@ export const AdminProduct = () => {
   };
 
   const handleAddProduct = () => {
-    const product = newProduct(true);
-    console.log(product);
-    postProduct(product);
-    updateApi();
-    setListProductsDisplay(listProducts);
+    var result = window.confirm("Chắc chắn muốn thêm sản phẩm có id: " + refProductID.current.value + " ?");
+
+    if (result) {
+      const product = newProduct(true);
+      console.log(product);
+      postProduct(product);
+      updateApi();
+      setListProductsDisplay(listProducts);
+      window.location.reload();
+    }
   };
   const handleUpdateProduct = () => {
-    var result = window.confirm("Chắc chắn muốn sửa sản phẩn có id: " + refProductID.current.value + " ?");
+    var result = window.confirm("Chắc chắn muốn sửa sản phẩm có id: " + refProductID.current.value + " ?");
     if (result) {
       // Sử dụng hàm cập nhật sản phẩm
       const updatedData = newProduct(false); // Dữ liệu sản phẩm mới
       updateProduct(updatedData.ProductID, updatedData);
       updateApi();
       setListProductsDisplay(listProducts);
+      window.location.reload();
     }
   };
   const handleDeleteProduct = () => {
-    var result = window.confirm("Chắc chắn muốn xóa sản phẩn có id: " + refProductID.current.value + " ?");
+    var result = window.confirm("Chắc chắn muốn xóa sản phẩm có id: " + refProductID.current.value + " ?");
     if (result) {
       deleteProduct(newProduct(false).ProductID);
+      window.location.reload();
       updateApi();
       setListProductsDisplay(listProducts);
     }

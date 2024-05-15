@@ -26,8 +26,8 @@ function Category({ CategoryID, BrandID, TypeID, Others }) {
       title = DATA.listBrand().find((obj) => obj.BrandID === parseInt(BrandID)).BrandName;
       return DATA.listProductsByBrand(parseInt(BrandID));
     } else if (CategoryID !== "Category") {
-      title = DATA.listCategories.find((obj) => obj.CategoryID === CategoryID).CategoryName;
-      return DATA.ListProductsDetail().filter((obj) => obj.CategoryID === CategoryID);
+      title = DATA.listCategories.find((obj) => obj.CategoryID === parseInt(CategoryID)).CategoryName;
+      return DATA.ListProductsDetail().filter((obj) => obj.CategoryID === parseInt(CategoryID));
     } else {
       return DATA.ListProductsDetail();
     }

@@ -30,7 +30,7 @@ updateApi();
 
 export const updateApiAccount = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/api/acounts");
+    const response = await axios.get("http://localhost:3000/api/accounts");
     // Xử lý khi có kết quả trả về thành công
     const accounts = response.data; // Mảng sản phẩm từ phản hồi
     console.log(accounts);
@@ -53,6 +53,110 @@ updateApiAccount()
     console.error("Lỗi khi cập nhật dữ liệu:", error);
   });
 updateApiAccount();
+
+export const updateApiCategory = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/api/categories");
+    // Xử lý khi có kết quả trả về thành công
+    const categories = response.data; // Mảng sản phẩm từ phản hồi
+    console.log(categories);
+    return categories;
+  } catch (error) {
+    // Xử lý khi có lỗi xảy ra
+    console.error("Lỗi khi lấy dữ liệu:", error);
+    throw error; // Để cho phép bên gọi xử lý lỗi nếu cần thiết
+  }
+};
+
+export let listCategories = [];
+
+updateApiCategory()
+  .then((categories) => {
+    listCategories = categories;
+  })
+  .catch((error) => {
+    // Xử lý lỗi nếu cần
+    console.error("Lỗi khi cập nhật dữ liệu:", error);
+  });
+updateApiCategory();
+
+export const updateApiType = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/api/types");
+    // Xử lý khi có kết quả trả về thành công
+    const types = response.data; // Mảng sản phẩm từ phản hồi
+    console.log(types);
+    return types;
+  } catch (error) {
+    // Xử lý khi có lỗi xảy ra
+    console.error("Lỗi khi lấy dữ liệu:", error);
+    throw error; // Để cho phép bên gọi xử lý lỗi nếu cần thiết
+  }
+};
+
+export let listCategory_Type = [];
+
+updateApiType()
+  .then((types) => {
+    listCategory_Type = types;
+  })
+  .catch((error) => {
+    // Xử lý lỗi nếu cần
+    console.error("Lỗi khi cập nhật dữ liệu:", error);
+  });
+updateApiType();
+
+export const updateApiPresentEvent = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/api/presentevents");
+    // Xử lý khi có kết quả trả về thành công
+    const presentevent = response.data; // Mảng sản phẩm từ phản hồi
+    // console.log(presentevent);
+    return presentevent;
+  } catch (error) {
+    // Xử lý khi có lỗi xảy ra
+    console.error("Lỗi khi lấy dữ liệu:", error);
+    throw error; // Để cho phép bên gọi xử lý lỗi nếu cần thiết
+  }
+};
+
+export let listPresentEvents = [];
+
+updateApiPresentEvent()
+  .then((presentevents) => {
+    listPresentEvents = presentevents;
+  })
+  .catch((error) => {
+    // Xử lý lỗi nếu cần
+    console.error("Lỗi khi cập nhật dữ liệu:", error);
+  });
+updateApiPresentEvent();
+
+export const updateApiPresentProduct = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/api/presentproducts");
+    // Xử lý khi có kết quả trả về thành công
+    const presentevent = response.data; // Mảng sản phẩm từ phản hồi
+    // console.log(presentevent);
+    return presentevent;
+  } catch (error) {
+    // Xử lý khi có lỗi xảy ra
+    console.error("Lỗi khi lấy dữ liệu:", error);
+    throw error; // Để cho phép bên gọi xử lý lỗi nếu cần thiết
+  }
+};
+
+// export let listPresentProduct = [];
+
+// updateApiPresentProduct()
+//   .then((presentproduct) => {
+//     listPresentProduct = presentproduct;
+//   })
+//   .catch((error) => {
+//     // Xử lý lỗi nếu cần
+//     console.error("Lỗi khi cập nhật dữ liệu:", error);
+//   });
+// updateApiPresentProduct();
 
 /*
 export const listProducts = [
@@ -2608,6 +2712,7 @@ export const listProducts = [
   },
 ];
 */
+/*
 export const listCategories = [
   { CategoryID: "C1", CategoryName: "Danh muc 1", CategoryIllustration: img },
   { CategoryID: "C2", CategoryName: "Danh muc 2", CategoryIllustration: img },
@@ -2615,7 +2720,8 @@ export const listCategories = [
   { CategoryID: "C4", CategoryName: "Danh muc 4", CategoryIllustration: img },
   { CategoryID: "C5", CategoryName: "Danh muc 5", CategoryIllustration: img },
 ];
-
+*/
+/*
 export const listCategory_Type = [
   { CategoryID: "C1", ProductTypeID: 1, ProductType: "Loai san phan 1" },
   { CategoryID: "C1", ProductTypeID: 2, ProductType: "Loai san phan 2" },
@@ -2635,7 +2741,7 @@ export const listCategory_Type = [
   { CategoryID: "C4", ProductTypeID: 16, ProductType: "Loai san phan 16" },
   { CategoryID: "C3", ProductTypeID: 17, ProductType: "Loai san phan 17" },
 ];
-
+*/
 export const listSaleEvents = [
   {
     DiscountID: 1,
@@ -2784,7 +2890,7 @@ export const listDiscountProduct = [
   { DiscountID: 10, ProductID: 82, Reduce: 0.1 },
   { DiscountID: 10, ProductID: 83, Reduce: 0.1 },
 ];
-
+/*
 export const listPresentEvents = [
   {
     PresentID: 1,
@@ -2857,7 +2963,8 @@ export const listPresentEvents = [
     End: new Date("2024-5-18"),
   },
 ];
-
+*/
+/*
 export const listPresentProduct = [
   { ProductID: 11, Require: 2, PresentID: 1 },
   { ProductID: 21, Require: 2, PresentID: 2 },
@@ -2890,7 +2997,7 @@ export const listPresentProduct = [
   { ProductID: 70, Require: 2, PresentID: 6 },
   { ProductID: 76, Require: 2, PresentID: 7 },
 ];
-
+*/
 export const listStock = [
   {
     StockID: 1,
@@ -3235,78 +3342,67 @@ export const listComment = [
     ProductID: 1,
     Title: "Title 1",
     Time: new Date("2024-4-1"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 1,
     Title: "Title 1",
     Time: new Date("2024-4-2"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 1,
     Title: "Title 1",
     Time: new Date("2024-4-3"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 2,
     Title: "Title 1",
     Time: new Date("2024-4-4"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 2,
     Title: "Title 1",
     Time: new Date("2024-4-5"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 3,
     Title: "Title 1",
     Time: new Date("2024-4-6"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 80,
     Title: "Title 1",
     Time: new Date("2024-3-1"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 80,
     Title: "Title 1",
     Time: new Date("2024-2-1"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 81,
     Title: "Title 1",
     Time: new Date("2024-1-1"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 82,
     Title: "Title 1",
     Time: new Date("2024-2-2"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
   {
     ProductID: 83,
     Title: "Title 1",
     Time: new Date("2024-4-4"),
-    Comment:
-      "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
+    Comment: "Mình ăn bên Đài hoài thời còn học bển. Nói chung mua được ở đây rồi, ngon. sẽ mua hoài",
   },
 ];
 
@@ -3562,14 +3658,10 @@ export function ListHotSale() {
   //     arrSales = arrSales.concat(filteredObjects);
   // });
 
-  arrSales = listDiscountProduct.filter((obj) =>
-    arrSaleEvents.includes(obj.DiscountID)
-  );
+  arrSales = listDiscountProduct.filter((obj) => arrSaleEvents.includes(obj.DiscountID));
   arrSales.map((item) => {
     var index = listProducts.find((obj) => obj.ProductID === item.ProductID);
-    var present = listPresentProduct.find(
-      (obj) => obj.ProductID === item.ProductID
-    );
+    var present = listPresentProduct.find((obj) => obj.ProductID === item.ProductID);
     arrSaleProducts.push({ ...index, ...present, ...item });
   });
 
@@ -3582,20 +3674,14 @@ export function ListProductsByCategory(CategoryID) {
   var categoryName = "";
   var categoryIllustration = "";
   var result = { Name: "", Illustation: "", Products: [] };
-  arrID = listProducts.filter((obj) => obj.CategoryID === CategoryID);
+  arrID = listProducts.filter((obj) => obj.CategoryID === parseInt(CategoryID));
   arrID.map((item) => {
     var index = listProducts.find((obj) => obj.ProductID === item.ProductID);
-    var present = listPresentProduct.find(
-      (obj) => obj.ProductID === item.ProductID
-    );
+    var present = listPresentProduct.find((obj) => obj.ProductID === item.ProductID);
     arrProducts.push({ ...index, ...present, ...item });
   });
-  categoryName = listCategories.find(
-    (obj) => obj.CategoryID === CategoryID
-  ).CategoryName;
-  categoryIllustration = listCategories.find(
-    (obj) => obj.CategoryID === CategoryID
-  ).CategoryIllustration;
+  categoryName = listCategories.find((obj) => obj.CategoryID === parseInt(CategoryID)).CategoryName;
+  categoryIllustration = listCategories.find((obj) => obj.CategoryID === parseInt(CategoryID)).CategoryIllustration;
   result.Name = categoryName;
   result.Illustation = categoryIllustration;
   result.Products = arrProducts;
@@ -3614,9 +3700,7 @@ export function ListProductsDetail() {
   });
 
   // Duyệt sản phẩm có giảm giá
-  var arrSaleProducts = listDiscountProduct.filter((obj) =>
-    arrSaleEvents.includes(obj.DiscountID)
-  );
+  var arrSaleProducts = listDiscountProduct.filter((obj) => arrSaleEvents.includes(obj.DiscountID));
   arrSaleProducts.map((obj) => {
     const index = FindIndex(allProducts, obj.ProductID);
     allProducts[index] = { ...allProducts[index], Reduce: obj.Reduce };
@@ -3625,9 +3709,7 @@ export function ListProductsDetail() {
   // Duyệt sản phẩm đang có quà tặng
   listPresentProduct.map((obj) => {
     const index = FindIndex(allProducts, obj.ProductID);
-    const present = listPresentEvents.find(
-      (pre) => pre.PresentID === obj.PresentID
-    );
+    const present = listPresentEvents.find((pre) => pre.PresentID === obj.PresentID);
     allProducts[index] = {
       ...allProducts[index],
       Require: obj.Require,
@@ -3645,9 +3727,7 @@ export function ListCartInfor(cartItems) {
   let listItems = [];
   for (const key in cartItems) {
     if (cartItems[key] > 0) {
-      let itemInfo = ListProductsDetail().find(
-        (product) => product.ProductID === Number(key)
-      );
+      let itemInfo = ListProductsDetail().find((product) => product.ProductID === Number(key));
       itemInfo = { ...itemInfo, Cart: cartItems[key] };
       listItems.push({
         ...listProducts.find((obj) => obj.ProductID === itemInfo.ProductID),
@@ -3657,24 +3737,15 @@ export function ListCartInfor(cartItems) {
       if (itemInfo.present !== undefined) {
         const quantityPresent = Math.floor(itemInfo.Cart / itemInfo.Require);
         if (quantityPresent > 0) {
-          totalPresent =
-            totalPresent +
-            quantityPresent *
-              listProducts.find(
-                (obj) => obj.ProductID === itemInfo.present.ProductID
-              ).Price;
+          totalPresent = totalPresent + quantityPresent * listProducts.find((obj) => obj.ProductID === itemInfo.present.ProductID).Price;
           listItems.push({
-            ...listProducts.find(
-              (obj) => obj.ProductID === itemInfo.present.ProductID
-            ),
+            ...listProducts.find((obj) => obj.ProductID === itemInfo.present.ProductID),
             Quantity: quantityPresent,
           });
         }
       }
       if (itemInfo.Reduce > 0) {
-        totalReduce =
-          totalReduce +
-          Math.floor(cartItems[key] * itemInfo.Reduce * itemInfo.Price);
+        totalReduce = totalReduce + Math.floor(cartItems[key] * itemInfo.Reduce * itemInfo.Price);
       }
     }
   }
@@ -3689,7 +3760,7 @@ export function ListCartInfor(cartItems) {
 export const listTypesByCategory = (CategoryID) => {
   let arrType = [];
   listCategory_Type.map((obj) => {
-    if (obj.CategoryID === CategoryID) {
+    if (obj.CategoryID === parseInt(CategoryID)) {
       arrType.push(obj);
     }
   });
@@ -3699,12 +3770,6 @@ export const listTypesByCategory = (CategoryID) => {
 export const listProductsByBrand = (BrandID) => {
   let arrProduct = [];
   let listProductID = listBrandProduct.filter((obj) => obj.BrandID === BrandID);
-  listProductID.map((obj) =>
-    arrProduct.push(
-      ListProductsDetail().find(
-        (product) => product.ProductID === obj.ProductID
-      )
-    )
-  );
+  listProductID.map((obj) => arrProduct.push(ListProductsDetail().find((product) => product.ProductID === obj.ProductID)));
   return arrProduct;
 };

@@ -1,5 +1,4 @@
 import SetRem from "../Contexts/SetRem.jsx";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "../Components/Header/Header.jsx";
 import NavBar from "../Components/Navbar/NavBar.jsx";
 import Footer from "../Components/Footer/Footer.jsx";
@@ -17,9 +16,9 @@ function MainPage() {
       <NavBar />
       <Banner />
       <HotSale DiscountID={10} />
-      <CategoryHome CategoryID={"C1"} />
-      <CategoryHome CategoryID={"C3"} />
-      <CategoryHome CategoryID={"C5"} />
+      {/* <CategoryHome CategoryID={1} />
+      <CategoryHome CategoryID={2} />
+      <CategoryHome CategoryID={3} /> */}
       <Brand />
       <Footer />
     </div>
