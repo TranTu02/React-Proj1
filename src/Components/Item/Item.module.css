@@ -1,11 +1,11 @@
 .ItemContainer {
   display: flex;
   flex-direction: column;
-  width: 220rem;
-  height: max-content;
+  width: 170rem;
+  height: 330rem;
   align-items: flex-start;
   justify-content: space-between;
-  margin: 20rem auto;
+  margin: 20rem 11rem;
   padding: 5rem;
   background-color: white;
   border-radius: 10rem;
@@ -29,7 +29,7 @@
 
 .ItemContainer h2 {
   font-size: 16rem;
-  width: 200rem;
+  width: 170rem;
   height: auto;
   min-height: 50rem;
   display: -webkit-box;

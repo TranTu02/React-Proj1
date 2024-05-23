@@ -1,24 +1,25 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import style from "./Admin.module.css";
-import { listCategory_Type, listAccount, updateApiAccount, updateApi } from "../Assets/data";
+import { listAccount, updateListAccounts } from "../Assets/data";
 import axios from "axios";
+import { ShopContext } from "../../Contexts/CartContext";
 
 export const AdminAccount = () => {
-  const [listColumnDisplay, setListColumnDisplay] = useState(listAccount);
+  updateListAccounts(listAccount.sort((a, b) => b.AccountID - a.AccountID));
+  const [listRowDisplay, setListRowDisplay] = useState(listAccount);
 
+  const { phoneNumber } = useContext(ShopContext);
+  const currentAuthorize = useRef();
   useEffect(() => {
-    updateApi();
-    setListColumnDisplay(listAccount);
+    if (listAccount.find((obj) => obj.PhoneNumber === phoneNumber) !== undefined) {
+      currentAuthorize.current = listAccount.find((obj) => obj.PhoneNumber === phoneNumber).Authorize;
+    }
   }, []);
+  useEffect(() => {
+    setListRowDisplay(listAccount.filter((obj) => obj.Authorize < currentAuthorize.current));
+  }, [listAccount]);
 
-  const Title = () => {
-    const keys = Object.keys(listAccount[0] || {});
-    return keys.slice(1, -1); // Bỏ qua phần tử đầu và cuối
-  };
-  const Value = (id) => {
-    const item = listColumnDisplay.find((obj) => obj.AccountID === id);
-    return Object.values(item).slice(1, -1);
-  };
+  let nextID = listAccount.length !== 0 ? listAccount[0].AccountID + 1 : 1;
 
   const refID = useRef("");
   const refPhone = useRef("");
@@ -27,7 +28,23 @@ export const AdminAccount = () => {
   const refBD = useRef("");
   const refAuth = useRef("");
 
-  const nextID = listAccount.length !== 0 ? listAccount[listAccount.length - 1].AccountID + 1 : 1;
+  const handleGetInfor = (Account) => {
+    if (Account !== undefined) {
+      refID.current.value = Account.AccountID;
+      refPhone.current.value = Account.PhoneNumber;
+      refName.current.value = Account.Name;
+      refPwd.current.value = Account.Password;
+      refBD.current.value = Account.Birthday;
+      refAuth.current.value = Account.Authorize;
+    } else {
+      refID.current.value = "";
+      refPhone.current.value = "";
+      refName.current.value = "";
+      refPwd.current.value = "";
+      refBD.current.value = "";
+      refAuth.current.value = "";
+    }
+  };
 
   const deleteAccount = async (accountID) => {
     try {
@@ -43,8 +60,6 @@ export const AdminAccount = () => {
   const updateAccount = async (accountID, updatedData) => {
     try {
       const response = await axios.put(`http://localhost:3000/api/accounts/${accountID}`, updatedData);
-      console.log(response.data); // Updated account information
-      // After successful update, update the list of accounts or perform other tasks
     } catch (error) {
       console.error("Error updating account:", error);
     }
@@ -57,65 +72,88 @@ export const AdminAccount = () => {
           "Content-Type": "application/json",
         },
       });
-      console.log("Response from server:", response.data);
-      setListColumnDisplay([...listColumnDisplay, response.data]);
     } catch (error) {
       console.error("Error sending data:", error.response || error);
     }
   };
 
   const handleAddAccount = () => {
+    const account = {
+      AccountID: nextID,
+      PhoneNumber: refPhone.current.value,
+      Name: refName.current.value,
+      Password: refPwd.current.value,
+      Birthday: refBD.current.value,
+      Authorize: parseInt(refAuth.current.value),
+    };
+    if (parseInt(refAuth.current.value) >= currentAuthorize.current) {
+      alert("Bạn không có đủ thẩm quyền để thực hiện!");
+      return false;
+    }
+    for (const key in account) {
+      if (account[key] === "" || account[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
     var result = window.confirm("Chắc chắn muốn thêm account có id: " + nextID + " ?");
     if (result) {
-      const account = {
-        AccountID: nextID,
-        PhoneNumber: refPhone.current.value,
-        Name: refName.current.value,
-        Password: refPwd.current.value,
-        Birthday: refBD.current.value,
-        Authorize: parseInt(refAuth.current.value),
-      };
-      postAccount(account)
-        .then(() => {
-          updateApiAccount(); // Cập nhật dữ liệu từ server
-          setListColumnDisplay([...listColumnDisplay, account]); // Thêm tài khoản mới vào danh sách hiện tại
-        })
-        .catch((error) => console.error("Error adding account:", error));
-      window.location.reload();
+      if (listAccount.find((obj) => obj.PhoneNumber === account.PhoneNumber) === undefined) {
+        postAccount(account)
+          .then(() => {
+            updateListAccounts([...listAccount, account]);
+          })
+          .catch((error) => console.error("Error adding account:", error));
+      } else {
+        alert("Đã tồn tại số điện thoại");
+      }
     }
   };
 
   const handleUpdateAccount = () => {
-    var result = window.confirm("Chắc chắn muốn sửa accountcó id: " + refID.current.value + " ?");
+    const updatedData = {
+      AccountID: parseInt(refID.current.value),
+      PhoneNumber: refPhone.current.value,
+      Name: refName.current.value,
+      Password: refPwd.current.value,
+      Birthday: refBD.current.value,
+      Authorize: parseInt(refAuth.current.value),
+    };
+    if (parseInt(refAuth.current.value) >= currentAuthorize.current) {
+      alert("Bạn không có đủ thẩm quyền để thực hiện!");
+      return false;
+    }
+    for (const key in updatedData) {
+      if (updatedData[key] === "" || updatedData[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
+    var result = window.confirm("Chắc chắn muốn sửa account có id: " + refID.current.value + " ?");
     if (result) {
-      const updatedData = {
-        PhoneNumber: refPhone.current.value,
-        Name: refName.current.value,
-        Password: refPwd.current.value,
-        Birthday: refBD.current.value,
-        Authorize: parseInt(refAuth.current.value),
-      };
       updateAccount(parseInt(refID.current.value), updatedData)
         .then(() => {
-          updateApiAccount(); // Cập nhật dữ liệu từ server
-          const updatedAccounts = listColumnDisplay.map((account) => (account.AccountID === parseInt(refID.current.value) ? { ...account, ...updatedData } : account));
-          setListColumnDisplay(updatedAccounts); // Cập nhật thông tin của tài khoản trong danh sách hiện tại
+          const updatedAccounts = listAccount.map((account) => (account.AccountID === parseInt(refID.current.value) ? { ...account, ...updatedData } : account));
+          updateListAccounts(updatedAccounts); // Cập nhật thông tin của tài khoản trong danh sách hiện tại
         })
         .catch((error) => console.error("Error updating account:", error));
-      window.location.reload();
     }
   };
 
   const handleDeleteAccount = () => {
-    var result = window.confirm("Chắc chắn muốn xóa accountcó id: " + refID.current.value + " ?");
+    const ID = refID.current.value;
+    const index = listAccount.filter((account) => account.Authorize < currentAuthorize.current).findIndex((obj) => obj.AccountID === parseInt(ID));
+    var result = window.confirm("Chắc chắn muốn xóa accountcó id: " + ID + " ?");
     if (result) {
+      if (ID === "") {
+        alert("Nhập AccountID!");
+        return false;
+      }
       deleteAccount(parseInt(refID.current.value))
         .then(() => {
-          updateApiAccount(); // Cập nhật dữ liệu từ server
-          setListColumnDisplay(listColumnDisplay); // Loại bỏ tài khoản đã xóa khỏi danh sách hiện tại
+          updateListAccounts([...listAccount.slice(0, index), ...listAccount.slice(index + 1)]); // Loại bỏ tài khoản đã xóa khỏi danh sách hiện tại
         })
         .catch((error) => console.error("Error deleting account:", error));
-      window.location.reload();
     }
   };
 
@@ -144,7 +182,7 @@ export const AdminAccount = () => {
     const name = refName.current.value.trim();
     const auth = refAuth.current.value.trim();
 
-    let filteredAccounts = listAccount;
+    let filteredAccounts = listAccount.filter((obj) => obj.Authorize < currentAuthorize.current);
 
     if (id) {
       filteredAccounts = filteredAccounts.filter((obj) => obj.AccountID === parseInt(id));
@@ -154,7 +192,7 @@ export const AdminAccount = () => {
       filteredAccounts = filteredAccounts.filter((item) => item.Authorize === parseInt(auth));
     }
 
-    setListColumnDisplay(filteredAccounts);
+    setListRowDisplay(filteredAccounts);
   };
 
   return (
@@ -164,9 +202,12 @@ export const AdminAccount = () => {
       <table>
         <thead>
           <tr>
-            {Title().map((key) => (
-              <th key={key}>{key}</th>
-            ))}
+            <th>AccountID</th>
+            <th>PhoneNumber</th>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Birthday</th>
+            <th>Authorize</th>
           </tr>
         </thead>
         <tbody>
@@ -202,17 +243,23 @@ export const AdminAccount = () => {
       <table className={style.TableContainer}>
         <thead className={style.TableHead}>
           <tr>
-            {Title().map((key) => (
-              <th key={key}>{key}</th>
-            ))}
+            <th>AccountID</th>
+            <th>PhoneNumber</th>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Birthday</th>
+            <th>Authorize</th>
           </tr>
         </thead>
         <tbody>
-          {listAccount.map((account) => (
-            <tr key={account.AccountID}>
-              {Value(account.AccountID).map((item, index) => (
-                <td key={index}>{item}</td>
-              ))}
+          {listRowDisplay.map((account) => (
+            <tr onClick={() => handleGetInfor(account)} key={account.AccountID}>
+              <td>{account.AccountID}</td>
+              <td>{account.PhoneNumber}</td>
+              <td>{account.Name}</td>
+              <td>{account.Password}</td>
+              <td>{account.Birthday}</td>
+              <td>{account.Authorize}</td>
             </tr>
           ))}
         </tbody>

@@ -27,7 +27,6 @@ th {
   text-align: left;
   font-size: 14rem;
 }
-
 /* CSS cho dòng chẵn */
 tr:nth-child(even) {
   background-color: #f9f9f9;
@@ -40,6 +39,19 @@ td {
   text-align: left;
   font-size: 12rem;
   padding-right: 12rem;
+}
+.descriptionCell {
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Hiển thị dấu "..." nếu có nội dung quá dài */
+}
+
+.descriptionCell:hover {
+  overflow: auto;
+  white-space: normal; /* Bỏ giới hạn về dòng */
+  text-overflow: clip; /* Loại bỏ việc hiển thị dấu "..." */
 }
 
 /* CSS khi rê chuột qua dòng */
@@ -54,6 +66,12 @@ textarea {
   height: fit-content;
   overflow-wrap: break-word;
 }
+/* Admin.module.css */
+.chart-axis-label {
+  font-size: 14px;
+  fill: #333; /* Màu của nhãn */
+}
+
 .Action {
   display: flex;
   justify-content: space-around;
@@ -76,7 +94,6 @@ textarea {
   padding: 10rem;
   font-size: 18rem;
   width: 150rem;
-  min-width: 150rem;
 }
 
 .ProductManage .Action h2 {
@@ -107,7 +124,7 @@ textarea {
   height: 40rem;
 }
 .AdminContainer .Sidebar .Task {
-  min-width: 150rem;
+  min-width: 140rem;
   height: 40rem;
   margin: 10rem 0;
   padding: 10rem;

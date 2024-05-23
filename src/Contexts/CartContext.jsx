@@ -11,28 +11,35 @@ const getDefaultCart = () => {
     return cart;
   }, {});
 };
-
 const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState(() => {
     const savedCart = localStorage.getItem("cartItems");
     return savedCart ? JSON.parse(savedCart) : getDefaultCart();
   });
+
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
-  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const [phoneNumber, setPhoneNumber] = useState(() => {
+    const savedCart = localStorage.getItem("PhoneNumber");
+    return savedCart ? JSON.parse(savedCart) : "";
+  });
 
   useEffect(() => {
     localStorage.setItem("PhoneNumber", JSON.stringify(phoneNumber));
   }, [phoneNumber]);
 
-  const setCurrentAccount = (phone) => {
-    console.log(phoneNumber);
-    setPhoneNumber(phone);
+  const setCurrentAccount = (account) => {
+    setPhoneNumber(account);
+    console.log(account);
+    localStorage.setItem("PhoneNumber", JSON.stringify(account));
   };
 
   const addToCart = (itemId, quantity) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + quantity }));
+    if (cartItems[itemId] === undefined) {
+      setCartItems((prev) => ({ ...prev, [itemId]: quantity }));
+    } else setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + quantity }));
   };
 
   const removeFromCart = (itemId, quantity) => {
@@ -48,18 +55,9 @@ const ShopContextProvider = (props) => {
   };
 
   const getTotalCartAmount = (shipCost) => {
-    let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        let itemInfo = allProduct.find(
-          (product) => product.ProductID === Number(item)
-        );
-        totalAmount +=
-          itemInfo.Price *
-          cartItems[item] *
-          (1 - (itemInfo.Reduce === undefined ? 0 : itemInfo.Reduce));
-      }
-    }
+    const cart = DATA.ListCartInfor(cartItems);
+    let totalAmount = cart.totalCart - cart.totalReduce;
+
     if (shipCost === undefined) shipCost = 0;
     return totalAmount + shipCost;
   };
@@ -71,14 +69,13 @@ const ShopContextProvider = (props) => {
         totalItems += cartItems[item];
       }
     }
+
     return totalItems;
   };
 
   const [currentLocation, setCurrentLocation] = useState(DATA.listLocations[1]);
   const setLocation = (locationID) => {
-    setCurrentLocation(
-      DATA.listLocations.find((obj) => obj.LocationID === locationID)
-    );
+    setCurrentLocation(DATA.listLocations.find((obj) => obj.LocationID === locationID));
   };
   // Lấy dữ liệu từ LocalStorage
   const localStorageData = localStorage.getItem("cartItems");
@@ -105,11 +102,7 @@ const ShopContextProvider = (props) => {
     setCurrentAccount,
   };
 
-  return (
-    <ShopContext.Provider value={contextValue}>
-      {props.children}
-    </ShopContext.Provider>
-  );
+  return <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>;
 };
 
 export default ShopContextProvider;

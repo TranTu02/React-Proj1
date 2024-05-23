@@ -1,48 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import style from "./Admin.module.css";
-import { listPresentEvents, listPresentProduct, updateApiPresentEvent, updateApiPresentProduct } from "../Assets/data";
+import { listPresentEvents, listPresentProduct, updateListPresentEvent, updateListPresentProduct } from "../Assets/data";
 import axios from "axios";
 export const AdminPresent = () => {
-  updateApiPresentProduct();
-
+  updateListPresentEvent(listPresentEvents.sort((a, b) => b.PresentID - a.PresentID));
+  updateListPresentProduct(listPresentProduct.sort((a, b) => b.PresentID - a.PresentID));
   const [active, setActive] = useState(true);
-  const [listColumnDisplay, setListColumnDisplay] = useState(active ? listPresentEvents : listPresentProduct);
+  const [listRowDisplay, setListRowDisplay] = useState(active ? listPresentEvents : listPresentProduct);
   const handleSetActive = (value) => {
     setActive(value);
+    setListRowDisplay(value ? listPresentEvents : listPresentProduct);
   };
   useEffect(() => {
-    // Đoạn mã JavaScript bạn muốn thực thi
+    setListRowDisplay(active ? listPresentEvents : listPresentProduct);
+  }, [listPresentEvents, listPresentProduct]);
 
-    const scriptElement = document.createElement("script");
-    scriptElement.innerHTML = ` if (document.getElementById("dcTitle") != null ) document.getElementById("dcTitle").value = "";
-    if (document.getElementById("prdID") != null ) document.getElementById("prdID").value = "";
-    `;
-    document.body.appendChild(scriptElement);
-    if (active) {
-      updateApiPresentEvent();
-      setListColumnDisplay(listPresentEvents);
-    } else {
-      updateApiPresentProduct();
-      setListColumnDisplay(listPresentProduct);
-    }
-  }, [active]); // [] để chỉ thực thi một lần sau khi component được render
-  const Title = () => {
-    const keys = Object.keys(listColumnDisplay[0] || {});
-    return keys.slice(1, -1); // Bỏ qua phần tử đầu và cuối
-  };
-
-  const Value = (id) => {
-    const item = active ? listPresentEvents.find((obj) => obj.PresentID === id) : listPresentProduct.find((obj) => obj.ProductID === id);
-    if (!item) return [];
-    const values = Object.keys(item).map((key) => {
-      if (key === "Start" || key === "End") {
-        return new Date(item[key]).toLocaleString();
-      } else {
-        return item[key];
-      }
-    });
-    return values.slice(1, -1); // Bỏ qua phần tử đầu và cuối
-  };
   const refPresentID = useRef("");
   const refPID = useRef("");
   const refQuantity = useRef("");
@@ -54,6 +26,23 @@ export const AdminPresent = () => {
   const refEndY = useRef("");
   const refProductID = useRef("");
   const refRequire = useRef("");
+  const getInfor = (item) => {
+    if (active) {
+      refPresentID.current.value = item.PresentID;
+      refPID.current.value = item.ProductID;
+      refQuantity.current.value = item.Quantity;
+      refStartD.current.value = new Date(item.Start).getDate();
+      refStartM.current.value = new Date(item.Start).getMonth() + 1;
+      refStartY.current.value = new Date(item.Start).getFullYear();
+      refEndD.current.value = new Date(item.End).getDate();
+      refEndM.current.value = new Date(item.End).getMonth() + 1;
+      refEndY.current.value = new Date(item.End).getFullYear();
+    } else {
+      refPresentID.current.value = item.PresentID;
+      refProductID.current.value = item.ProductID;
+      refRequire.current.value = item.Require;
+    }
+  };
 
   const handlePresentIDChange = (event) => {
     refPresentID.current.value = event.target.value;
@@ -122,53 +111,89 @@ export const AdminPresent = () => {
   };
   var nextID = listPresentEvents.length !== 0 ? listPresentEvents[listPresentEvents.length - 1].PresentID + 1 : 1;
   const handleAddPresentEvent = () => {
+    const PresentEvent = {
+      PresentID: nextID,
+      ProductID: parseInt(refPID.current.value),
+      Quantity: parseInt(refQuantity.current.value),
+      Start: new Date(parseInt(refStartY.current.value), parseInt(refStartM.current.value) - 1, parseInt(refStartD.current.value)),
+      End: new Date(parseInt(refEndY.current.value), parseInt(refEndM.current.value) - 1, parseInt(refEndD.current.value)),
+    };
+
+    for (const key in PresentEvent) {
+      if (PresentEvent[key] === "" || PresentEvent[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
     const result = window.confirm(`Chắc chắn muốn thêm sự kiện quà tặng có id: ${nextID} ?`);
     if (result) {
-      const PresentEvent = {
-        PresentID: nextID,
-        ProductID: parseInt(refPID.current.value),
-        Quantity: parseInt(refQuantity.current.value),
-        Start: new Date(parseInt(refStartY.current.value), parseInt(refStartM.current.value) - 1, parseInt(refStartD.current.value)),
-        End: new Date(parseInt(refEndY.current.value), parseInt(refEndM.current.value) - 1, parseInt(refEndD.current.value)),
-      };
       postPresentEvent(PresentEvent)
         .then(() => {
-          updateApiPresentEvent();
-          setListColumnDisplay([...listColumnDisplay, PresentEvent]);
+          updateListPresentEvent([...listPresentEvents, PresentEvent]);
         })
         .catch((error) => console.error("Error adding Present event:", error));
     }
   };
 
   const handleUpdatePresentEvent = () => {
+    const updatedData = {
+      PresentID: parseInt(refPresentID.current.value),
+      ProductID: parseInt(refPID.current.value),
+      Quantity: parseInt(refQuantity.current.value),
+      Start: new Date(parseInt(refStartY.current.value), parseInt(refStartM.current.value) - 1, parseInt(refStartD.current.value)),
+      End: new Date(parseInt(refEndY.current.value), parseInt(refEndM.current.value) - 1, parseInt(refEndD.current.value)),
+    };
+    for (const key in updatedData) {
+      if (updatedData[key] === "" || updatedData[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
     const result = window.confirm(`Chắc chắn muốn sửa quà tặng có id: ${refPresentID.current.value} ?`);
     if (result) {
-      const updatedData = {
-        ProductID: parseInt(refPID.current.value),
-        Quantity: parseInt(refQuantity.current.value),
-        Start: new Date(parseInt(refStartY.current.value), parseInt(refStartM.current.value) - 1, parseInt(refStartD.current.value)),
-        End: new Date(parseInt(refEndY.current.value), parseInt(refEndM.current.value) - 1, parseInt(refEndD.current.value)),
-      };
       updatePresentEvent(parseInt(refPresentID.current.value), updatedData)
         .then(() => {
-          updateApiPresentEvent();
-          setListColumnDisplay(listPresentEvents);
+          const newList = () => {
+            let list = [];
+            listPresentEvents.map((obj) => {
+              if (obj.PresentID === updatedData.PresentID) {
+                list.push(updatedData);
+              } else {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListPresentEvent(newList());
         })
         .catch((error) => console.error("Error updating Present event:", error));
     }
   };
 
   const handleDeletePresentEvent = () => {
+    if (refPresentID.current.value === "") {
+      alert("Nhập đủ thông tin!");
+      return false;
+    }
     const result = window.confirm(`Chắc chắn muốn xóa quà tặng có id: ${refPresentID.current.value} ?`);
     if (result) {
       deletePresentEvent(parseInt(refPresentID.current.value))
         .then(() => {
-          updateApiPresentEvent();
-          setListColumnDisplay(listPresentEvents);
+          const newList = () => {
+            let list = [];
+            listPresentEvents.map((obj) => {
+              if (obj.PresentID !== parseInt(refPresentID.current.value)) {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListPresentEvent(newList());
         })
         .catch((error) => console.error("Error deleting Present:", error));
     }
   };
+
   const handleFindPresentEvent = () => {
     const PresentID = refPresentID.current.value === "" ? "" : refPresentID.current.value.trim();
     const ProductID = refPID.current.value === "" ? "" : refPID.current.value.trim();
@@ -180,10 +205,10 @@ export const AdminPresent = () => {
     const yearEnd = parseInt(refEndY.current.value === "" ? "" : refEndY.current.value.trim());
 
     if (PresentID !== "") {
-      setListColumnDisplay(listPresentEvents.filter((obj) => obj.PresentID === parseInt(PresentID)) || []);
+      setListRowDisplay(listPresentEvents.filter((obj) => obj.PresentID === parseInt(PresentID)) || []);
     } else if (refProductID !== "") {
-      setListColumnDisplay(listPresentEvents.filter((obj) => obj.ProductID === parseInt(ProductID)));
-    } else setListColumnDisplay(listPresentEvents);
+      setListRowDisplay(listPresentEvents.filter((obj) => obj.ProductID === parseInt(ProductID)));
+    } else setListRowDisplay(listPresentEvents);
     if (
       Number.isInteger(dateEnd) &&
       Number.isInteger(monthEnd) &&
@@ -195,7 +220,7 @@ export const AdminPresent = () => {
       yearEnd > 0 // yyyy là số dương
     ) {
       const dateE = new Date(yearEnd, monthEnd - 1, dateEnd);
-      setListColumnDisplay(listPresentEvents.filter((obj) => obj.End <= dateE) || []);
+      setListRowDisplay(listPresentEvents.filter((obj) => obj.End <= dateE) || []);
     }
     if (
       Number.isInteger(dateStart) &&
@@ -208,7 +233,7 @@ export const AdminPresent = () => {
       yearStart > 0 // yyyy là số dương
     ) {
       const dateS = new Date(yearStart, monthStart - 1, dateStart);
-      setListColumnDisplay((prev) => prev.filter((obj) => obj.Start >= dateS) || []);
+      setListRowDisplay((prev) => prev.filter((obj) => obj.Start >= dateS) || []);
     }
   };
 
@@ -217,13 +242,13 @@ export const AdminPresent = () => {
     const PresentID = refPresentID.current.value === "" ? "" : refPresentID.current.value.trim();
     const ProductID = refProductID.current.value === "" ? "" : refProductID.current.value.trim();
     if (ProductID !== "" && PresentID !== "") {
-      setListColumnDisplay(listPresentProduct.filter((obj) => obj.ProductID === parseInt(ProductID) && obj.PresentID === parseInt(PresentID)) || []);
+      setListRowDisplay(listPresentProduct.filter((obj) => obj.ProductID === parseInt(ProductID) && obj.PresentID === parseInt(PresentID)) || []);
     } else if (ProductID !== "") {
-      setListColumnDisplay(listPresentProduct.filter((obj) => obj.ProductID === parseInt(ProductID)) || []);
+      setListRowDisplay(listPresentProduct.filter((obj) => obj.ProductID === parseInt(ProductID)) || []);
     } else if (PresentID !== "") {
-      setListColumnDisplay(listPresentProduct.filter((obj) => obj.PresentID === parseInt(PresentID)) || []);
+      setListRowDisplay(listPresentProduct.filter((obj) => obj.PresentID === parseInt(PresentID)) || []);
     } else {
-      setListColumnDisplay(listPresentProduct);
+      setListRowDisplay(listPresentProduct);
     }
   };
   const deletePresentProduct = async (ProductID) => {
@@ -254,56 +279,92 @@ export const AdminPresent = () => {
         },
       });
       console.log("Response from server:", response.data);
-      setListColumnDisplay([...listColumnDisplay, response.data]);
+      setListRowDisplay([...listRowDisplay, response.data]);
     } catch (error) {
       console.error("Error sending data:", error.response || error);
     }
   };
   const handleAddPresentProduct = () => {
+    const Present = {
+      PresentID: parseInt(refPresentID.current.value),
+      ProductID: parseInt(refProductID.current.value),
+      Require: parseInt(refRequire.current.value),
+    };
+    for (const key in Present) {
+      if (Present[key] === "" || Present[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
+    if (listPresentProduct.find((obj) => obj.PresentID === Present.PresentID && obj.ProductID === Present.ProductID) !== undefined) {
+      alert("Sản phẩm đã áp dụng chương trình quà tặng này!");
+      return false;
+    }
     const result = window.confirm(`Chắc chắn muốn thêm sp quà tặng có id: ${refProductID.current.value} ?`);
     if (result) {
-      const PresentEvent = {
-        ProductID: parseInt(refProductID.current.value),
-        Require: parseInt(refRequire.current.value),
-        PresentID: parseInt(refPresentID.current.value),
-      };
-      postPresentProduct(PresentEvent)
+      postPresentProduct(Present)
         .then(() => {
-          setListColumnDisplay(listPresentProduct);
+          updateListPresentProduct([...listPresentProduct, Present]);
         })
         .catch((error) => console.error("Error adding Present event:", error));
     }
-    window.location.reload();
   };
 
   const handleUpdatePresentProduct = () => {
-    const result = window.confirm(`Chắc chắn muốn sửa sản phẩm áp dụng có id: ${refProductID.current.value} ?`);
+    const Present = {
+      ProductID: parseInt(refProductID.current.value),
+      Require: parseInt(refRequire.current.value),
+      PresentID: parseInt(refPresentID.current.value),
+    };
+    for (const key in Present) {
+      if (Present[key] === "" || Present[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
+    const result = window.confirm(`Chắc chắn muốn sửa sản phẩm áp dụng quà tặng có id: ${refProductID.current.value} ?`);
     if (result) {
-      const updatedData = {
-        Require: parseInt(refRequire.current.value),
-        PresentID: parseInt(refPresentID.current.value),
-      };
-      updatePresentProduct(parseInt(refProductID.current.value), updatedData)
+      updatePresentProduct(parseInt(refProductID.current.value), Present)
         .then(() => {
-          updateApiPresentProduct();
-          setListColumnDisplay(listPresentEvents);
+          const newList = () => {
+            let list = [];
+            listPresentProduct.map((obj) => {
+              if (obj.PresentID === Present.PresentID && obj.ProductID === Present.ProductID) {
+                list.push(Present);
+              } else {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListPresentEvent(newList());
         })
         .catch((error) => console.error("Error updating Present event:", error));
     }
-    window.location.reload();
   };
 
   const handleDeletePresentProduct = () => {
+    if (listPresentProduct.find((obj) => obj.PresentID === parseInt(refPresentID.current.value) && obj.ProductID === parseInt(refProductID.current.value)) === undefined) {
+      alert("Nhập đúng thông tin PresentID và ProductID để xóa!");
+      return false;
+    }
     const result = window.confirm(`Chắc chắn muốn xóa sp quà tặng có id: ${refProductID.current.value} ?`);
     if (result) {
       deletePresentProduct(parseInt(refProductID.current.value))
         .then(() => {
-          updateApiPresentProduct();
-          setListColumnDisplay(listPresentEvents);
+          const newList = () => {
+            let list = [];
+            listPresentProduct.map((obj) => {
+              if (obj.PresentID !== parseInt(refPresentID.current.value) || obj.ProductID !== parseInt(refProductID.current.value)) {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListPresentEvent(newList());
         })
         .catch((error) => console.error("Error deleting Present:", error));
     }
-    window.location.reload();
   };
   return (
     <div className={style.ProductManage}>
@@ -327,9 +388,9 @@ export const AdminPresent = () => {
           </thead>
         ) : (
           <thead>
+            <th>PresentID</th>
             <th>ProductID</th>
             <th>Require</th>
-            <th>PresentID</th>
           </thead>
         )}
 
@@ -376,13 +437,13 @@ export const AdminPresent = () => {
         ) : (
           <tbody>
             <td>
+              <input type="text" ref={refPresentID} onChange={handlePresentIDChange} />
+            </td>
+            <td>
               <input type="text" id="prdID" ref={refProductID} onChange={handleProductIDChange} />
             </td>
             <td>
               <input type="text" ref={refRequire} onChange={handleReduceChange} />
-            </td>
-            <td>
-              <input type="text" ref={refPresentID} onChange={handlePresentIDChange} />
             </td>
           </tbody>
         )}
@@ -399,17 +460,21 @@ export const AdminPresent = () => {
           <h3>Danh sách sự kiện quà tặng</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              {Title().map((obj) => {
-                return <th>{obj}</th>;
-              })}
+              <th>PresentID</th>
+              <th>ProductID</th>
+              <th>Quantity</th>
+              <th>Start</th>
+              <th>End</th>
             </thead>
             <tbody>
-              {listColumnDisplay.map((id) => {
+              {listRowDisplay.map((Row) => {
                 return (
-                  <tr>
-                    {Value(id.PresentID).map((item) => {
-                      return <td>{item}</td>;
-                    })}
+                  <tr onClick={() => getInfor(Row)}>
+                    <td>{Row.PresentID}</td>
+                    <td>{Row.ProductID}</td>
+                    <td>{Row.Quantity}</td>
+                    <td>{`${new Date(Row.Start).getDate()}/${new Date(Row.Start).getMonth() + 1}/${new Date(Row.Start).getFullYear()}`}</td>
+                    <td>{`${new Date(Row.End).getDate()}/${new Date(Row.End).getMonth() + 1}/${new Date(Row.End).getFullYear()}`}</td>
                   </tr>
                 );
               })}
@@ -421,17 +486,17 @@ export const AdminPresent = () => {
           <h3>Danh sách sản phẩm quà tặng</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              {Title().map((obj) => {
-                return <th>{obj}</th>;
-              })}
+              <th>PresentID</th>
+              <th>ProductID</th>
+              <th>Require</th>
             </thead>
             <tbody>
-              {listColumnDisplay.map((obj) => {
+              {listRowDisplay.map((Row) => {
                 return (
-                  <tr>
-                    {Value(obj.ProductID).map((item) => (
-                      <td>{item}</td>
-                    ))}
+                  <tr onClick={() => getInfor(Row)}>
+                    <td>{Row.PresentID}</td>
+                    <td>{Row.ProductID}</td>
+                    <td>{Row.Require}</td>
                   </tr>
                 );
               })}

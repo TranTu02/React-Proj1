@@ -1,32 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import style from "./Category.module.css";
 import down from "../Assets/down-arrow.png";
 import sort from "../Assets/sort.png";
 import * as DATA from "../Assets/data.js";
+import bannerAll from "../Assets/banner2.jpg";
+import bannerSale from "../Assets/discount.jpg";
 import Item from "../Item/Item.jsx";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import "../Assets/Banner/OIP (1).jpg";
 
 function Category({ CategoryID, BrandID, TypeID, Others }) {
+  const [lstCategories, setLstCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const fetchCategories = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get("http://localhost:3000/api/categories");
+      console.log(DATA.ListProductsDetail());
+      setLstCategories(response.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
+  let banner = bannerAll;
   const navigate = useNavigate();
   let title = "Tất cả sản phẩm";
   const filterList = () => {
     if (Others !== "Others") {
       if (Others === "AllProducts") {
         title = "Tất cả sản phẩm";
+        banner = bannerAll;
         return DATA.ListProductsDetail();
       } else {
         title = "Sản phẩm khuyến mại";
+        banner = bannerSale;
         return DATA.ListProductsDetail().filter((obj) => obj.Reduce !== undefined);
       }
     } else if (TypeID !== "Type") {
-      title = DATA.listCategory_Type.find((obj) => obj.ProductTypeID === parseInt(TypeID)).ProductType;
+      if (DATA.listCategories.length !== 0) {
+        banner = DATA.listCategories?.find((obj) => DATA.listCategory_Type.find((type) => type.ProductTypeID === parseInt(TypeID)).CategoryID === obj.CategoryID).CategoryIllustration;
+        title = DATA.listCategory_Type?.find((obj) => obj.ProductTypeID === parseInt(TypeID)).ProductType;
+      }
       return DATA.ListProductsDetail().filter((obj) => obj.ProductTypeID === parseInt(TypeID));
     } else if (BrandID !== "Brand") {
-      console.log(BrandID);
-      title = DATA.listBrand().find((obj) => obj.BrandID === parseInt(BrandID)).BrandName;
+      if (DATA.listCategories.length !== 0) {
+        banner = bannerAll;
+        title = DATA.listBrand.find((obj) => obj.BrandID === parseInt(BrandID)).BrandName;
+      }
       return DATA.listProductsByBrand(parseInt(BrandID));
     } else if (CategoryID !== "Category") {
-      title = DATA.listCategories.find((obj) => obj.CategoryID === parseInt(CategoryID)).CategoryName;
+      if (DATA.listCategories.length !== 0) {
+        banner = DATA.listCategories.find((obj) => obj.CategoryID === parseInt(CategoryID)).CategoryIllustration;
+        title = DATA.listCategories.find((obj) => obj.CategoryID === parseInt(CategoryID)).CategoryName;
+      }
+
       return DATA.ListProductsDetail().filter((obj) => obj.CategoryID === parseInt(CategoryID));
     } else {
       return DATA.ListProductsDetail();
@@ -34,9 +68,9 @@ function Category({ CategoryID, BrandID, TypeID, Others }) {
   };
   const data = filterList();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
-  const indexOfLastItem = currentPage * itemsPerPage > data.length ? (currentPage - 1) * itemsPerPage + (data.length % 8) : currentPage * itemsPerPage;
+  const [currentPage, setCurrentPage] = useState(2);
+  const itemsPerPage = 5;
+  const indexOfLastItem = currentPage * itemsPerPage > data.length ? (currentPage - 1) * itemsPerPage + (data.length % 5) : currentPage * itemsPerPage;
   const currentItems = data.slice(0, indexOfLastItem);
   const handleMore = () => {
     setCurrentPage((prev) => prev + 1);
@@ -84,7 +118,6 @@ function Category({ CategoryID, BrandID, TypeID, Others }) {
   };
 
   const routeCategoryFilter = (C, B, T, O) => {
-    console.log(C);
     navigate(`/CategoryPage/${C !== "" ? C : "Category"}/${B !== "" ? B : "Brand"}/${T !== "" ? T : "Type"}/${O !== "" ? O : "Others"}`);
   };
 
@@ -100,12 +133,12 @@ function Category({ CategoryID, BrandID, TypeID, Others }) {
             <ul>
               <li onClick={() => routeCategoryFilter("", "", "", "AllProducts")}> Tất cả sản phẩm</li>
               <li onClick={() => routeCategoryFilter("", "", "", "Sale")}>Sản phẩm khuyến mại</li>
-              {DATA.listCategories.map((item, index) => (
+              {DATA.listCategories.map((item) => (
                 <li>
-                  <p onClick={() => routeCategoryFilter(item.CategoryID, "", "", "Others")}>{item.CategoryName}</p>
+                  <p onClick={() => routeCategoryFilter(item.CategoryID, "", "", "Others")}>{item?.CategoryName}</p>
                   <ul>
-                    {DATA.listTypesByCategory(item.CategoryID).map((type) => {
-                      return <li onClick={() => routeCategoryFilter("", "", type.ProductTypeID, "Others")}>{type.ProductType}</li>;
+                    {DATA.listTypesByCategory(item?.CategoryID).map((type) => {
+                      return <li onClick={() => routeCategoryFilter("", "", type?.ProductTypeID, "Others")}>{type.ProductType}</li>;
                     })}
                   </ul>
                 </li>
@@ -120,7 +153,7 @@ function Category({ CategoryID, BrandID, TypeID, Others }) {
           </div>
           {showBrandList && (
             <ul>
-              {DATA.listBrand().map((item, index) => (
+              {DATA.listBrand.map((item, index) => (
                 <li onClick={() => routeCategoryFilter("", item.BrandID, "", "Others")}>{item.BrandName}</li>
               ))}
             </ul>
@@ -129,7 +162,7 @@ function Category({ CategoryID, BrandID, TypeID, Others }) {
       </div>
       <div className={style.ProductContainer}>
         {/* Fix */}
-        <img className={style.Banner} src="#" />
+        <img className={style.Banner} src={banner} />
         <div className={style.Title}>
           <div className={style.HeadingBox}>
             <h2>{title}</h2>

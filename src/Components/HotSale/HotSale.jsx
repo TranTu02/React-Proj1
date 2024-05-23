@@ -29,12 +29,12 @@ const CountDown = (ExpirationDate) => {
 };
 
 function HotSale({ DiscountID }) {
-  const timeRemaining = CountDown(DATA.listSaleEvents.find((obj) => obj.DiscountID === DiscountID).End);
+  const timeRemaining = CountDown(new Date(DATA.listSaleEvents.find((obj) => obj.DiscountID === parseInt(DiscountID)).End));
   const arrProduct = DATA.ListProductsDetail().filter((obj) => obj.Reduce !== undefined);
   const data = arrProduct.slice(0, 20);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-  const indexOfLastItem = currentPage * itemsPerPage > data.length ? (currentPage - 1) * itemsPerPage + (data.length % 5) : currentPage * itemsPerPage;
+  const itemsPerPage = 6;
+  const indexOfLastItem = currentPage * itemsPerPage > data.length ? (currentPage - 1) * itemsPerPage + (data.length % 6) : currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 

@@ -11,13 +11,11 @@ function NavBar() {
   const navigate = useNavigate();
   const DDlist1 = useRef(true);
   const routeCategory = (CateID, TypeID) => {
-    if (CateID === undefined || TypeID === undefined)
-      navigate("/CategoryPage/Category/Brand/Type/AllProducts");
+    if (CateID === undefined || TypeID === undefined) navigate("/CategoryPage/Category/Brand/Type/AllProducts");
     else if (TypeID !== "") {
       navigate("/CategoryPage/Category/Brand/" + TypeID + "/Others");
       DDlist1.current = false;
-    } else if (TypeID === "" && CateID === "")
-      navigate("/CategoryPage/Category/Brand/Type/Sale");
+    } else if (TypeID === "" && CateID === "") navigate("/CategoryPage/Category/Brand/Type/Sale");
     else if (DDlist1.current === true) {
       navigate("/CategoryPage/" + CateID + "/Brand/Type/Others");
     } else {
@@ -45,9 +43,7 @@ function NavBar() {
                   <ul>
                     {DATA.listTypesByCategory(item.CategoryID).map((type) => {
                       return (
-                        <li
-                          onClick={() => routeCategory("", type.ProductTypeID)}
-                        >
+                        <li onClick={() => routeCategory("", type.ProductTypeID)}>
                           <a>{type.ProductType}</a>
                         </li>
                       );

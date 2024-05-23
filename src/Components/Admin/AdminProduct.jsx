@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import style from "./Admin.module.css";
-import { listCategory_Type, listProducts, listCategories, listBrand, updateApi } from "../Assets/data";
+import { initializeData, listCategory_Type, listProducts, listCategories, listBrand, update } from "../Assets/data";
 import axios from "axios";
 
 export const AdminProduct = () => {
+  update(listProducts.sort((a, b) => b.ProductID - a.ProductID));
   const [listProductsDisplay, setListProductsDisplay] = useState(listProducts);
   useEffect(() => {
-    updateApi();
     setListProductsDisplay(listProducts);
   }, [listProducts]);
-  const [selectedCategory, setSelectedCategory] = useState(listCategories[0].CategoryName);
-  const [selectedBrand, setSelectedBrand] = useState("");
-  const [selectedType, setSelectedType] = useState("");
+  let nextID = listProducts.length !== 0 ? listProducts[0].ProductID + 1 : 1;
+  const [selectedCategory, setSelectedCategory] = useState(1);
+  const [selectedBrand, setSelectedBrand] = useState(0);
+  const [selectedType, setSelectedType] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
   const refProductID = useRef("");
   const refProductName = useRef("");
@@ -21,8 +22,21 @@ export const AdminProduct = () => {
   const refOverview = useRef("");
   const refCalculationUnit = useRef("");
   const refWeight = useRef("");
+  const handleGetInfor = (Product) => {
+    refProductID.current.value = Product.ProductID;
+    refProductName.current.value = Product.ProductName;
+    refPrice.current.value = Product.Price;
+    refDescription.current.value = Product.Description;
+    refStock.current.value = Product.Stock;
+    refOverview.current.value = Product.Overview;
+    refCalculationUnit.current.value = Product.CalculationUnit;
+    refWeight.current.value = Product.Weight;
+    setSelectedCategory(listCategories.find((obj) => obj.CategoryID === Product.CategoryID).CategoryID);
+    setSelectedType(listCategory_Type.find((obj) => obj.ProductTypeID === Product.ProductTypeID).ProductTypeID);
+    setSelectedBrand(listBrand.find((obj) => obj.BrandID === Product.BrandID) === undefined ? 1 : listBrand.find((obj) => obj.BrandID === Product.BrandID).BrandID);
+    setSelectedImage(Product.Image);
+  };
 
-  const nextID = listProducts.length !== 0 ? listProducts[listProducts.length - 1].ProductID + 1 : 1;
   const newProduct = (isAdd) => ({
     ProductID: isAdd ? nextID : parseInt(refProductID.current.value),
     ProductName: refProductName.current.value,
@@ -68,43 +82,52 @@ export const AdminProduct = () => {
           "Content-Type": "application/json",
         },
       });
-      console.log("Phản hồi từ server:", response.data);
-      setListProductsDisplay([...listProductsDisplay, response.data]);
     } catch (error) {
       console.error("Lỗi khi gửi dữ liệu:", error.response || error);
     }
   };
 
   const handleAddProduct = () => {
-    var result = window.confirm("Chắc chắn muốn thêm sản phẩm có id: " + refProductID.current.value + " ?");
+    const product = newProduct(true);
+    for (const key in product) {
+      if (product[key] === "" || product[key] === undefined) {
+        alert("Nhập đủ thông tin");
+        return false;
+      }
+    }
+    var result = window.confirm("Chắc chắn muốn thêm sản phẩm có id: " + nextID + " ?");
 
     if (result) {
-      const product = newProduct(true);
-      console.log(product);
       postProduct(product);
-      updateApi();
-      setListProductsDisplay(listProducts);
-      window.location.reload();
+      update(listProducts, listProducts.push(product));
     }
   };
   const handleUpdateProduct = () => {
+    const updatedData = newProduct(false); // Dữ liệu sản phẩm mới
+    for (const key in updatedData) {
+      if (updatedData[key] === "" || updatedData[key] === undefined) {
+        alert("Nhập đủ thông tin");
+        return false;
+      }
+    }
     var result = window.confirm("Chắc chắn muốn sửa sản phẩm có id: " + refProductID.current.value + " ?");
     if (result) {
       // Sử dụng hàm cập nhật sản phẩm
-      const updatedData = newProduct(false); // Dữ liệu sản phẩm mới
       updateProduct(updatedData.ProductID, updatedData);
-      updateApi();
-      setListProductsDisplay(listProducts);
-      window.location.reload();
+      const index = listProducts.findIndex((obj) => obj.ProductID === updatedData.ProductID);
+      update([...listProducts.slice(0, index), updatedData, ...listProducts.slice(index + 1)]);
     }
   };
   const handleDeleteProduct = () => {
+    if (refProductID.current.value === "") {
+      alert("Nhập ProductID");
+      return false;
+    }
     var result = window.confirm("Chắc chắn muốn xóa sản phẩm có id: " + refProductID.current.value + " ?");
     if (result) {
       deleteProduct(newProduct(false).ProductID);
-      window.location.reload();
-      updateApi();
-      setListProductsDisplay(listProducts);
+      const index = listProducts.findIndex((obj) => obj.ProductID === newProduct(false).ProductID);
+      update([...listProducts.slice(0, index), ...listProducts.slice(index + 1)]);
     }
   };
   const productTitle = () => {
@@ -112,20 +135,6 @@ export const AdminProduct = () => {
     return keys.slice(1, -1); // Bỏ qua phần tử đầu và cuối
   };
 
-  const productValue = (id) => {
-    const prd = listProducts.find((obj) => obj.ProductID === id);
-    if (!prd) return [];
-    const values = Object.keys(prd).map((key) => {
-      if (key === "Date") {
-        return new Date(prd[key]).toLocaleString();
-      } else if (key === "Image") {
-        return <img src={prd[key]} alt="Product" style={{ maxWidth: "100%", maxHeight: "100px" }} />;
-      } else {
-        return prd[key];
-      }
-    });
-    return values.slice(1, -1); // Bỏ qua phần tử đầu và cuối
-  };
   const handleIDChange = (event) => {
     refProductID.current.value = event.target.value;
   };
@@ -195,13 +204,7 @@ export const AdminProduct = () => {
             <th>Thương hiệu</th>
             <th>Danh mục</th>
             <th>Loại sản phẩm</th>
-            <th>Minh họa</th>
             <th>Giá gốc</th>
-            <th>Mô tả chi tiết</th>
-            <th>Số lượng</th>
-            <th>Tổng quan</th>
-            <th>Đơn vị tính</th>
-            <th>Khối lượng</th>
           </tr>
         </thead>
         <tbody>
@@ -214,8 +217,7 @@ export const AdminProduct = () => {
             </td>
             <td>
               <select value={selectedBrand} onChange={handleBrandChange}>
-                <option>Default</option>
-                {listBrand().map((brand) => (
+                {listBrand.map((brand) => (
                   <option key={brand.BrandID} value={brand.BrandID}>
                     {brand.BrandName}
                   </option>
@@ -224,46 +226,63 @@ export const AdminProduct = () => {
             </td>
             <td>
               <select value={selectedCategory} onChange={handleCategoryChange}>
-                <option value={"none"}>Default</option>
-                {listCategories.map((category) => (
-                  <option key={category.CategoryID} value={category.CategoryName}>
-                    {category.CategoryName}
-                  </option>
-                ))}
+                <option>Default</option>
+                {listCategories.length != 0 ? (
+                  listCategories.map((category) => (
+                    <option key={category.CategoryID} value={category.CategoryID}>
+                      {category.CategoryName}
+                    </option>
+                  ))
+                ) : (
+                  <></>
+                )}
               </select>
             </td>
             <td>
               <select value={selectedType} onChange={handleTypeChange}>
-                <option>Default</option>
-                {selectedCategory === "none" ? (
-                  <></>
-                ) : (
+                {listCategories.length != 0 ? (
                   listCategory_Type
-                    .filter((obj) => obj.CategoryID === listCategories.find((obj) => obj.CategoryName === selectedCategory).CategoryID)
+                    .filter((obj) => obj.CategoryID === parseInt(selectedCategory))
                     .map((type) => (
                       <option key={type.ProductTypeID} value={type.ProductTypeID}>
                         {type.ProductType}
                       </option>
                     ))
+                ) : (
+                  <option value={0}>{"Default"}</option>
                 )}
               </select>
-            </td>
-            <td>
-              <input type="file" accept="image/*" onChange={handleImageChange} />
-              {selectedImage && <img src={selectedImage} alt="Selected" style={{ maxWidth: "100%", maxHeight: "150px" }} />}
             </td>
             <td>
               {" "}
               <textarea rows={2} ref={refPrice} onChange={handlePriceChange}></textarea>
             </td>
-            <td>
-              <textarea rows={2} ref={refDescription} onChange={handleDesChange}></textarea>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <th>Minh họa</th>
+          <th>Mô tả chi tiết</th>
+          <th>Số lượng</th>
+          <th>Tổng quan</th>
+          <th>Đơn vị tính</th>
+          <th>Khối lượng</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td style={{ width: "200rem" }}>
+              <input type="file" accept="image/*" onChange={handleImageChange} />
+              {selectedImage && <img src={selectedImage} alt="Selected" style={{ maxWidth: "100%", maxHeight: "180rem" }} />}
+            </td>
+            <td style={{ width: "500rem" }}>
+              <textarea rows={10} ref={refDescription} onChange={handleDesChange}></textarea>
             </td>
             <td>
               <textarea rows={2} ref={refStock} onChange={handleStockChange}></textarea>
             </td>
-            <td>
-              <textarea rows={2} ref={refOverview} onChange={handleOverviewChange}></textarea>
+            <td style={{ width: "300rem" }}>
+              <textarea rows={10} ref={refOverview} onChange={handleOverviewChange}></textarea>
             </td>
             <td>
               <textarea rows={2} ref={refCalculationUnit} onChange={handleCUChange}></textarea>
@@ -284,17 +303,39 @@ export const AdminProduct = () => {
       <table className={style.TableContainer}>
         <thead className={style.TableHead}>
           <tr>
-            {productTitle().map((title) => (
-              <th key={title}>{title}</th>
-            ))}
+            <th>Mã SP</th>
+            <th>Tên SP</th>
+            <th>Thương hiệu</th>
+            <th>Danh mục</th>
+            <th>Loại </th>
+            <th>Minh họa</th>
+            <th>Giá gốc</th>
+            <th>Mô tả chi tiết</th>
+            <th>Số lượng</th>
+            <th>Ngày sửa đổi</th>
+            <th>Tổng quan</th>
+            <th>Đơn vị</th>
+            <th>Khối lượng</th>
           </tr>
         </thead>
         <tbody>
           {listProductsDisplay.map((product) => (
-            <tr key={product.ProductID}>
-              {productValue(product.ProductID).map((value, index) => (
-                <td key={index}>{value}</td>
-              ))}
+            <tr key={product.ProductID} onClick={() => handleGetInfor(product)}>
+              <td>{product.ProductID}</td>
+              <td>{product.ProductName}</td>
+              <td>{product.BrandID}</td>
+              <td>{product.CategoryID}</td>
+              <td>{product.ProductTypeID}</td>
+              <td>
+                <img src={product.Image} width={"100rem"} height={"100rem"} />
+              </td>
+              <td>{product.Price}</td>
+              <td class={style.descriptionCell}>{product.Description}</td>
+              <td>{product.Stock}</td>
+              <td>{`${new Date(product.Date).getDate()}/${new Date(product.Date).getMonth()}/${new Date(product.Date).getFullYear()}`}</td>
+              <td class={style.descriptionCell}>{product.Overview}</td>
+              <td>{product.CalculationUnit}</td>
+              <td>{product.Weight}</td>
             </tr>
           ))}
         </tbody>

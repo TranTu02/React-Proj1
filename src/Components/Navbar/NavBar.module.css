@@ -77,7 +77,7 @@
   width: 700rem;
   padding: 0;
   border: #a9a9a9 1rem solid;
-  height: 450rem;
+  height: 250rem;
   z-index: 51;
 }
 .Category .DropList1 li .DropList2 ul {
@@ -93,9 +93,11 @@
 .Category .DropList1 li .DropList2 img {
   padding: 0;
   position: absolute;
+  object-fit: cover;
   right: 0;
+  bottom: 0;
   width: 450rem;
-  height: 450rem;
+  height: 200rem;
 }
 
 .link {

@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import style from "./Admin.module.css";
-import { listCategory_Type, listCategories, updateApiCategory, listProducts, updateApiType } from "../Assets/data";
+import { listCategory_Type, listCategories, updateListCategory, updateListProductType } from "../Assets/data";
 import axios from "axios";
 
 export const AdminCategory = () => {
   const [active, setActive] = useState(true);
-  const [update, setUpdate] = useState(true);
+  updateListCategory(listCategories.sort((a, b) => b.CategoryID - a.CategoryID));
+  updateListProductType(listCategory_Type.sort((a, b) => b.ProductTypeID - a.ProductTypeID));
   const [listColumnDisplay, setListColumnDisplay] = useState(active ? listCategories : listCategory_Type);
   const handleSetActive = (value) => {
     setActive(value);
@@ -14,56 +15,32 @@ export const AdminCategory = () => {
 
   useEffect(() => {
     if (active) {
-      updateApiCategory();
       setListColumnDisplay(listCategories);
     } else {
-      updateApiType();
       setListColumnDisplay(listCategory_Type);
     }
-  }, [active, update]);
-
-  const Title = () => {
-    if (active) {
-      const keys = Object.keys(listCategories[0] || {});
-      return keys.slice(1, -1); // Bỏ qua phần tử đầu và cuối
-    } else {
-      const keys = Object.keys(listCategory_Type[0] || {});
-      return keys.slice(1, -1); // Bỏ qua phần tử đầu và cuối
-    }
-  };
-
-  const Value = (id) => {
-    if (active) {
-      const category = listCategories.find((obj) => obj.CategoryID === id);
-      if (!category) return [];
-      const values = Object.keys(category).map((key) => {
-        if (key === "CategoryIllustration") {
-          return <img src={category[key]} alt="Image" style={{ maxWidth: "100%", maxHeight: "80px" }} />;
-        } else {
-          return category[key];
-        }
-      });
-      return values.slice(1, -1); // Bỏ qua phần tử đầu và cuối
-    } else {
-      const type = listColumnDisplay.find((obj) => obj.ProductTypeID === id);
-      if (!type) return [];
-      return Object.values(type).slice(1, -1);
-    }
-  };
+  }, [listCategories, listCategory_Type]);
 
   const refCategoryID = useRef("");
   const refCategoryName = useRef("");
   const refProductTypeID = useRef("");
   const refProductType = useRef("");
+  const refOrder = useRef("");
   const [selectedImage, setSelectedImage] = useState(null);
-  const nextID = active
-    ? listCategories.length !== 0
-      ? listCategories[listCategories.length - 1].CategoryID + 1
-      : 1
-    : listCategory_Type.length !== 0
-    ? listCategory_Type[listCategory_Type.length - 1].ProductTypeID + 1
-    : 1;
+  const nextID = active ? (listCategories.length !== 0 ? listCategories[0].CategoryID + 1 : 1) : listCategory_Type.length !== 0 ? listCategory_Type[0].ProductTypeID + 1 : 1;
 
+  const getInfor = (item) => {
+    if (active) {
+      refCategoryID.current.value = item.CategoryID;
+      refCategoryName.current.value = item.CategoryName;
+      setSelectedImage(item.CategoryIllustration);
+      refOrder.current.value = item.Order;
+    } else {
+      refCategoryID.current.value = item.CategoryID;
+      refProductTypeID.current.value = item.ProductTypeID;
+      refProductType.current.value = item.ProductType;
+    }
+  };
   const deleteCategory = async (CategoryID) => {
     try {
       const response = await axios.delete(`http://localhost:3000/api/categories/${CategoryID}`);
@@ -91,8 +68,6 @@ export const AdminCategory = () => {
           "Content-Type": "application/json",
         },
       });
-      console.log("Response from server:", response.data);
-      setListColumnDisplay([...listColumnDisplay, response.data]);
     } catch (error) {
       console.error("Error sending data:", error.response || error);
     }
@@ -115,18 +90,19 @@ export const AdminCategory = () => {
   };
 
   const handleInputChange = (event, ref) => {
-    ref.current = event.target.value;
+    ref.current.value = event.target.value;
   };
 
   const handleCategoryIDChange = (event) => handleInputChange(event, refCategoryID);
   const handleCategoryNameChange = (event) => handleInputChange(event, refCategoryName);
   const handleProductTypeIDChange = (event) => handleInputChange(event, refProductTypeID);
   const handleProductTypeChange = (event) => handleInputChange(event, refProductType);
+  const handleProductOrderChange = (event) => handleInputChange(event, refOrder);
 
   // Category
   const handleFindCategory = () => {
-    const CategoryID = refCategoryID.current === "" ? "" : parseInt(refCategoryID.current);
-    const CategoryName = refCategoryName.current === "" ? "" : refCategoryName.current;
+    const CategoryID = refCategoryID.current.value === "" ? "" : parseInt(refCategoryID.current.value);
+    const CategoryName = refCategoryName.current.value === "" ? "" : refCategoryName.current.value;
     if (CategoryID !== "") {
       setListColumnDisplay(listCategories.filter((obj) => obj.CategoryID === CategoryID) || []);
     } else if (CategoryName !== "") {
@@ -137,51 +113,73 @@ export const AdminCategory = () => {
   };
 
   const handleAddCategory = () => {
+    const Category = {
+      CategoryID: nextID,
+      CategoryName: refCategoryName.current.value,
+      CategoryIllustration: selectedImage,
+      Order: parseInt(refOrder.current.value),
+    };
+    for (const key in Category) {
+      if (Category[key] === "" || Category[key] === undefined) {
+        alert("Nhập thông tin");
+        return false;
+      }
+    }
     const result = window.confirm(`Chắc chắn muốn thêm Category có id: ${nextID} ?`);
     if (result) {
-      const Category = {
-        CategoryID: nextID,
-        CategoryName: refCategoryName.current,
-        CategoryIllustration: selectedImage,
-      };
       postCategory(Category)
         .then(() => {
-          updateApiCategory(); // Cập nhật dữ liệu từ server
-          setListColumnDisplay([...listColumnDisplay, Category]); // Thêm tài khoản mới vào danh sách hiện tại
+          updateListCategory([...listCategories, Category]); // Thêm tài khoản mới vào danh sách hiện tại
         })
         .catch((error) => console.error("Error adding Category:", error));
-      window.location.reload();
     }
   };
 
   const handleUpdateCategory = () => {
-    const result = window.confirm(`Chắc chắn muốn sửa Category có id: ${refCategoryID.current} ?`);
+    const updatedCategory = {
+      CategoryID: parseInt(refCategoryID.current.value),
+      CategoryName: refCategoryName.current.value,
+      CategoryIllustration: selectedImage,
+      Order: parseInt(refOrder.current.value),
+    };
+    for (const key in updatedCategory) {
+      if (updatedCategory[key] === "" || updatedCategory[key] === undefined) {
+        alert("Nhập thông tin");
+        return false;
+      }
+    }
+    const result = window.confirm(`Chắc chắn muốn sửa Category có id: ${refCategoryID.current.value} ?`);
     if (result) {
-      const updatedData = {
-        CategoryName: refCategoryName.current,
-        CategoryIllustration: selectedImage,
-      };
-      updateCategory(parseInt(refCategoryID.current), updatedData)
+      updateCategory(parseInt(refCategoryID.current.value), updatedCategory)
         .then(() => {
-          updateApiCategory(); // Cập nhật dữ liệu từ server
-          const updatedCategories = listColumnDisplay.map((Category) => (Category.CategoryID === parseInt(refCategoryID.current) ? { ...Category, ...updatedData } : Category));
-          setListColumnDisplay(updatedCategories); // Cập nhật thông tin của tài khoản trong danh sách hiện tại
+          const updatedCategories = listCategories.map((Category) => (Category.CategoryID === parseInt(refCategoryID.current.value) ? { ...Category, ...updatedCategory } : Category));
+          updateListCategory(updatedCategories);
         })
         .catch((error) => console.error("Error updating Category:", error));
-      window.location.reload();
     }
   };
 
   const handleDeleteCategory = () => {
-    const result = window.confirm(`Chắc chắn muốn xóa Category có id: ${refCategoryID.current} ?`);
+    if (refCategoryID.current.value === "") {
+      alert("Nhập CategoryID!");
+      return false;
+    }
+    const result = window.confirm(`Chắc chắn muốn xóa Category có id: ${refCategoryID.current.value} ?`);
     if (result) {
-      deleteCategory(parseInt(refCategoryID.current))
+      deleteCategory(parseInt(refCategoryID.current.value))
         .then(() => {
-          updateApiCategory(); // Cập nhật dữ liệu từ server
-          setListColumnDisplay(listCategories); // Loại bỏ tài khoản đã xóa khỏi danh sách hiện tại
+          const newList = () => {
+            let list = [];
+            listCategories.map((obj) => {
+              if (obj.CategoryID !== parseInt(refCategoryID.current.value)) {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListCategory(newList());
         })
         .catch((error) => console.error("Error deleting Category:", error));
-      window.location.reload();
     }
   };
 
@@ -194,7 +192,6 @@ export const AdminCategory = () => {
     } catch (error) {
       console.error("Error deleting Type:", error);
     }
-    window.location.reload();
   };
 
   const updateType = async (TypeID, updatedData) => {
@@ -205,7 +202,6 @@ export const AdminCategory = () => {
     } catch (error) {
       console.error("Error updating Type:", error);
     }
-    window.location.reload();
   };
 
   const postType = async (Type) => {
@@ -215,17 +211,14 @@ export const AdminCategory = () => {
           "Content-Type": "application/json",
         },
       });
-      console.log("Response from server:", response.data);
-      setListColumnDisplay([...listColumnDisplay, response.data]);
     } catch (error) {
       console.error("Error sending data:", error.response || error);
     }
-    window.location.reload();
   };
 
   const handleFindType = () => {
-    const CategoryID = refCategoryID.current;
-    const TypeID = refProductTypeID.current;
+    const CategoryID = refCategoryID.current.value;
+    const TypeID = refProductTypeID.current.value;
     if (TypeID) {
       setListColumnDisplay(listCategory_Type.filter((obj) => obj.ProductTypeID === parseInt(TypeID)) || []);
     } else if (CategoryID) {
@@ -235,50 +228,81 @@ export const AdminCategory = () => {
     }
   };
   const handleAddType = () => {
+    const Type = {
+      ProductTypeID: nextID,
+      CategoryID: parseInt(refCategoryID.current.value),
+      ProductType: refProductType.current.value,
+    };
+    for (const key in Type) {
+      if (Type[key] === "" || Type[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
     const result = window.confirm(`Chắc chắn muốn thêm Type có id: ${nextID} ?`);
     if (result) {
-      const Type = {
-        ProductTypeID: nextID,
-        CategoryID: parseInt(refCategoryID.current),
-        ProductType: refProductType.current,
-      };
       postType(Type)
         .then(() => {
-          updateApiType(); // Cập nhật dữ liệu từ server
-          setListColumnDisplay([...listColumnDisplay, Type]); // Thêm tài khoản mới vào danh sách hiện tại
+          updateListProductType([...listCategory_Type, Type]);
         })
         .catch((error) => console.error("Error adding Type:", error));
-      setUpdate(!update);
     }
   };
 
   const handleUpdateType = () => {
-    const result = window.confirm(`Chắc chắn muốn sửa Type có id: ${refProductTypeID.current} ?`);
+    const Type = {
+      ProductTypeID: parseInt(refProductTypeID.current.value),
+      CategoryID: parseInt(refCategoryID.current.value),
+      ProductType: refProductType.current.value,
+    };
+    for (const key in Type) {
+      if (Type[key] === "" || Type[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
+    const result = window.confirm(`Chắc chắn muốn sửa Type có id: ${refProductTypeID.current.value} ?`);
     if (result) {
-      const updatedData = {
-        CategoryID: refCategoryID.current,
-        ProductType: refProductType.current,
-      };
-      updateType(parseInt(refProductTypeID.current), updatedData)
+      updateType(parseInt(refProductTypeID.current.value), Type)
         .then(() => {
-          updateApiType(); // Cập nhật dữ liệu từ server
-          setListColumnDisplay(listCategory_Type); // Cập nhật thông tin của tài khoản trong danh sách hiện tại
+          const newList = () => {
+            let list = [];
+            listCategory_Type.map((obj) => {
+              if (obj.ProductTypeID !== parseInt(refProductTypeID.current.value)) {
+                list.push(obj);
+              } else {
+                list.push(Type);
+              }
+            });
+            return list;
+          };
+          updateListProductType(newList());
         })
         .catch((error) => console.error("Error updating Type:", error));
-      setUpdate(!update);
     }
   };
 
   const handleDeleteType = () => {
-    const result = window.confirm(`Chắc chắn muốn xóa Type có id: ${refProductTypeID.current} ?`);
+    if (refProductTypeID.current.value === "") {
+      alert("Nhập ProductTypeID!");
+      return false;
+    }
+    const result = window.confirm(`Chắc chắn muốn xóa Type có id: ${refProductTypeID.current.value} ?`);
     if (result) {
-      deleteType(parseInt(refProductTypeID.current))
+      deleteType(parseInt(refProductTypeID.current.value))
         .then(() => {
-          updateApiType(); // Cập nhật dữ liệu từ server
-          setListColumnDisplay(listCategory_Type); // Loại bỏ tài khoản đã xóa khỏi danh sách hiện tại
+          const newList = () => {
+            let list = [];
+            listCategory_Type.map((obj) => {
+              if (obj.ProductTypeID !== parseInt(refProductTypeID.current.value)) {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListProductType(newList());
         })
         .catch((error) => console.error("Error deleting Type:", error));
-      setUpdate(!update);
     }
   };
   return (
@@ -298,6 +322,7 @@ export const AdminCategory = () => {
             <th>CategoryID</th>
             <th>CategoryName</th>
             <th>CategoryIllustration</th>
+            <th>Order</th>
           </thead>
         ) : (
           <thead>
@@ -309,15 +334,18 @@ export const AdminCategory = () => {
 
         {active ? (
           <tbody>
-            <td>
+            <td style={{ width: "200rem" }}>
               <input type="text" ref={refCategoryID} onChange={handleCategoryIDChange} />
             </td>
             <td>
-              <input type="text" ref={refCategoryName} onChange={handleCategoryNameChange} />
+              <textarea rows={2} ref={refCategoryName} onChange={handleCategoryNameChange}></textarea>
             </td>
-            <td>
+            <td style={{ width: "800rem" }}>
               <input type="file" accept="image/*" onChange={handleImageChange} />
-              {selectedImage && <img src={selectedImage} alt="Selected" style={{ maxWidth: "100%", maxHeight: "200px" }} />}
+              {selectedImage && <img src={selectedImage} alt="Selected" style={{ maxWidth: "100%", maxHeight: "300rem" }} />}
+            </td>
+            <td style={{ width: "200rem" }}>
+              <input type="text" ref={refOrder} onChange={handleProductOrderChange} />
             </td>
           </tbody>
         ) : (
@@ -346,17 +374,21 @@ export const AdminCategory = () => {
           <h3>Danh sách danh mục</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              {Title().map((obj) => {
-                return <th>{obj}</th>;
-              })}
+              <th>CategoryID</th>
+              <th>CategoryName</th>
+              <th>CategoryIllustration</th>
+              <th>Order</th>
             </thead>
             <tbody>
               {listColumnDisplay.map((Category) => {
                 return (
-                  <tr>
-                    {Value(Category.CategoryID).map((item) => (
-                      <td>{item}</td>
-                    ))}
+                  <tr onClick={() => getInfor(Category)}>
+                    <td>{Category.CategoryID}</td>
+                    <td>{Category.CategoryName}</td>
+                    <td>
+                      <img src={Category.CategoryIllustration} alt="Image" style={{ maxWidth: "100%", maxHeight: "80px" }} />
+                    </td>
+                    <td>{Category.Order}</td>
                   </tr>
                 );
               })}
@@ -368,17 +400,17 @@ export const AdminCategory = () => {
           <h3>Danh sách thể loại sản phẩm</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              {Title().map((obj) => {
-                return <th>{obj}</th>;
-              })}
+              <th>ProductTypeID</th>
+              <th>CategoryID</th>
+              <th>ProductType</th>
             </thead>
             <tbody>
               {listColumnDisplay.map((Type) => {
                 return (
-                  <tr>
-                    {Value(Type.ProductTypeID).map((item) => (
-                      <td>{item}</td>
-                    ))}
+                  <tr onClick={() => getInfor(Type)}>
+                    <td>{Type.ProductTypeID}</td>
+                    <td>{Type.CategoryID}</td>
+                    <td>{Type.ProductType}</td>
                   </tr>
                 );
               })}

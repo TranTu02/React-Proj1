@@ -1,38 +1,47 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ShopContext } from "../../Contexts/CartContext";
 import style from "./Account.module.css";
-import { listAccount, listBill } from "../Assets/data";
+import { listAccount, listBill, listDetailBill, ListProductsDetail, updateListBill } from "../Assets/data";
 import Bill from "../Bill/Bill";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Account() {
+  let formatter = new Intl.NumberFormat("en-US");
+  const [listBillDisplay, setListBillDisplay] = useState(listBill.sort((a, b) => b.BillID - a.BillID));
+  useEffect(() => {
+    setListBillDisplay(listBill.sort((a, b) => b.BillID - a.BillID));
+  }, [listBill]);
   const { phoneNumber, setCurrentAccount } = useContext(ShopContext);
   const [isActive, setIsActive] = useState(true);
   const handleSetActive = (isInfor) => {
     isInfor === true ? setIsActive(true) : setIsActive(false);
   };
-  // const phoneNumber = "0969504954";
-  const accountInfor = listAccount.find(
-    (obj) => obj.PhoneNumber === phoneNumber
-  );
+
+  let accountInfor = listAccount.find((obj) => obj.PhoneNumber === phoneNumber);
+  if (accountInfor === undefined) {
+    accountInfor = [];
+  }
   // form
+  const updateRow = async (itemid, updatedData) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/bills/${itemid}`, updatedData);
+      console.log(response.data); // Updated Type information
+      // After successful update, update the list of Categories or perform other tasks
+    } catch (error) {
+      console.error("Error updating Type:", error);
+    }
+  };
+
   const newName = useRef();
   const newBirth = useRef();
   const newPassword = useRef();
   const confirmPassword = useRef();
   const password = useRef();
   const handleConfirmInfor = () => {
-    if (
-      password.current.value !==
-      listAccount.find((obj) => obj.PhoneNumber === phoneNumber).Password
-    ) {
+    if (password.current.value !== listAccount.find((obj) => obj.PhoneNumber === phoneNumber).Password) {
       alert("Nhập đúng mật khẩu để thay đổi thông tin!");
-    } else if (
-      newName.current.value.trim() +
-        newBirth.current.value.trim() +
-        newPassword.current.value ===
-      ""
-    ) {
+    } else if (newName.current.value.trim() + newBirth.current.value.trim() + newPassword.current.value === "") {
       alert("Nhập thông tin bất kì để thay đổi!");
     } else if (newPassword.current.value !== confirmPassword.current.value) {
       alert("Xác nhận mật khẩu phải trùng với mật khẩu mới!");
@@ -52,12 +61,49 @@ export default function Account() {
   // displaybill
   const [isDisplayBill, setIsDisplayBill] = useState(false);
   const [billInfor, setBillInfor] = useState();
+  const [listItems, setListItems] = useState();
   const handleDisplayBill = (infor) => {
     setBillInfor(infor);
+    setListItems(
+      listDetailBill
+        .filter((obj) => obj.BillID === infor.BillID)
+        .map((item) => {
+          return { ...ListProductsDetail().find((id) => id.ProductID === item.ProductID), Quantity: item.Quantity };
+        })
+    );
     setIsDisplayBill(true);
   };
+
+  // const cartInfor = DATA.ListCartInfor(cartItems);
   const handleCloseBill = () => {
     setIsDisplayBill(false);
+  };
+  //confirm
+  const handleConfirm = async (infor) => {
+    const result = window.confirm("Xác nhận đã nhận được hàng!");
+    if (result) {
+      let updatedBill = { ...infor, Status: 0 }; // Tạo một bản sao của billInfor và cập nhật Status
+      try {
+        await updateRow(infor.BillID, updatedBill); // Gửi yêu cầu cập nhật lên server
+        // Sau khi cập nhật thành công, cập nhật lại danh sách hóa đơn trong state
+        const newList = () => {
+          let list = [];
+          listBill.map((obj) => {
+            if (obj.BillID === updatedBill.BillID) {
+              list.push(updatedBill);
+            } else {
+              list.push(obj);
+            }
+          });
+          return list;
+        };
+        updateListBill(newList());
+        alert("Đã nhận hàng thành công!");
+      } catch (error) {
+        console.error("Error updating bill:", error);
+        alert("Có lỗi xảy ra khi xác nhận đơn hàng.");
+      }
+    }
   };
 
   // log out
@@ -74,16 +120,10 @@ export default function Account() {
     <div className={style.AccountBody}>
       <div className={style.AccountContainer}>
         <div className={style.Title}>
-          <h2
-            onClick={() => handleSetActive(true)}
-            className={isActive ? style.Active : style.nonActive}
-          >
+          <h2 onClick={() => handleSetActive(true)} className={isActive ? style.Active : style.nonActive}>
             THÔNG TIN TÀI KHOẢN
           </h2>
-          <h2
-            onClick={() => handleSetActive(false)}
-            className={isActive ? style.nonActive : style.Active}
-          >
+          <h2 onClick={() => handleSetActive(false)} className={isActive ? style.nonActive : style.Active}>
             LỊCH SỬ MUA HÀNG
           </h2>
         </div>
@@ -105,11 +145,7 @@ export default function Account() {
             <h2>Thay đổi thông tin</h2>
             <div className={style.Infor}>
               <p className={style.Label}>Đổi tên</p>
-              <input
-                type="text"
-                ref={newName}
-                placeholder="Nguyễn Văn A . . ."
-              />
+              <input type="text" ref={newName} placeholder="Nguyễn Văn A . . ." />
             </div>
 
             <div className={style.Infor}>
@@ -118,27 +154,15 @@ export default function Account() {
             </div>
             <div className={style.Infor}>
               <p className={style.Label}>Thay đổi mật khẩu</p>
-              <input
-                type="Password"
-                ref={newPassword}
-                placeholder="Nhập mật khẩu mới"
-              />
+              <input type="Password" ref={newPassword} placeholder="Nhập mật khẩu mới" />
             </div>
             <div className={style.Infor}>
               <p className={style.Label}>Xác nhận mật khẩu</p>
-              <input
-                type="Password"
-                ref={confirmPassword}
-                placeholder="Nhập lại mật khẩu mới"
-              />
+              <input type="Password" ref={confirmPassword} placeholder="Nhập lại mật khẩu mới" />
             </div>
             <div className={style.Infor}>
               <p className={style.Label}>Nhập mật khẩu</p>
-              <input
-                type="Password"
-                ref={password}
-                placeholder="Nhập mật khẩu hiện tại để đổi thông tin"
-              />
+              <input type="Password" ref={password} placeholder="Nhập mật khẩu hiện tại để đổi thông tin" />
             </div>
             <div className={style.Infor}>
               <button onClick={handleConfirmInfor} className={style.Btn}>
@@ -152,30 +176,47 @@ export default function Account() {
         ) : (
           <>
             <div className={style.TitleList}>
-              <p>
+              <p className={style.DateTime}>
                 <b>Ngày</b>
               </p>
-              <p>
+              <p className={style.DateTime}>
                 <b>Giờ</b>
               </p>
               <p>
-                <b>Phương thức thanh toán</b>
+                <b>Phương thức</b>
               </p>
               <p>
-                <b>Tổng tiền thanh toán</b>
+                <b>Tổng tiền</b>
+              </p>
+              <p>
+                <b>SDT người giao</b>
+              </p>
+              <p>
+                <b>Tình trạng</b>
               </p>
             </div>
-            {listBill.map((bill) => {
+            {listBillDisplay.map((bill) => {
               if (bill.PhoneNumber === phoneNumber) {
                 return (
-                  <div
-                    onClick={() => handleDisplayBill(bill)}
-                    className={style.ListBills}
-                  >
-                    <p>{bill.Date}</p>
-                    <p>{bill.Time}</p>
+                  <div key={bill.BillID} onClick={() => handleDisplayBill(bill)} className={style.ListBills}>
+                    <p className={style.DateTime}>{bill.Date}</p>
+                    <p className={style.DateTime}>{bill.Time}</p>
                     <p>{bill.Payment}</p>
-                    <p>{bill.totalCost}</p>
+                    <p>{formatter.format(bill.totalCost)}</p>
+                    <p>{bill?.Shipper}</p>
+                    <p>
+                      {bill.Status !== 0 ? (
+                        <button
+                          onClick={() => {
+                            handleConfirm(bill);
+                          }}
+                        >
+                          Xác nhận đơn hàng
+                        </button>
+                      ) : (
+                        "Đã nhận được hàng"
+                      )}
+                    </p>
                   </div>
                 );
               }
@@ -186,7 +227,7 @@ export default function Account() {
 
       {isDisplayBill && (
         <>
-          <Bill billInfor={billInfor} listCartItems={billInfor.listItems} />
+          <Bill billInfor={billInfor} listCartItems={listItems} />
           <button onClick={handleCloseBill} className={style.CloseBill}>
             Close
           </button>

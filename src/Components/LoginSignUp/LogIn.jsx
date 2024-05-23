@@ -13,26 +13,20 @@ export default function LogIn() {
   const handleCheckInfor = () => {
     const PhoneNumber = refPhone.current ? refPhone.current.value : "";
     const Password = refPassword.current ? refPassword.current.value : "";
-    if (
-      DATA.listAccount.find((obj) => obj.PhoneNumber === PhoneNumber) ===
-      undefined
-    ) {
+    if (DATA.listAccount.find((obj) => obj.PhoneNumber === PhoneNumber) === undefined) {
       alert("Số điện thoại chưa được đăng ký!");
-    } else if (
-      DATA.listAccount.find((obj) => obj.PhoneNumber === PhoneNumber)
-        .Password !== Password
-    ) {
-      console.log(
-        Password +
-          "---" +
-          DATA.listAccount.find((obj) => obj.PhoneNumber === PhoneNumber)
-            .Password
-      );
+    } else if (DATA.listAccount.find((obj) => obj.PhoneNumber === PhoneNumber).Password !== Password) {
+      console.log(Password + "---" + DATA.listAccount.find((obj) => obj.PhoneNumber === PhoneNumber).Password);
       alert("Sai mật khẩu");
     } else {
       alert("Đăng nhập thành công.");
       setCurrentAccount(PhoneNumber);
-      navigate("/");
+      if (DATA.listAccount.find((obj) => obj.PhoneNumber === PhoneNumber).Authorize > 0) {
+        setCurrentAccount(PhoneNumber);
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     }
   };
   return (
@@ -40,26 +34,13 @@ export default function LogIn() {
       <div className={style.Form}>
         <h2>Đăng nhập</h2>
         <div className={style.Input}>
-          <input
-            type="text"
-            placeholder="Số điện thoại"
-            ref={refPhone}
-            required
-          />
+          <input type="text" placeholder="Số điện thoại" ref={refPhone} required />
           <label>Số điện thoại</label>
         </div>
         <div className={style.Input}>
-          <input
-            type={isHidePassword ? "password" : "text"}
-            ref={refPassword}
-            placeholder="Mật khẩu"
-            required
-          />
+          <input type={isHidePassword ? "password" : "text"} ref={refPassword} placeholder="Mật khẩu" required />
           <label>Mật khẩu</label>
-          <div
-            className={isHidePassword ? style.BtnHide : style.BtnLook}
-            onClick={() => setHidePassword(!isHidePassword)}
-          ></div>
+          <div className={isHidePassword ? style.BtnHide : style.BtnLook} onClick={() => setHidePassword(!isHidePassword)}></div>
         </div>
         <button className={style.BtnActive} onClick={handleCheckInfor}>
           Đăng nhập

@@ -1,419 +1,416 @@
-.DetailPage{
-    width: 100%;
-    min-width: 1360px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.DetailPage {
+  width: 100%;
+  min-width: 1360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 250rem;
 }
 
-.DetailContainer{
-    display: flex;
-    flex-direction: column;
-    width: 1410rem;
-    min-width: 1050px;
-    height: fit-content;
-    padding: 1px;
-    background-color: white;
-    margin: 10px auto;
-    align-items: center;
+.DetailContainer {
+  display: flex;
+  flex-direction: column;
+  width: 1344rem;
+  min-width: 1050px;
+  height: fit-content;
+  padding: 1px;
+  background-color: white;
+  margin: 10px auto;
+  align-items: center;
 }
 
-.ProductDetailContainer{
-    display: flex;
-    width: 100%;
-    min-width: 1050px;
-    height: fit-content;
-    justify-content: center ;
+.ProductDetailContainer {
+  display: flex;
+  width: 100%;
+  min-width: 1050px;
+  height: fit-content;
+  justify-content: center;
 }
 
-.ProductDetailContainer .Illustration{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 460rem;
-    height: auto;
-    min-width: 360px;
-    padding: 15px;    
-    margin-right: 2px;
+.ProductDetailContainer .Illustration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 460rem;
+  height: auto;
+  min-height: 570rem;
+  min-width: 360px;
+  padding: 15px;
+  margin-right: 2px;
 }
 
-.ProductDetailContainer .Illustration .MainPhoto{
-    width: 460rem;
-    height: 460rem;
-    min-width: 320px;
-    min-height: 320px;
+.ProductDetailContainer .Illustration .MainPhoto {
+  width: 470rem;
+  height: 470rem;
+  border: 1px solid #ba646a;
 }
 
-.ProductDetailContainer .Illustration .PhotoList{
-    display: flex;
-    height: fit-content;
-    margin: 10px 0;
-    width: 90%;
-    align-items:end;
-    flex-wrap: wrap;
+.ProductDetailContainer .Illustration .PhotoList {
+  display: flex;
+  height: fit-content;
+  margin: 10px 0;
+  width: 100%;
+  align-items: end;
+  flex-wrap: wrap;
 }
 
-.ProductDetailContainer .Illustration .PhotoList img{
-    width: 70rem;
-    height: 70rem;
-    min-height: 50px;
-    min-width: 50px;    
-    margin-right: 7px;
-    padding: 1px;
+.ProductDetailContainer .Illustration .PhotoList img {
+  width: 70rem;
+  height: 70rem;
+  min-height: 50px;
+  min-width: 50px;
+  margin-right: 7px;
+  padding: 1px;
+  cursor: pointer;
+  border: 1px solid #eee;
 }
 
-.ProductDetailContainer .Illustration .PhotoList .Display{
-    border: 1px solid #FF0000;
-    padding: 0;
+.ProductDetailContainer .Illustration .PhotoList .Display {
+  border: 1px solid #ff0000;
+  padding: 0;
 }
 
-.ProductDetailContainer .Content{
-    display: flex;
-    flex-direction: column;
-    width: 920rem;
-    height: 100%;
-    min-height: 560px;
-    padding: 15px 0;
-    min-width: 660px;
-    justify-content: start;
+.ProductDetailContainer .Content {
+  display: flex;
+  flex-direction: column;
+  width: 920rem;
+  height: 100%;
+  padding: 15px 0;
+  min-width: 660px;
+  justify-content: start;
 }
 
-
-.ProductDetailContainer .Content .HeadingBox{
-    display: flex;
-    width: 90%;
-    height: fit-content;
-    padding: 0 20px;
-    font-size: 16px;
-    flex-wrap: wrap;
+.ProductDetailContainer .Content .HeadingBox {
+  display: flex;
+  width: 90%;
+  height: fit-content;
+  padding: 0 20px;
+  font-size: 16px;
+  flex-wrap: wrap;
 }
 
-.ProductDetailContainer .Content .HeadingBox h1{
-    font-size: 30px;
-    color: #862227;
-    width: 100%;
-    margin: 0px;
+.ProductDetailContainer .Content .HeadingBox h1 {
+  font-size: 30px;
+  color: #862227;
+  width: 100%;
+  margin: 0px;
 }
 
 .ProductDetailContainer .Content .HeadingBox .Infor {
-    border-left: 2px solid #f5f5f5;
-    padding: 0 10px;
+  border-left: 2px solid #f5f5f5;
+  padding: 0 10px;
 }
 
 .ProductDetailContainer .Content .HeadingBox .Infor:first-of-type {
-    border: none;
-    padding: 0 10px 0 0;
+  border: none;
+  padding: 0 10px 0 0;
 }
 
-
-.ProductDetailContainer .Content .HeadingBox a{
-    font-size: 16px;
-    color: #ba646a;
-    font-weight: bold;
+.ProductDetailContainer .Content .HeadingBox a {
+  font-size: 16px;
+  color: #ba646a;
+  font-weight: bold;
 }
 
-.DetailLayout{
-    display: flex;
+.DetailLayout {
+  display: flex;
 }
 
-.ProductDetailContainer .Content .DetailBox{
-    display: flex;
-    width: 550rem;
-    min-width: 390px;
-    flex-wrap: wrap;
-    height: fit-content;
-    min-width: 420px;
-    padding: 0 15px;
-    
+.ProductDetailContainer .Content .DetailBox {
+  display: flex;
+  width: 550rem;
+  min-width: 390px;
+  flex-wrap: wrap;
+  height: fit-content;
+  min-height: 570rem;
+  min-width: 420px;
+  padding: 0 15px;
 }
-.ProductDetailContainer .Content .DetailBox .PriceBox{
-    display: flex;
-    align-items: center;
-    width: 550rem;
-    min-width: 390px ;
-    height: 70rem;
-    min-height: 50px;
-    background-color: #FAFAFA;
-    margin-top: 20px;
-}
-
-.ProductDetailContainer .Content .DetailBox .PriceBox .Title{
-    font-size: 18px;
-    margin: 0 25px;
+.ProductDetailContainer .Content .DetailBox .PriceBox {
+  display: flex;
+  align-items: center;
+  width: 550rem;
+  min-width: 390px;
+  height: 70rem;
+  min-height: 50px;
+  background-color: #fafafa;
+  margin-top: 20px;
 }
 
-.ProductDetailContainer .Content .DetailBox .PriceBox .Original{
-    font-size: 22px;
-    color: #878C8F;    
-    text-decoration: line-through;
-    margin-right: 15px;
+.ProductDetailContainer .Content .DetailBox .PriceBox .Title {
+  font-size: 18px;
+  margin: 0 25px;
 }
 
-.ProductDetailContainer .Content .DetailBox .PriceBox .Price{
-    font-size: 30px;
-    color: #FF0000;
-    margin-right: 15px;
-    font-weight: bold;
+.ProductDetailContainer .Content .DetailBox .PriceBox .Original {
+  font-size: 22rem;
+  color: #878c8f;
+  text-decoration: line-through;
+  margin-right: 15px;
 }
 
-.ProductDetailContainer .Content .DetailBox .PriceBox .Recent{
-    width: 50px;
-    height: 24px;
-    background-color: #FFFFFF;
-    color: #FF0000;
-    font-size: 18px;
-    text-align: center;
-    border: 1px solid #FF0000;
-    border-radius: 5px;
+.ProductDetailContainer .Content .DetailBox .PriceBox .Price {
+  font-size: 30rem;
+  color: #ff0000;
+  margin-right: 15px;
+  font-weight: bold;
 }
 
-.ProductDetailContainer .Content .DetailBox .Overview{
-    width: 550rem;
-    min-width: 390px ;  
-    font-size: 16px;
-    margin-top: 20px;
-    word-wrap: break-word;
+.ProductDetailContainer .Content .DetailBox .PriceBox .Recent {
+  width: 50px;
+  height: 24px;
+  background-color: #ffffff;
+  color: #ff0000;
+  font-size: 18px;
+  text-align: center;
+  border: 1px solid #ff0000;
+  border-radius: 5px;
 }
 
-
-.ProductDetailContainer .Content .DetailBox .Variant{    
-    display: flex;
-    align-items: center;
-    width: 550rem;
-    min-width: 390px ;
-    height: 70rem;
-    min-height: 50px;
-    margin-top: 20px;
+.ProductDetailContainer .Content .DetailBox .Overview {
+  width: 550rem;
+  min-width: 390px;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-left: 18px;
+  word-wrap: break-word;
 }
 
-.ProductDetailContainer .Content .DetailBox .Variant .Title{
-    font-size: 18px;
-    width: 80px;
-    margin: 0 20px;
+.ProductDetailContainer .Content .DetailBox .Variant {
+  display: flex;
+  align-items: center;
+  width: 550rem;
+  min-width: 390px;
+  height: 70rem;
+  min-height: 50px;
+  margin-top: 20px;
 }
 
-.ProductDetailContainer .Content .DetailBox .Variant .Type{
-    font-size: 16px;
-    display: flex;
-    flex-wrap: wrap;
+.ProductDetailContainer .Content .DetailBox .Variant .Title {
+  font-size: 18px;
+  width: 80px;
+  margin: 0 20px;
+}
+
+.ProductDetailContainer .Content .DetailBox .Variant .Type {
+  font-size: 16px;
+  display: flex;
+  flex-wrap: wrap;
 }
 .ProductDetailContainer .Content .DetailBox .Variant .Type label {
-    display: inline-block; /* Hiển thị nhãn như là một khối để có thể áp dụng chiều rộng và chiều cao */
-    width: fit-content; /* Đặt chiều rộng của nhãn */
-    height: 30px; /* Đặt chiều cao của nhãn */
-    border: 1.5px solid #878C8F; /* Đặt viền đen cho nhãn */
-    cursor: pointer; /* Hiển thị con trỏ tay khi di chuột qua nhãn */
-    text-align: center; /* Căn giữa văn bản trong nhãn */
-    line-height: 30px; /* Căn giữa theo chiều dọc */
-    padding: 0 10px;
-    margin: 5px;
-    border-radius: 5px;
-  }
+  display: inline-block; /* Hiển thị nhãn như là một khối để có thể áp dụng chiều rộng và chiều cao */
+  width: fit-content; /* Đặt chiều rộng của nhãn */
+  height: 30px; /* Đặt chiều cao của nhãn */
+  border: 1.5px solid #878c8f; /* Đặt viền đen cho nhãn */
+  cursor: pointer; /* Hiển thị con trỏ tay khi di chuột qua nhãn */
+  text-align: center; /* Căn giữa văn bản trong nhãn */
+  line-height: 30px; /* Căn giữa theo chiều dọc */
+  padding: 0 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
 
 .ProductDetailContainer .Content .DetailBox .Variant .Type input[type="radio"] {
-    display: none; /* Ẩn ô radio */
+  display: none; /* Ẩn ô radio */
 }
 
 .ProductDetailContainer .Content .DetailBox .Variant .Type input[type="radio"]:checked + label {
-    border-color: red; /* Thay đổi màu viền thành màu đỏ khi input radio được chọn */
+  border-color: red; /* Thay đổi màu viền thành màu đỏ khi input radio được chọn */
 
-    background: linear-gradient(225deg, rgba(255, 0, 0, 0.6) 15%, transparent 10%);
-  }
-
-.ProductDetailContainer .Content .DetailBox .Quantity{
-    display: flex;
-    align-items: center;
-    width: 550rem;
-    min-width: 390px ;
-    height: 70rem;
-    min-height: 50px;
-    margin-top: 10px;
+  background: linear-gradient(225deg, rgba(255, 0, 0, 0.6) 15%, transparent 10%);
 }
 
-.ProductDetailContainer .Content .DetailBox .Quantity .Title{    
-    font-size: 18px;
-    width: 80px;
-    margin: 0 20px;
+.ProductDetailContainer .Content .DetailBox .Quantity {
+  display: flex;
+  align-items: center;
+  width: 550rem;
+  min-width: 390px;
+  height: 70rem;
+  min-height: 50px;
+  margin-top: 10px;
 }
 
-.ProductDetailContainer .Content .DetailBox .Quantity button{
-    width: 40px;
-    height: 40px;
-    font-size: 30px;
-    padding: 0;
-    border: 1px solid #f3f4f4;
-    color: #878C8F;
-    cursor: pointer;
-}
-.ProductDetailContainer .Content .DetailBox .Quantity button:first-of-type{
-    padding-bottom: 5px;
+.ProductDetailContainer .Content .DetailBox .Quantity .Title {
+  font-size: 18px;
+  width: 80px;
+  margin: 0 20px;
 }
 
-.ProductDetailContainer .Content .DetailBox .Quantity button:hover{
-    color: black;
+.ProductDetailContainer .Content .DetailBox .Quantity button {
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  padding: 0;
+  border: 1px solid #f3f4f4;
+  color: #878c8f;
+  cursor: pointer;
+}
+.ProductDetailContainer .Content .DetailBox .Quantity button:first-of-type {
+  padding-bottom: 5px;
 }
 
-.ProductDetailContainer .Content .DetailBox .Quantity input{
-    width: 40px;
-    height: 38px;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 0;
-    border: 1px solid #f3f4f4;
-    text-align: center;
-}
-.ProductDetailContainer .Content .DetailBox .Quantity input[type="text"]:focus{
-    outline: none;
+.ProductDetailContainer .Content .DetailBox .Quantity button:hover {
+  color: black;
 }
 
-.ProductDetailContainer .Content .DetailBox .Present{
-    display: flex;
-    width: 550rem;
-    min-width: 390px;
-    height: fit-content;
-    align-items: center;
-    margin-top: 10px;
-    margin-left: 10px;
+.ProductDetailContainer .Content .DetailBox .Quantity input {
+  width: 40px;
+  height: 38px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0;
+  border: 1px solid #f3f4f4;
+  text-align: center;
+}
+.ProductDetailContainer .Content .DetailBox .Quantity input[type="text"]:focus {
+  outline: none;
 }
 
-.ProductDetailContainer .Content .DetailBox .Present img{
-    width: 42rem;
-    height: 42rem;
-    margin: 4px 10px;
-    min-width: 30px;
-    min-height: 30px;
+.ProductDetailContainer .Content .DetailBox .Present {
+  display: flex;
+  width: 550rem;
+  min-width: 390px;
+  height: fit-content;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
-.ProductDetailContainer .Content .DetailBox .Present p{
-    font-size: 14px;
-    margin: 0;
-    color: coral;
-    text-wrap: wrap;
+.ProductDetailContainer .Content .DetailBox .Present img {
+  width: 42rem;
+  height: 42rem;
+  margin: 4px 10px;
+  min-width: 30px;
+  min-height: 30px;
 }
 
+.ProductDetailContainer .Content .DetailBox .Present p {
+  font-size: 14px;
+  margin: 0;
+  color: coral;
+  text-wrap: wrap;
+}
 
 .ProductDetailContainer .Content .DetailBox .Action {
-    display: flex;
-    width: 550rem;
-    min-width: 390px ;
-    height: 70rem;
-    min-height: 50px;
-    justify-content: space-around;
-    margin-top: 20px;
+  display: flex;
+  width: 550rem;
+  min-width: 390px;
+  height: 70rem;
+  min-height: 50px;
+  justify-content: space-around;
+  margin-top: 20px;
 }
 
-.ProductDetailContainer .Content .DetailBox .Action .AddCart{
-    font-size: 18px;
-    width: 220rem;
-    min-width: 160px;
-    padding: 12px 0px;
-    height: 21px;
-    color: #FF0000;
-    background-color: #FFFFFF;
-    border: 1px solid #FF0000;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
+.ProductDetailContainer .Content .DetailBox .Action .AddCart {
+  font-size: 18px;
+  width: 220rem;
+  min-width: 160px;
+  padding: 12px 0px;
+  height: 21px;
+  color: #ff0000;
+  background-color: #ffffff;
+  border: 1px solid #ff0000;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.ProductDetailContainer .Content .DetailBox .Action .Buy{
-    font-size: 18px;
-    width: 220rem;
-    min-width: 160px;   
-    padding: 12px 0;
-    height: 21px;
-    color: #FFFFFF;
-    background-color: #FF0000;
-    border: 1px solid #FF0000;
-    text-align: center;
-    border-radius: 5px;    
-    cursor: pointer;
+.ProductDetailContainer .Content .DetailBox .Action .Buy {
+  font-size: 18px;
+  width: 220rem;
+  min-width: 160px;
+  padding: 12px 0;
+  height: 21px;
+  color: #ffffff;
+  background-color: #ff0000;
+  border: 1px solid #ff0000;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.ProductDetailContainer .Content .DelivelyBox{
-    display: flex;
-    width: 250rem;
-    min-width: 180px;
-    height: fit-content;
-    padding: 10px;
-    border: 1px solid #eee;
-    flex-direction: column;
-    margin: 10px 0 0 0px ;
+.ProductDetailContainer .Content .DelivelyBox {
+  display: flex;
+  width: 250rem;
+  min-width: 180px;
+  height: fit-content;
+  padding: 10px;
+  border: 1px solid #eee;
+  flex-direction: column;
+  margin: 10px 0 0 0px;
 }
 
-.ProductDetailContainer .Content .DelivelyBox .Title{
-    font-size: 18px;
-    font-weight: bold;
-    margin: 10px 0;
+.ProductDetailContainer .Content .DelivelyBox .Title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
 }
 
-.ProductDetailContainer .Content .DelivelyBox .DelivelyItem{
-    display: flex;
-    width: 100%;
-    align-items: center;
+.ProductDetailContainer .Content .DelivelyBox .DelivelyItem {
+  display: flex;
+  width: 100%;
+  align-items: center;
 }
 
-.ProductDetailContainer .Content .DelivelyBox .DelivelyItem img{
-    width: 30px;
-    height: 30px;
-    margin: 0 5px;
+.ProductDetailContainer .Content .DelivelyBox .DelivelyItem img {
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
 }
 
-.ProductDetailContainer .Content .DelivelyBox .DelivelyItem p{
-    font-size: 14px;
-    margin: 0;  
+.ProductDetailContainer .Content .DelivelyBox .DelivelyItem p {
+  font-size: 14px;
+  margin: 0;
 }
 
-.DescriptionContainer{
-    display: flex;
-    flex-direction: column;
-    width: 96%;
-    height: fit-content;
-    
+.DescriptionContainer {
+  display: flex;
+  flex-direction: column;
+  width: 96%;
+  height: fit-content;
 }
 
-.DescriptionContainer .NavTabs{
-    display: flex;
-    width: 100%;
-    height: 40px;
-    padding: 5px 0;
-    margin: 5px;
-    border-bottom: 1px solid #eee;
+.DescriptionContainer .NavTabs {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  padding: 5px 0;
+  margin: 5px;
+  border-bottom: 1px solid #eee;
 }
 
-.DescriptionContainer .NavTabs .Tab{
-    font-size: 18px;
-    width: 200px;
-    color: #888888;
-    cursor: pointer;
+.DescriptionContainer .NavTabs .Tab {
+  font-size: 18px;
+  width: 200px;
+  color: #888888;
+  cursor: pointer;
 }
 
-.DescriptionContainer .NavTabs .Active{
-    font-size: 18px;
-    width: 200px;
-    color: #000000;
-    cursor: pointer;
+.DescriptionContainer .NavTabs .Active {
+  font-size: 18px;
+  width: 200px;
+  color: #000000;
+  cursor: pointer;
 }
 
-.DescriptionContainer .DescriptionBox{
-    width: 100%;
-    height: fit-content;
-    margin-bottom: 10px;
-    text-wrap: wrap;
-    font-size: 14px;
-    margin-left: 10px;
+.DescriptionContainer .DescriptionBox {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 10px;
+  text-wrap: wrap;
+  font-size: 14px;
+  margin-left: 10px;
 }
 
-.DescriptionContainer .CmtBox{
-    width: 100%;
-    height: fit-content;
-    margin-bottom: 10px;
+.DescriptionContainer .CmtBox {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 10px;
 }
 
-.DescriptionContainer .CmtBox .Cmt{
-    margin-left: 10px;
-    font-size: 16px;
-    border-bottom: 1px solid #eee;
-    margin-top: 10px;
+.DescriptionContainer .CmtBox .Cmt {
+  margin-left: 10px;
+  font-size: 16px;
+  border-bottom: 1px solid #eee;
+  margin-top: 10px;
 }
-

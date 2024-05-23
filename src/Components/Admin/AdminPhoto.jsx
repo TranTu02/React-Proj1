@@ -1,39 +1,45 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "./Admin.module.css";
-import { listBanner, listCategories, listPhoto, listBrand, listCategory_Type } from "../Assets/data";
+import { listBanner, listPhoto, listBrand, listCategory_Type, listCategories, updateListPhoto, updateListBanner } from "../Assets/data";
+import axios from "axios";
 export const AdminPhoto = () => {
+  updateListPhoto(listPhoto.sort((a, b) => b.PhotoID - a.PhotoID));
+  updateListBanner(listBanner.sort((a, b) => b.BannerID - a.BannerID));
+
   const [active, setActive] = useState(true);
-  const [listColumnDisplay, setListColumnDisplay] = useState(active ? listPhoto : listBanner);
+  const [listRowDisplay, setListRowDisplay] = useState(active ? listPhoto : listBanner);
   const handleSetActive = (value) => {
     setActive(value);
-    setListColumnDisplay(value ? listPhoto : listBanner);
+    setListRowDisplay(value ? listPhoto : listBanner);
   };
-  const Title = () => {
-    let arr = [];
-    for (const key in active ? listPhoto[0] : listBanner[0]) {
-      arr.push(key);
-    }
-    return arr;
-  };
-  const Value = (id) => {
-    let arr = [];
-    let item = listColumnDisplay.find((obj) => (active ? obj.PhotoID === id : obj.BannerID === id));
-    for (const key in item) {
-      {
-        arr.push(item[key]);
-      }
-    }
-    return arr;
-  };
+  useEffect(() => {
+    setListRowDisplay(active ? listPhoto : listBanner);
+  }, [listPhoto, listBanner]);
+
   const refPhotoID = useRef("");
   const refProductID = useRef("");
   const refBannerID = useRef("");
   const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(listCategories[0].CategoryName);
-  const [selectedBrand, setSelectedBrand] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedOther, setSelectedOther] = useState("");
-  const [selectedOrder, setSelectedOrder] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Category");
+  const [selectedBrand, setSelectedBrand] = useState("Brand");
+  const [selectedType, setSelectedType] = useState("Type");
+  const [selectedOther, setSelectedOther] = useState("Other");
+  const [selectedOrder, setSelectedOrder] = useState(0);
+  const getInfor = (item) => {
+    if (active) {
+      refPhotoID.current.value = item.PhotoID;
+      refProductID.current.value = item.ProductID;
+      setSelectedImage(item.ImgSrc);
+    } else {
+      refBannerID.current.value = item.BannerID;
+      setSelectedImage(item.ImgSrc);
+      setSelectedCategory(item.CategoryID);
+      setSelectedBrand(item.BrandID);
+      setSelectedType(item.ProductTypeID);
+      setSelectedOther(item.Other);
+      setSelectedOrder(item.Order);
+    }
+  };
 
   // Xử lý khi người dùng chọn tệp ảnh
   const handleImageChange = (event) => {
@@ -51,13 +57,13 @@ export const AdminPhoto = () => {
     }
   };
   const handlePhotoIDChange = (event) => {
-    refPhotoID.current = event.target.value;
+    refPhotoID.current.value = event.target.value;
   };
   const handleProductIDChange = (event) => {
-    refProductID.current = event.target.value;
+    refProductID.current.value = event.target.value;
   };
   const handleBannerIDChange = (event) => {
-    refBannerID.current = event.target.value;
+    refBannerID.current.value = event.target.value;
   };
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
@@ -75,26 +81,262 @@ export const AdminPhoto = () => {
     setSelectedOrder(event.target.value);
   };
 
+  // API Photo
+  const deletePhoto = async (itemid) => {
+    try {
+      const response = await axios.delete(`http://localhost:3000/api/photos/${itemid}`);
+      console.log(response.data.message); // Success message from server after deletion
+      // After successful deletion, update the list of Categories or perform other tasks
+    } catch (error) {
+      console.error("Error deleting Type:", error);
+    }
+  };
+
+  const updatePhoto = async (itemid, updatedData) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/photos/${itemid}`, updatedData);
+      console.log(response.data); // Updated Type information
+      // After successful update, update the list of Categories or perform other tasks
+    } catch (error) {
+      console.error("Error updating Type:", error);
+    }
+  };
+
+  const postPhoto = async (item) => {
+    try {
+      const response = await axios.post("http://localhost:3000/api/photos", item, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.error("Error sending data:", error.response || error);
+    }
+  };
+  //
+
+  var nextID = listPhoto.length !== 0 ? listPhoto[0].PhotoID + 1 : 1;
+  const handleAddPhoto = () => {
+    const Photo = {
+      PhotoID: nextID,
+      ProductID: parseInt(refProductID.current.value),
+      ImgSrc: selectedImage,
+    };
+    for (const key in Photo) {
+      if (Photo[key] === "" || Photo[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
+    const result = window.confirm(`Chắc chắn muốn thêm id: ${nextID} ?`);
+    if (result) {
+      postPhoto(Photo)
+        .then(() => {
+          updateListPhoto([...listPhoto, Photo]);
+        })
+        .catch((error) => console.error("Error adding Present event:", error));
+    }
+  };
+
+  const handleUpdatePhoto = () => {
+    const updatedData = {
+      PhotoID: parseInt(refPhotoID.current.value),
+      ProductID: parseInt(refProductID.current.value),
+      ImgSrc: selectedImage,
+    };
+    for (const key in updatedData) {
+      if (updatedData[key] === "" || updatedData[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
+    const result = window.confirm(`Chắc chắn muốn sửa id: ${refPhotoID.current.value} ?`);
+    if (result) {
+      updatePhoto(parseInt(refPhotoID.current.value), updatedData)
+        .then(() => {
+          const newList = () => {
+            let list = [];
+            listPhoto.map((obj) => {
+              if (obj.PhotoID === updatedData.PhotoID) {
+                list.push(updatedData);
+              } else {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListPhoto(newList());
+        })
+        .catch((error) => console.error("Error updating Present event:", error));
+    }
+  };
+
+  const handleDeletePhoto = () => {
+    if (refPhotoID.current.value === "") {
+      alert("Nhập PhotoID");
+      return false;
+    }
+    const result = window.confirm(`Chắc chắn muốn hình ảnh xóa có id: ${refPhotoID.current.value} ?`);
+    if (result) {
+      deletePhoto(parseInt(refPhotoID.current.value))
+        .then(() => {
+          const newList = () => {
+            let list = [];
+            listPhoto.map((obj) => {
+              if (obj.PhotoID !== parseInt(refPhotoID.current.value)) {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListPhoto(newList());
+        })
+        .catch((error) => console.error("Error deleting Present:", error));
+    }
+  };
+
   const handleFindImg = () => {
-    const photoID = refPhotoID.current.value === "" ? "" : refPhotoID.current.trim();
-    const productID = refProductID.current.value === "" ? "" : refProductID.current.trim();
+    const photoID = refPhotoID.current.value === "" ? "" : refPhotoID.current.value.trim();
+    const productID = refProductID.current.value === "" ? "" : refProductID.current.value.trim();
     if (photoID !== "") {
-      setListColumnDisplay(listPhoto.filter((obj) => obj.PhotoID === parseInt(photoID)) || []);
+      setListRowDisplay(listPhoto.filter((obj) => obj.PhotoID === parseInt(photoID)) || []);
     } else if (productID !== "") {
-      setListColumnDisplay(listPhoto.filter((obj) => obj.ProductID === parseInt(productID)) || []);
+      setListRowDisplay(listPhoto.filter((obj) => obj.ProductID === parseInt(productID)) || []);
     } else {
-      setListColumnDisplay(listPhoto);
+      setListRowDisplay(listPhoto);
+    }
+  };
+
+  // API Banner
+  const deleteBanner = async (itemid) => {
+    try {
+      const response = await axios.delete(`http://localhost:3000/api/banners/${itemid}`);
+      console.log(response.data.message); // Success message from server after deletion
+      // After successful deletion, update the list of Categories or perform other tasks
+    } catch (error) {
+      console.error("Error deleting Type:", error);
+    }
+  };
+
+  const updateBanner = async (itemid, updatedData) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/banners/${itemid}`, updatedData);
+      console.log(response.data); // Updated Type information
+      // After successful update, update the list of Categories or perform other tasks
+    } catch (error) {
+      console.error("Error updating Type:", error);
+    }
+  };
+
+  const postBanner = async (item) => {
+    try {
+      const response = await axios.post("http://localhost:3000/api/banners", item, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.error("Error sending data:", error.response || error);
+    }
+  };
+  //
+
+  var nextIDB = listBanner.length !== 0 ? listBanner[0].BannerID + 1 : 1;
+  const handleAddBanner = () => {
+    const Banner = {
+      BannerID: nextIDB,
+      ImgSrc: selectedImage,
+      CategoryID: selectedCategory,
+      BrandID: selectedBrand,
+      ProductTypeID: selectedType,
+      Other: selectedOther,
+      Order: selectedOrder,
+    };
+    for (const key in Banner) {
+      if (Banner[key] === "" || Banner[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
+    const result = window.confirm(`Chắc chắn muốn thêm id: ${nextIDB} ?`);
+    if (result) {
+      postBanner(Banner)
+        .then(() => {
+          updateListBanner([...listBanner, Banner]);
+        })
+        .catch((error) => console.error("Error adding Present event:", error));
+    }
+  };
+
+  const handleUpdateBanner = () => {
+    const updatedData = {
+      BannerID: parseInt(refBannerID.current.value),
+      ImgSrc: selectedImage,
+      CategoryID: selectedCategory,
+      BrandID: selectedBrand,
+      ProductTypeID: selectedType,
+      Other: selectedOther,
+      Order: selectedOrder,
+    };
+    for (const key in updatedData) {
+      if (updatedData[key] === "" || updatedData[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
+    const result = window.confirm(`Chắc chắn muốn sửa id: ${refBannerID.current.value} ?`);
+    if (result) {
+      updateBanner(parseInt(refBannerID.current.value), updatedData)
+        .then(() => {
+          const newList = () => {
+            let list = [];
+            listBanner.map((obj) => {
+              if (obj.BannerID === updatedData.BannerID) {
+                list.push(updatedData);
+              } else {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListBanner(newList());
+        })
+        .catch((error) => console.error("Error updating Present event:", error));
+    }
+  };
+
+  const handleDeleteBanner = () => {
+    if (refBannerID.current.value === "") {
+      alert("Nhập BannerID");
+      return false;
+    }
+    const result = window.confirm(`Chắc chắn muốn biểu ngữ xóa có id: ${refBannerID.current.value} ?`);
+    if (result) {
+      deleteBanner(parseInt(refBannerID.current.value))
+        .then(() => {
+          const newList = () => {
+            let list = [];
+            listBanner.map((obj) => {
+              if (obj.BannerID !== parseInt(refBannerID.current.value)) {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListBanner(newList());
+        })
+        .catch((error) => console.error("Error deleting Present:", error));
     }
   };
   const handleFindBanner = () => {
-    const id = refBannerID.current.value === "" ? "" : refBannerID.current.trim();
+    const id = refBannerID.current.value === "" ? "" : refBannerID.current.value.trim();
     const order = parseInt(selectedOrder);
     if (id !== "") {
-      setListColumnDisplay(listBanner.filter((obj) => obj.BannerID === parseInt(id)) || []);
+      setListRowDisplay(listBanner.filter((obj) => obj.BannerID === parseInt(id)) || []);
     } else if (order !== 0) {
-      setListColumnDisplay(listBanner.filter((obj) => obj.Order === order) || []);
+      setListRowDisplay(listBanner.filter((obj) => obj.Order === order) || []);
     } else {
-      setListColumnDisplay(listBanner);
+      setListRowDisplay(listBanner);
     }
   };
   return (
@@ -109,11 +351,23 @@ export const AdminPhoto = () => {
       </div>
       <h3>Form</h3>
       <table>
-        <thead>
-          {Title().map((obj) => {
-            return <th>{obj}</th>;
-          })}
-        </thead>
+        {active ? (
+          <thead>
+            <th>PhotoID</th>
+            <th>ProductID</th>
+            <th>ImgSrc</th>
+          </thead>
+        ) : (
+          <thead>
+            <th>BannerID</th>
+            <th>ImgSrc</th>
+            <th>CategoryID</th>
+            <th>BrandID</th>
+            <th>ProductTypeID</th>
+            <th>Other</th>
+            <th>Order</th>
+          </thead>
+        )}
         {active ? (
           <tbody>
             <td>
@@ -149,7 +403,7 @@ export const AdminPhoto = () => {
             <td>
               <select value={selectedBrand} onChange={handleBrandChange}>
                 <option value={"Brand"}>Default</option>
-                {listBrand().map((brand) => (
+                {listBrand.map((brand) => (
                   <option key={brand.BrandID} value={brand.BrandID}>
                     {brand.BrandName}
                   </option>
@@ -168,10 +422,10 @@ export const AdminPhoto = () => {
                       );
                     })
                   : listCategory_Type
-                      .filter((obj) => obj.CategoryID === listCategories.find((obj) => obj.CategoryName === selectedCategory).CategoryID)
+                      .filter((obj) => obj.CategoryID === parseInt(selectedCategory))
                       .map((type) => {
                         return (
-                          <option key={type.ProductTypeID} value={type.ProductType}>
+                          <option key={type.ProductTypeID} value={type.ProductTypeID}>
                             {type.ProductType}
                           </option>
                         );
@@ -201,9 +455,9 @@ export const AdminPhoto = () => {
       </table>
 
       <div className={style.Action}>
-        <button>Thêm</button>
-        <button>Sửa</button>
-        <button>Xóa</button>
+        <button onClick={active ? handleAddPhoto : handleAddBanner}>Thêm</button>
+        <button onClick={active ? handleUpdatePhoto : handleUpdateBanner}>Sửa</button>
+        <button onClick={active ? handleDeletePhoto : handleDeleteBanner}>Xóa</button>
         <button onClick={active ? handleFindImg : handleFindBanner}>Tìm</button>
       </div>
       {active ? (
@@ -211,17 +465,20 @@ export const AdminPhoto = () => {
           <h3>Danh sách minh họa</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              {Title().map((obj) => {
-                return <th>{obj}</th>;
-              })}
+              <th>PhotoID</th>
+              <th>ProductID</th>
+              <th>Image</th>
             </thead>
             <tbody>
-              {listColumnDisplay.map((photo) => {
+              {listRowDisplay.map((photo) => {
                 return (
-                  <tr>
-                    {Value(photo.PhotoID).map((item) => (
-                      <td>{item}</td>
-                    ))}
+                  <tr onClick={() => getInfor(photo)}>
+                    <td>{photo.PhotoID}</td>
+                    <td>{photo.ProductID}</td>
+                    <td>
+                      {" "}
+                      <img src={photo.ImgSrc} alt="Image" style={{ maxWidth: "100%", maxHeight: "80px" }} />
+                    </td>
                   </tr>
                 );
               })}
@@ -233,17 +490,28 @@ export const AdminPhoto = () => {
           <h3>Danh sách biểu ngữ</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              {Title().map((obj) => {
-                return <th>{obj}</th>;
-              })}
+              <th>BannerID</th>
+              <th>Image</th>
+              <th>Category</th>
+              <th>BrandID</th>
+              <th>ProductTypeID</th>
+              <th>Other</th>
+              <th>Order</th>
             </thead>
             <tbody>
-              {listColumnDisplay.map((photo) => {
+              {listRowDisplay.map((photo) => {
                 return (
-                  <tr>
-                    {Value(photo.BannerID).map((item) => (
-                      <td>{item}</td>
-                    ))}
+                  <tr onClick={() => getInfor(photo)}>
+                    <td>{photo.BannerID}</td>
+                    <td>
+                      {" "}
+                      <img src={photo.ImgSrc} alt="Image" style={{ maxWidth: "100%", maxHeight: "80px" }} />
+                    </td>
+                    <td>{photo.CategoryID}</td>
+                    <td>{photo.BrandID}</td>
+                    <td>{photo.ProductTypeID}</td>
+                    <td>{photo.Other}</td>
+                    <td>{photo.Order}</td>
                   </tr>
                 );
               })}

@@ -1,55 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import style from "./Admin.module.css";
-import { listCategory_Type, listBanner, listBrand, listBill, listLocations, listProducts } from "../Assets/data";
+import { listBill, listLocations, listDetailBill, updateListBill, updateListDetailBill } from "../Assets/data";
+import axios from "axios";
 export const AdminBill = () => {
+  updateListBill(listBill.sort((a, b) => b.BillID - a.BillID));
+  updateListDetailBill(listDetailBill.sort((a, b) => b.BillID - a.BillID));
   const [active, setActive] = useState(true);
-  const currentBill = useRef("");
-  const [listRowDetail, setRow] = useState("");
-  const [listRowDisplay, setListRowDisplay] = useState(active ? listBill : currentBill.current);
+  const [listRowDisplay, setListRowDisplay] = useState(active ? listBill : listDetailBill);
   const handleSetActive = (value) => {
-    if (currentBill.current !== "") setActive(value);
+    setActive(value);
+    setListRowDisplay(value ? listBill : listDetailBill);
   };
-  //   type listProductsProps = {
-  //     product:Pro
-  //   }
+
   useEffect(() => {
-    if (active) {
-      setListRowDisplay(listBill);
-    } else {
-      const arr = [];
-      for (const obj in currentBill.current) {
-        arr.push(currentBill.current[parseInt(obj)]);
-      }
-      setRow(arr);
-    }
-  }, [active]);
-  const Title = () => {
-    let arr = [];
-    if (active)
-      for (const key in listBill[0]) {
-        if (key !== "listItems") arr.push(key);
-      }
-    else arr = ["ProductID", "ProductName", "Price", "Quantity"];
-    //   for (const key in currentBill.current[0]) {
-    //     if (key !== "Date") arr.push(key);
-    //   }
-    return arr;
-  };
-  const Value = (id) => {
-    let arr = [];
-    let item = active ? listRowDisplay.find((obj) => obj.BillID === id) : listRowDisplay.find((obj) => obj.ProudctID === id);
-    for (const key in item) {
-      {
-        if (active) {
-          if (key !== "listItems" && key !== "Date") arr.push(item[key]);
-          else if (key === "Date") arr.push(item[key].toString());
-        } else if (key === "ProductID" || key === "ProductName" || key === "Price" || key === "Quantity") {
-          arr.push(item[key]);
-        }
-      }
-    }
-    return arr;
-  };
+    setListRowDisplay(active ? listBill : listDetailBill);
+  }, [listBill, listDetailBill]);
   const refBillID = useRef("");
   const refName = useRef("");
   const refPhone = useRef("");
@@ -68,84 +33,104 @@ export const AdminBill = () => {
   const refReduce = useRef("");
   const refCost = useRef("");
   const refStatus = useRef("");
+  const refShipper = useRef("");
 
   const refProductID = useRef("");
   const refQuantity = useRef("");
-  const [ProductName, setProductName] = useState("");
-  const [Price, setPrice] = useState(0);
-  const handleBillIDChange = (event) => {
-    refBillID.current = event.target.value;
-    if (refBillID.current.trim() !== "") currentBill.current = listBill?.find((obj) => obj.BillID === parseInt(refBillID.current));
-    if (currentBill.current !== undefined) {
-      currentBill.current = currentBill.current.listItems;
+
+  const getInfor = (item) => {
+    if (active) {
+      const locationID = listLocations.find((obj) => obj.Location === item.Location);
+      refBillID.current.value = item.BillID;
+      refName.current.value = item.Name;
+      refPhone.current.value = item.PhoneNumber;
+      setSelectedLocation(locationID === undefined ? 0 : locationID.LocationID);
+      refAddress.current.value = item.Address;
+      refDate.current.value = item.Date;
+      refTime.current.value = item.Time;
+      refPayment.current.value = item.Payment;
+      refNote.current.value = item.Note;
+      refCompanyName.current.value = item.CompanyName;
+      refEmail.current.value = item.Email;
+      refTax.current.value = item.TaxCode;
+      refCompanyAddress.current.value = item.CompanyAddress;
+      refCart.current.value = item.totalCart;
+      refPresent.current.value = item.totalPresent;
+      refReduce.current.value = item.totalReduce;
+      refCost.current.value = item.totalCost;
+      refStatus.current.value = item.Status;
+      refShipper.current.value = item.Shipper;
+    } else {
+      refBillID.current.value = item.BillID;
+      refProductID.current.value = item.ProductID;
+      refQuantity.current.value = item.Quantity;
     }
   };
+
+  const handleBillIDChange = (event) => {
+    refBillID.current.value = event.target.value;
+  };
   const handleNameChange = (event) => {
-    refName.current = event.target.value;
+    refName.current.value = event.target.value;
   };
   const handlePhoneChange = (event) => {
-    refPhone.current = event.target.value;
+    refPhone.current.value = event.target.value;
   };
   const handleAddressChange = (event) => {
-    refAddress.current = event.target.value;
+    refAddress.current.value = event.target.value;
   };
   const handleDateChange = (event) => {
-    refDate.current = event.target.value;
+    refDate.current.value = event.target.value;
   };
   const handleTimeChange = (event) => {
-    refTime.current = event.target.value;
+    refTime.current.value = event.target.value;
   };
   const handlePaymentChange = (event) => {
-    refPayment.current = event.target.value;
+    refPayment.current.value = event.target.value;
   };
   const handleNoteChange = (event) => {
-    refNote.current = event.target.value;
+    refNote.current.value = event.target.value;
   };
   const handleCompanyNameChange = (event) => {
-    refCompanyName.current = event.target.value;
+    refCompanyName.current.value = event.target.value;
   };
   const handleEmailChange = (event) => {
-    refEmail.current = event.target.value;
+    refEmail.current.value = event.target.value;
   };
   const handleTaxChange = (event) => {
-    refTax.current = event.target.value;
+    refTax.current.value = event.target.value;
   };
   const handleCompanyAddressChange = (event) => {
-    refCompanyAddress.current = event.target.value;
+    refCompanyAddress.current.value = event.target.value;
   };
   const handleCartChange = (event) => {
-    refCart.current = event.target.value;
+    refCart.current.value = event.target.value;
     handleShipChange();
   };
   const handlePresentChange = (event) => {
-    refPresent.current = event.target.value;
+    refPresent.current.value = event.target.value;
   };
   const handleReduceChange = (event) => {
-    refReduce.current = event.target.value;
+    refReduce.current.value = event.target.value;
   };
   const handleCostChange = (event) => {
-    refCost.current = event.target.value;
+    refCost.current.value = event.target.value;
   };
   const handleStatusChange = (event) => {
-    refStatus.current = event.target.value;
+    refStatus.current.value = event.target.value;
   };
   const handleLocationChange = (event) => {
     setSelectedLocation(event.target.value);
   };
 
   const hanldeProductChange = (event) => {
-    refProductID.current = event.target.value;
-    let product = listProducts?.find((prd) => prd.ProductID === parseInt(refProductID.current));
-    if (product !== undefined) {
-      setProductName(product.ProductName);
-      setPrice(product.Price);
-    } else {
-      setProductName("");
-      setPrice(0);
-    }
+    refProductID.current.value = event.target.value;
   };
   const handleQuantityChange = (event) => {
-    refQuantity.current = event.target.value;
+    refQuantity.current.value = event.target.value;
+  };
+  const handleShipperChange = (event) => {
+    refShipper.current.value = event.target.value;
   };
   useEffect(() => {
     handleShipChange();
@@ -154,15 +139,166 @@ export const AdminBill = () => {
   const handleShipChange = () => {
     let ship = true;
     let location = listLocations.find((obj) => obj.LocationID === parseInt(selectedLocation));
-    if (parseFloat(refCart.current) >= 300000) ship = false;
+    if (parseFloat(refCart.current.value) >= 300000) ship = false;
     setShipCost(ship ? location.Distance * 5000 : 0);
   };
 
+  const deleteRow = async (itemid) => {
+    try {
+      const response = await axios.delete(`http://localhost:3000/api/bills/${itemid}`);
+      console.log(response.data.message); // Success message from server after deletion
+      // After successful deletion, update the list of Categories or perform other tasks
+    } catch (error) {
+      console.error("Error deleting Type:", error);
+    }
+  };
+
+  const updateRow = async (itemid, updatedData) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/bills/${itemid}`, updatedData);
+      console.log(response.data); // Updated Type information
+      // After successful update, update the list of Categories or perform other tasks
+    } catch (error) {
+      console.error("Error updating Type:", error);
+    }
+  };
+
+  const postRow = async (item) => {
+    try {
+      const response = await axios.post("http://localhost:3000/api/bills", item, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.error("Error sending data:", error.response || error);
+    }
+  };
+  //
+
+  var nextID = listBill.length !== 0 ? listBill[0].BillID + 1 : 1;
+  const handleAddBill = () => {
+    const Bill = {
+      BillID: nextID,
+      Name: refName.current.value,
+      PhoneNumber: refPhone.current.value,
+      Location: listLocations.find((obj) => obj.LocationID === parseInt(selectedLocation)).Location,
+      Address: refAddress.current.value,
+      Date: refDate.current.value,
+      Time: refTime.current.value,
+      Payment: refPayment.current.value,
+      Note: refNote.current.value,
+      CompanyName: refCompanyName.current.value,
+      Email: refEmail.current.value,
+      TaxCode: refTax.current.value,
+      CompanyAddress: refCompanyAddress.current.value,
+      totalCart: parseInt(refCart.current.value),
+      totalPresent: parseFloat(refPresent.current.value),
+      ShipCost: shipCost,
+      totalReduce: parseInt(refReduce.current.value),
+      totalCost: parseInt(refCost.current.value),
+      Shipper: refShipper.current.value,
+      Status: parseInt(refStatus.current.value),
+    };
+    for (const key in Bill) {
+      if (Bill[key] === "" || Bill[key] === undefined) {
+        if (key !== "Shipper" && key !== "Note" && key !== "CompanyName" && key !== "CompanyAddress" && key !== "TaxCode" && key !== "Email") alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
+    const result = window.confirm(`Chắc chắn muốn thêm id: ${nextID} ?`);
+    if (result) {
+      postRow(Bill)
+        .then(() => {
+          updateListBill([...listBill, Bill]);
+        })
+        .catch((error) => console.error("Error adding Present event:", error));
+    }
+  };
+
+  const handleUpdateBill = () => {
+    const updatedData = {
+      BillID: parseInt(refBillID.current.value),
+      Name: refName.current.value,
+      PhoneNumber: refPhone.current.value,
+      Location: listLocations.find((obj) => obj.LocationID === parseInt(selectedLocation)).Location,
+      Address: refAddress.current.value,
+      Date: refDate.current.value,
+      Time: refTime.current.value,
+      Payment: refPayment.current.value,
+      Note: refNote.current.value,
+      CompanyName: refCompanyName.current.value,
+      Email: refEmail.current.value,
+      TaxCode: refTax.current.value,
+      CompanyAddress: refCompanyAddress.current.value,
+      totalCart: parseInt(refCart.current.value),
+      totalPresent: parseFloat(refPresent.current.value),
+      ShipCost: shipCost,
+      totalReduce: parseInt(refReduce.current.value),
+      totalCost: parseInt(refCost.current.value),
+      Shipper: refShipper.current.value,
+      Status: parseInt(refStatus.current.value),
+    };
+    for (const key in updatedData) {
+      if (updatedData[key] === "" || updatedData[key] === undefined) {
+        if (key !== "Shipper" && key !== "Note" && key !== "CompanyName" && key !== "CompanyAddress" && key !== "TaxCode" && key !== "Email") {
+          alert("Nhập đủ thông tin!");
+          return false;
+        }
+      }
+    }
+
+    const result = window.confirm(`Chắc chắn muốn sửa id: ${refBillID.current.value} ?`);
+    if (result) {
+      updateRow(parseInt(refBillID.current.value), updatedData)
+        .then(() => {
+          const newList = () => {
+            let list = [];
+            listBill.map((obj) => {
+              if (obj.BillID === updatedData.BillID) {
+                list.push(updatedData);
+              } else {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListBill(newList());
+        })
+        .catch((error) => console.error("Error updating Present event:", error));
+    }
+  };
+
+  const handleDeleteBill = () => {
+    if (refBillID.current.value === "") {
+      alert("Nhập thông tin BillID!");
+      return false;
+    }
+    const result = window.confirm(`Chắc chắn muốn xóa có id: ${refBillID.current.value} ?`);
+    if (result) {
+      console.log(refBillID.current.value);
+      deleteRow(parseInt(refBillID.current.value))
+        .then(() => {
+          const newList = () => {
+            let list = [];
+            listBill.map((obj) => {
+              if (obj.BillID === parseInt(refBillID.current.value)) {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListBill(newList());
+        })
+        .catch((error) => console.error("Error deleting Present:", error));
+    }
+  };
+
   const handleFindBill = () => {
-    const id = refBillID.current.value === "" ? "" : refBillID.current.trim();
-    const phone = refPhone.current.value === "" ? "" : refPhone.current.trim();
-    const tax = refTax.current.value === "" ? "" : refTax.current.trim();
-    const status = refStatus.current.value === "" ? "" : refStatus.current.trim();
+    const id = refBillID.current.value === "" ? "" : refBillID.current.value.trim();
+    const phone = refPhone.current.value === "" ? "" : refPhone.current.value.trim();
+    const tax = refTax.current.value === "" ? "" : refTax.current.value.trim();
+    const status = refStatus.current.value === "" ? "" : refStatus.current.value.trim();
     if (id !== "") {
       setListRowDisplay(listBill?.filter((obj) => obj.BillID === parseInt(id)));
     } else if (phone !== "") {
@@ -180,17 +316,128 @@ export const AdminBill = () => {
       setListRowDisplay((prev) => prev.filter((obj) => obj.Status === parseInt(status)));
     }
   };
-  const handleDetail = () => {
-    if (currentBill.current === undefined) alert("Nhập đúng BillID!");
-    else handleSetActive(false);
+  const deleteRowD = async (itemid, idp) => {
+    try {
+      const response = await axios.delete(`http://localhost:3000/api/detailbill/${itemid}/${idp}`);
+      console.log(response.data.message); // Success message from server after deletion
+      // After successful deletion, update the list of Categories or perform other tasks
+    } catch (error) {
+      console.error("Error deleting Type:", error);
+    }
+  };
+
+  const updateRowD = async (itemid, idp, updatedData) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/detailbill/${itemid}/${idp}`, updatedData);
+      console.log(response.data); // Updated Type information
+      // After successful update, update the list of Categories or perform other tasks
+    } catch (error) {
+      console.error("Error updating Type:", error);
+    }
+  };
+
+  const postRowD = async (item) => {
+    try {
+      const response = await axios.post("http://localhost:3000/api/detailbill", item, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.error("Error sending data:", error.response || error);
+    }
+  };
+  //
+
+  const handleAddDetailBill = () => {
+    const Bill = {
+      BillID: parseInt(refBillID.current.value),
+      ProductID: parseInt(refProductID.current.value),
+      Quantity: parseInt(refQuantity.current.value),
+    };
+    for (const key in Bill) {
+      if (Bill[key] === "" || Bill[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
+    if (listDetailBill.find((obj) => obj.BillID === Bill.BillID && obj.ProductID === Bill.ProductID) !== undefined) {
+      alert("Đã tồn tại sản phẩm trong hóa đơn!");
+      return false;
+    }
+    const result = window.confirm(`Chắc chắn muốn thêm id: ${refBillID.current.value} + ${refProductID.current.value}?`);
+    if (result) {
+      postRowD(Bill)
+        .then(() => {
+          updateListDetailBill([...listDetailBill, Bill]);
+        })
+        .catch((error) => console.error("Error adding Present event:", error));
+    }
+  };
+
+  const handleUpdateDetailBill = () => {
+    const updatedData = {
+      BillID: parseInt(refBillID.current.value),
+      ProductID: parseInt(refProductID.current.value),
+      Quantity: parseInt(refQuantity.current.value),
+    };
+    for (const key in updatedData) {
+      if (updatedData[key] === "" || updatedData[key] === undefined) {
+        alert("Nhập đủ thông tin!");
+        return false;
+      }
+    }
+    const result = window.confirm(`Chắc chắn muốn sửa id: ${refBillID.current.value} ?`);
+    if (result) {
+      updateRowD(parseInt(refBillID.current.value), parseInt(refProductID.current.value), updatedData)
+        .then(() => {
+          const newList = () => {
+            let list = [];
+            listDetailBill.map((obj) => {
+              if (obj.BillID === updatedData.BillID && obj.ProductID === updatedData.ProductID) {
+                list.push(updatedData);
+              } else {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListDetailBill(newList());
+        })
+        .catch((error) => console.error("Error updating Present event:", error));
+    }
+  };
+
+  const handleDeleteDetailBill = () => {
+    if (refBillID.current.value === "" || refProductID.current.value === "") {
+      alert("Nhập đủ thông tin BillID và ProductID!");
+      return false;
+    }
+    const result = window.confirm(`Chắc chắn muốn xóa có id: ${refBillID.current.value} ?`);
+    if (result) {
+      console.log(refBillID.current.value);
+      deleteRowD(parseInt(refBillID.current.value), parseInt(refProductID.current.value))
+        .then(() => {
+          const newList = () => {
+            let list = [];
+            listDetailBill.map((obj) => {
+              if (obj.BillID !== parseInt(refBillID.current.value) || obj.ProductID !== parseInt(refProductID.current.value)) {
+                list.push(obj);
+              }
+            });
+            return list;
+          };
+          updateListDetailBill(newList());
+        })
+        .catch((error) => console.error("Error deleting Present:", error));
+    }
   };
   const handleFindProduct = () => {
-    const pid = refProductID.current.value === "" ? "" : refProductID.current;
-    if (pid !== "") {
-      console.log(pid);
-      setRow(currentBill.current.filter((obj) => obj.ProductID === parseInt(pid)));
+    const id = refBillID.current.value === "" ? "" : refBillID.current.value.trim();
+    if (id !== "") {
+      setListRowDisplay(listDetailBill.filter((obj) => obj.BillID === parseInt(id)));
     } else {
-      setListRowDisplay(currentBill.current);
+      setListRowDisplay(listDetailBill);
     }
   };
   return (
@@ -266,6 +513,7 @@ export const AdminBill = () => {
               <th>ShipCost</th>
               <th>totalReduce</th>
               <th>totalCost</th>
+              <th>Shipper</th>
               <th>Status</th>
             </thead>
             <tbody>
@@ -297,6 +545,9 @@ export const AdminBill = () => {
                 <input type="text" ref={refCost} onChange={handleCostChange} />
               </td>
               <td>
+                <input type="text" ref={refShipper} onChange={handleShipperChange} />
+              </td>
+              <td>
                 <input type="text" ref={refStatus} onChange={handleStatusChange} />
               </td>
             </tbody>
@@ -306,20 +557,18 @@ export const AdminBill = () => {
         <>
           <table>
             <thead>
-              {Title().map((obj) => {
-                return <th>{obj}</th>;
-              })}
+              <th>BillID</th>
+              <th>ProductID</th>
+              <th>Quantity</th>
             </thead>
             <tbody>
               <td>
+                <input type="text" ref={refBillID} onChange={handleBillIDChange} />
+              </td>
+              <td>
                 <input type="text" ref={refProductID} onChange={hanldeProductChange} />
               </td>
-              <td>
-                <input type="text" value={ProductName} />
-              </td>
-              <td>
-                <input type="text" value={Price} />
-              </td>
+
               <td>
                 <input type="text" ref={refQuantity} onChange={handleQuantityChange} />
               </td>
@@ -328,28 +577,61 @@ export const AdminBill = () => {
         </>
       )}
       <div className={style.Action}>
-        <button>Thêm</button>
-        <button>Sửa</button>
-        <button>Xóa</button>
+        <button onClick={active ? handleAddBill : handleAddDetailBill}>Thêm</button>
+        <button onClick={active ? handleUpdateBill : handleUpdateDetailBill}>Sửa</button>
+        <button onClick={active ? handleDeleteBill : handleDeleteDetailBill}>Xóa</button>
         <button onClick={active ? handleFindBill : handleFindProduct}>Tìm</button>
-        {active ? <button onClick={handleDetail}>Chi tiết</button> : <button onClick={() => setActive(true)}>Quay lại</button>}
       </div>
       {active ? (
         <>
           <h3>Danh sách hóa đơn</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              {Title().map((obj) => {
-                return <th>{obj}</th>;
-              })}
+              <th>BillID</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Location</th>
+              <th>Address</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Payment</th>
+              <th>Note</th>
+              <th>CompanyName</th>
+              <th>Email</th>
+              <th>TaxCode</th>
+              <th>CompanyAddress</th>
+              <th>totalCart</th>
+              <th>totalPresent</th>
+              <th>ShipCost</th>
+              <th>totalReduce</th>
+              <th>totalCost</th>
+              <th>PhoneShipper</th>
+              <th>Status</th>
             </thead>
             <tbody>
-              {listRowDisplay.map((Category) => {
+              {listRowDisplay.map((bill) => {
                 return (
-                  <tr>
-                    {Value(Category.BillID).map((item) => (
-                      <td>{item}</td>
-                    ))}
+                  <tr onClick={() => getInfor(bill)}>
+                    <td>{bill.BillID}</td>
+                    <td>{bill.Name}</td>
+                    <td>{bill.PhoneNumber}</td>
+                    <td>{bill.Location}</td>
+                    <td>{bill.Address}</td>
+                    <td>{bill.Date}</td>
+                    <td>{bill.Time}</td>
+                    <td>{bill.Payment}</td>
+                    <td>{bill.Note}</td>
+                    <td>{bill.CompanyName}</td>
+                    <td>{bill.Email}</td>
+                    <td>{bill.TaxCode}</td>
+                    <td>{bill.CompanyAddress}</td>
+                    <td>{bill.totalCart}</td>
+                    <td>{bill.totalPresent}</td>
+                    <td>{bill.ShipCost}</td>
+                    <td>{bill.totalReduce}</td>
+                    <td>{bill.totalCost}</td>
+                    <td>{bill.Shipper === undefined ? "" : bill.Shipper}</td>
+                    <td>{bill.Status}</td>
                   </tr>
                 );
               })}
@@ -361,17 +643,16 @@ export const AdminBill = () => {
           <h3>Chi tiết hóa đơn</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              {Title().map((obj) => {
-                return <th>{obj}</th>;
-              })}
+              <th>BillID</th>
+              <th>ProductID</th>
+              <th>Quantity</th>
             </thead>
             <tbody>
-              {listRowDetail.map((product) => (
-                <tr>
-                  <td>{product.ProductID}</td>
-                  <td>{product.ProductName}</td>
-                  <td>{product.Price}</td>
-                  <td>{product.Quantity}</td>
+              {listRowDisplay.map((bill) => (
+                <tr onClick={() => getInfor(bill)}>
+                  <td>{bill.BillID}</td>
+                  <td>{bill.ProductID}</td>
+                  <td>{bill.Quantity}</td>
                 </tr>
               ))}
             </tbody>

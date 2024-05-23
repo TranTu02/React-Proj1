@@ -1,60 +1,58 @@
-.FooterContainer{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    min-width: 1360px;
-    min-height: 300px;
-    background-color: #363636;
-    position:relative;
-    top: 2%;
-    margin: 0;
-    justify-content:center;
-    padding-top: 10px;
+.FooterContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-width: 1360px;
+  min-height: 200rem;
+  background-color: #363636;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  justify-content: center;
+  padding-top: 10rem;
 }
 
-
-
-.FooterContainer .FooterContent{
-    width: 1344rem;
-    min-width: 920px;
-    height: auto;
-    display: flex;
-    justify-content: center;
+.FooterContainer .FooterContent {
+  width: 1344rem;
+  min-width: 920rem;
+  height: auto;
+  display: flex;
+  justify-content: center;
 }
 
-.FooterContainer .FooterContent .FooterContentSection{
-    display: flex;
-    flex-direction: column;
-    width: 24%;
-    height: 300px;
-    margin: 10px;
-    justify-content: left;
+.FooterContainer .FooterContent .FooterContentSection {
+  display: flex;
+  flex-direction: column;
+  width: 24%;
+  height: 200rem;
+  margin: 10rem;
+  justify-content: left;
 }
 
-.FooterContainer .FooterContent .FooterContentSection .FooterInfor{
-    font-size: 12px;
-    color: #FFFFFF ;
-    text-wrap: wrap;
+.FooterContainer .FooterContent .FooterContentSection .FooterInfor {
+  font-size: 12rem;
+  color: #ffffff;
+  text-wrap: wrap;
 }
 
-.FooterContainer .FooterContent .FooterContentSection .FooterTitle{
-    font-size: 12px;
-    color: #8B8B8B ;
-    text-wrap: wrap;
+.FooterContainer .FooterContent .FooterContentSection .FooterTitle {
+  font-size: 12rem;
+  color: #8b8b8b;
+  text-wrap: wrap;
 }
 
-.FooterContainer .FooterContent .FooterContentSection .FooterLink{
-    font-size: 12px;
-    color: #FFFFFF ;
-    text-wrap: wrap;
-    margin-top: 20px;
+.FooterContainer .FooterContent .FooterContentSection .FooterLink {
+  font-size: 12rem;
+  color: #ffffff;
+  text-wrap: wrap;
+  margin-top: 20rem;
 }
 
-.FooterContainer .FooterContent .FooterContentSection .FooterPathContainer{
-    display: flex;
-    justify-content: left;
+.FooterContainer .FooterContent .FooterContentSection .FooterPathContainer {
+  display: flex;
+  justify-content: left;
 }
 
-.FooterContainer .FooterContent .FooterContentSection .FooterPathContainer img{
-    margin-right: 10px;
+.FooterContainer .FooterContent .FooterContentSection .FooterPathContainer img {
+  margin-right: 10rem;
 }

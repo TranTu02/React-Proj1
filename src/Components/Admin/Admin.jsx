@@ -1,6 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import style from "./Admin.module.css";
-import { listCategory_Type, listProducts } from "../Assets/data";
 import { AdminProduct } from "./AdminProduct";
 import { AdminAccount } from "./AdminAccount";
 import { AdminLocation } from "./AdminLocation";
@@ -11,7 +10,17 @@ import { AdminPresent } from "./AdninPresent";
 import { AdminStock } from "./AdminStock";
 import { AdminBill } from "./AdminBill";
 import { AdminBrand } from "./AdminBrand";
+import { AdminStatistical } from "./AdminStatistical";
+import { listAccount } from "../Assets/data";
+import { ShopContext } from "../../Contexts/CartContext";
 export const Admin = () => {
+  const { phoneNumber } = useContext(ShopContext);
+  const currentAuthorize = useRef();
+  useEffect(() => {
+    if (listAccount.find((obj) => obj.PhoneNumber === phoneNumber) !== undefined) {
+      currentAuthorize.current = listAccount.find((obj) => obj.PhoneNumber === phoneNumber).Authorize;
+    }
+  }, []);
   const initialAdminPage = parseInt(localStorage.getItem("adminPage")) || 0;
   const [adminPage, setAdminPage] = useState(initialAdminPage);
   useEffect(() => {
@@ -52,9 +61,9 @@ export const Admin = () => {
       break;
     case 9:
       setDisplay(<AdminBrand />);
-
+      break;
     default:
-      setDisplay(<></>);
+      setDisplay(<AdminStatistical />);
   }
   return (
     <div className={style.AdminContainer}>
@@ -83,15 +92,19 @@ export const Admin = () => {
         <div className={style.Task} onClick={() => setAdminPage(6)}>
           <h3>Nhập kho</h3>
         </div>
-        <div className={style.Task} onClick={() => setAdminPage(7)}>
+        {/* <div className={style.Task} onClick={() => setAdminPage(7)}>
           <h3>Khu vực giao hàng</h3>
-        </div>
+        </div> */}
         <div className={style.Task} onClick={() => setAdminPage(8)}>
           <h3>Hóa đơn</h3>
         </div>
-        <div className={style.Task} onClick={() => setAdminPage(10)}>
-          <h3>Thống kê</h3>
-        </div>
+        {currentAuthorize.current >= 2 ? (
+          <div className={style.Task} onClick={() => setAdminPage(10)}>
+            <h3>Thống kê</h3>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
       <div className={style.Main}>{display.current}</div>
     </div>

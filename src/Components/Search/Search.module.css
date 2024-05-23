@@ -1,67 +1,66 @@
-.SearchContainer{
-    display: flex;
-    width: 1400rem;
-    min-width: 1000px;
-    height: fit-content;
-    margin: 20px auto;
-    flex-direction: column;
+.SearchContainer {
+  display: flex;
+  width: 1344rem;
+  min-height: 70vh;
+  height: fit-content;
+  margin: 20px auto;
+  flex-direction: column;
 }
 
-.SearchContainer .Heading{
-    width: 100%;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+.SearchContainer .Heading {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
-.SearchContainer .Heading h2{
-    font-size: 30px;
-    color: #862227;
-    margin: 10px auto 0 auto;
+.SearchContainer .Heading h2 {
+  font-size: 30px;
+  color: #862227;
+  margin: 10px auto 0 auto;
 }
 
-.SearchContainer .Heading p{
-    font-size: 16px;
-    color: #252A2B;
-    margin: 0;
+.SearchContainer .Heading p {
+  font-size: 16px;
+  color: #252a2b;
+  margin: 0;
 }
 
-.SearchContainer .Heading .Line{
-    width: 120px;
-    height: 5px;
-    margin: 15px auto;
-    background-color: #252A2B;
+.SearchContainer .Heading .Line {
+  width: 120px;
+  height: 5px;
+  margin: 15px auto;
+  background-color: #252a2b;
 }
 
-.SearchContainer .SubText{
-    width: 100%;
-    font-size: 15px;
+.SearchContainer .SubText {
+  width: 100%;
+  font-size: 15px;
 }
 
-.SearchContainer .ProductsContainer{
-    width: 100%;
-    height: fit-content;
-    margin: 10px;
-    display: flex;
-    justify-content:left;
-    flex-wrap: wrap;
-    position: relative;
+.SearchContainer .ProductsContainer {
+  width: 92%;
+  height: fit-content;
+  padding: 0 52rem;
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  position: relative;
 }
 
-.SearchContainer .BtnMore{
-    display: flex;
-    width: 260px;
-    height: 50px;   
-    cursor: pointer;    
-    border-radius: 10px;
-    margin: auto;
-    border: 1px solid black;
+.SearchContainer .BtnMore {
+  display: flex;
+  width: 260px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 10px;
+  margin: auto;
+  border: 1px solid black;
 }
 
-.SearchContainer .BtnMore a{
-    text-decoration: none;
-    font-size: 20px;
-    margin: auto;
-    height: 25px;
+.SearchContainer .BtnMore a {
+  text-decoration: none;
+  font-size: 20px;
+  margin: auto;
+  height: 25px;
 }
-

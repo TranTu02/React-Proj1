@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
   background-color: unset;
+  padding-bottom: 250rem;
 }
 
 .rotate {
@@ -28,7 +29,7 @@
   background-color: aliceblue;
   width: 320rem;
   height: fit-content;
-  max-height: 500rem;
+  max-height: 400rem;
   min-width: 255px;
   margin: 10px 0;
   padding: 0 10px;
@@ -56,7 +57,7 @@
 }
 .FilterContainer ul li ul {
   width: 90%;
-  display: none;
+  display: block;
 }
 .FilterContainer ul li ul li {
   font-size: 16px;
@@ -67,9 +68,6 @@
 }
 .FilterContainer li:hover {
   font-weight: 600;
-}
-.FilterContainer ul li:hover ul {
-  display: block;
 }
 .FilterContainer ul li ul li:hover {
   color: red;
@@ -122,27 +120,27 @@
 .ProductContainer {
   display: flex;
   width: 1030rem;
-  min-width: 780px;
   height: auto;
   margin: 10px;
+  margin-left: 30rem;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 }
 
 .ProductContainer .Banner {
   width: 1010rem;
-  min-width: 780px;
   height: 450rem;
-  min-height: 340px;
+  object-fit: cover;
+  margin-left: 10rem;
+  border: #eee 1px solid;
 }
 
 .ProductContainer .Title {
   display: flex;
   width: 1010rem;
-  min-width: 780px;
   height: 50px;
-  margin: 10px 0;
+  margin: 15rem 0 0 10rem;
   justify-content: space-between;
   align-items: start;
 }

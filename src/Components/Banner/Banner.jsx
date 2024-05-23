@@ -1,17 +1,12 @@
 import React from "react";
 import SlideShow from "./SlideShow";
-import "../Assets/add1.jpg";
-import "../Assets/add2.png";
+import { listBanner } from "../Assets/data";
 
 function App() {
-  const images = [
-    { src: require("../Assets/add1.jpg") },
-    { src: require("../Assets/add2.png") },
-  ];
-
+  let listBannerDisplay = listBanner.sort((a, b) => b.Order - a.Order).slice(0, 5);
   return (
     <div>
-      <SlideShow images={images} />
+      <SlideShow images={listBannerDisplay} />
     </div>
   );
 }

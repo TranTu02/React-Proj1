@@ -1,5 +1,5 @@
 import styles from "./Header.module.css";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import PinMapIcon from "../Assets/pin-map.png";
@@ -11,13 +11,13 @@ import Location from "../Location/Location.jsx";
 
 function Header() {
   const navigate = useNavigate();
-  const { getTotalCartItems, currentLocation, phoneNumber } =
-    useContext(ShopContext);
+  const { getTotalCartItems, currentLocation, phoneNumber } = useContext(ShopContext);
   const [isDisplayPinMap, setIsDisplayPinMap] = useState(false);
   const handlePinMap = () => {
     setIsDisplayPinMap(!isDisplayPinMap);
-    console.log(isDisplayPinMap);
   };
+  const [accountName, setaccountName] = useState();
+
   const routeLogin = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     navigate("/Login");
@@ -52,15 +52,12 @@ function Header() {
           <img src={Cart} />
           <p>Giỏ hàng({getTotalCartItems()})</p>
         </div>
-        <div
-          className={styles.User}
-          onClick={phoneNumber !== "" ? routeAccount : routeLogin}
-        >
+        <div className={styles.User} onClick={phoneNumber !== "" ? routeAccount : routeLogin}>
           <img src={User} />
           <p>
-            {phoneNumber === ""
+            {listAccount.find((obj) => obj.PhoneNumber === JSON.parse(localStorage.getItem("PhoneNumber"))) === undefined
               ? "Hội Viên"
-              : listAccount.find((obj) => obj.PhoneNumber === phoneNumber).Name}
+              : listAccount.find((obj) => obj.PhoneNumber === JSON.parse(localStorage.getItem("PhoneNumber"))).Name}
           </p>
         </div>
       </div>

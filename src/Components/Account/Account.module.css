@@ -4,9 +4,10 @@
   width: 100%;
   height: fit-content;
   min-width: 1330px;
+  padding-bottom: 250rem;
 }
 .AccountBody .AccountContainer {
-  width: 800rem;
+  width: 1000rem;
   min-width: 800px;
   min-height: 500px;
   height: fit-content;
@@ -104,14 +105,19 @@
 }
 
 .AccountBody .AccountContainer .ListBills .InforBox {
-  width: 22%;
+  width: 20%;
 }
-.AccountBody .AccountContainer p:first-of-type {
-  width: 18%;
+.AccountBody .AccountContainer .DateTime {
+  width: 12%;
+  padding-left: 5rem;
 }
 .AccountBody .AccountContainer p {
-  width: 24%;
+  width: 20%;
   font-size: 16px;
+}
+.AccountBody .AccountContainer p button {
+  position: absolute;
+  z-index: 10;
 }
 .AccountBody .CloseBill {
   color: red;

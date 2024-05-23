@@ -1,4 +1,5 @@
 import SetRem from "./Contexts/SetRem.jsx";
+import style from "./App.module.css";
 import { BrowserRouter, useParams, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header/Header.jsx";
 import NavBar from "./Components/Navbar/NavBar.jsx";
@@ -13,12 +14,13 @@ import LoginSignUp from "./Pages/Login-SignUp.jsx";
 import Location from "./Components/Location/Location.jsx";
 import { AccountPage } from "./Pages/AccountPage.jsx";
 import { Adminpage } from "./Pages/Adminpage.jsx";
-import { listProducts, updateApi } from "./Components/Assets/data.js";
-import { useEffect } from "react";
+import { initializeData, listProducts, listSaleEvents, updateApi } from "./Components/Assets/data.js";
+import { useEffect, useState } from "react";
+
 function App() {
   return (
     <BrowserRouter>
-      <div>
+      <div className={style.Page}>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/SearchPage/:searchTerm" element={<SearchPage />} />

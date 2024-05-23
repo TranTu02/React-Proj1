@@ -4,12 +4,12 @@ import Item from "../Item/Item.jsx";
 import * as DATA from "../Assets/data.js";
 import { useNavigate } from "react-router-dom";
 
-function CategoryHome({ CategoryID }) {
-  const in4 = DATA.ListProductsByCategory(CategoryID);
-  const data = in4.Products.slice(0, 20);
+function CategoryHome({ CategoryID, CategoryName, BrandID }) {
+  const in4 = CategoryID !== undefined ? DATA.listProducts?.filter((obj) => obj.CategoryID === parseInt(CategoryID)) : DATA.listProducts?.filter((obj) => obj.BrandID === parseInt(BrandID));
+  const data = in4.slice(0, 20);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-  const indexOfLastItem = currentPage * itemsPerPage > data.length ? (currentPage - 1) * itemsPerPage + (data.length % 5) : currentPage * itemsPerPage;
+  const itemsPerPage = 6;
+  const indexOfLastItem = currentPage * itemsPerPage > data.length ? (currentPage - 1) * itemsPerPage + (data.length % 6) : currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
@@ -34,7 +34,7 @@ function CategoryHome({ CategoryID }) {
   return (
     <div className={style.ListContainer}>
       <div className={style.ListTitle}>
-        <h3 onClick={routeCategory}>{in4.Name}</h3>
+        <h3 onClick={routeCategory}>{CategoryName}</h3>
         <div>
           <div className={style.Prev} onClick={prevPage}>
             &#10094;

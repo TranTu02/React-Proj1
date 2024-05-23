@@ -7,21 +7,27 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.8",
+    "chart.js": "^4.4.2",
+    "d3": "^7.9.0",
     "express": "^4.19.2",
     "mongo": "^0.1.0",
     "mongodb": "^6.6.1",
     "nodemon": "^3.1.0",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.0",
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.2",
+    "recharts": "^2.12.7",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-client": "react-scripts start",
+    "start-server": "node Server/server.js",
+    "start": "concurrently \"npm run start-client\" \"npm run start-server\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -43,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

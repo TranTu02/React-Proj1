@@ -1,0 +1,19 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1920rem;
+  height: 1080rem;
+  background-color: rgba(255, 255, 255); /* Màu trắng với độ mờ */
+  z-index: 9999; /* Đảm bảo lớp nền chồng lên trên tất cả các phần tử khác */
+  opacity: 1.2; /* Trạng thái ban đầu: hiển thị */
+  animation: scaleDown 1s ease 0.15s forwards; /* Sử dụng animation scaleDown với thời gian 1s */
+}
+
+@keyframes scaleDown {
+  to {
+    transform: scale(0); /* Thu nhỏ overlay về giữa */
+    opacity: 0; /* Trạng thái kết thúc: ẩn đi */
+    z-index: -10; /* Đảm bảo lớp nền chồng lên trên tất cả các phần tử khác */
+  }
+}

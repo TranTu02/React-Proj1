@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { initializeData } from "../Components/Assets/data";
+import style from "./Rem.module.css";
 
 const SetRem = () => {
   useEffect(() => {
@@ -23,7 +25,7 @@ const SetRem = () => {
     }
   }, []);
 
-  return null;
+  return <div className={style.overlay}></div>;
 };
 
 export default SetRem;

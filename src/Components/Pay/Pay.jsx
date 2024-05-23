@@ -1,18 +1,24 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import style from "./Pay.module.css";
 import { ShopContext } from "../../Contexts/CartContext";
 import * as DATA from "../Assets/data.js";
 import Bill from "../Bill/Bill.jsx";
 import Location from "../Location/Location.jsx";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Pay() {
   let formatter = new Intl.NumberFormat("en-US");
   // Thay đổi địa điểm
+  useEffect(() => {
+    if ((refName.current.value = DATA.listAccount.find((obj) => obj.PhoneNumber === phoneNumber) !== undefined)) {
+      refName.current.value = DATA.listAccount.find((obj) => obj.PhoneNumber === phoneNumber).Name;
+      refPhone.current.value = phoneNumber;
+    }
+  }, []);
   const [isDisplayPinMap, setIsDisplayPinMap] = useState(false);
   const handlePinMap = () => {
     setIsDisplayPinMap(!isDisplayPinMap);
-    console.log(isDisplayPinMap);
   };
   const currentDate = new Date();
   // lấy thông tin thời gian
@@ -62,49 +68,74 @@ function Pay() {
   const [isInvoice, setIsInvoice] = useState(false);
   const [isAccept, setIsAccept] = useState(false);
   // Giỏ hàng
-  const { cartItems, deleteCart, getTotalCartAmount, currentLocation } = useContext(ShopContext);
+  const { cartItems, deleteCart, getTotalCartAmount, currentLocation, phoneNumber } = useContext(ShopContext);
   const cartInfor = DATA.ListCartInfor(cartItems);
+  const listItem = useRef(cartInfor.listItems);
   const shipCost = getTotalCartAmount(0) >= 300000 ? 0 : currentLocation.Distance * 5000;
 
   const [isDisplayBill, setIsDisplayBill] = useState(false);
 
-  const handleDisplayBill = () => {
-    const result = window.confirm("Bạn có chắc chắn muốn đặt đơn hàng?");
-    if (result) {
-      // Thực hiện hành động khi người dùng đồng ý
-      alert("Đặt hàng thành công");
-      setIsDisplayBill(!isDisplayBill);
-      deleteCart();
-    } else {
-      // Thực hiện hành động khi người dùng từ chối
-      alert("Đã hủy bỏ");
+  const postRow = async (item) => {
+    try {
+      const response = await axios.post("http://localhost:3000/api/bills", item, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.error("Error sending data:", error.response || error);
     }
   };
+  //
+
+  var nextID = DATA.listBill.length !== 0 ? DATA.listBill[DATA.listBill.length - 1].BillID + 1 : 1;
+  const handleAddBill = (Bill) => {
+    postRow(Bill)
+      .then(() => {})
+      .catch((error) => console.error("Error adding Present event:", error));
+  };
+
   const navigate = useNavigate();
   const routeMainPage = () => {
     const result = window.confirm("Xác nhận thoát và quay về trang chủ?");
     if (result) {
       navigate("/");
-      alert("Cảm ơn khách hàng đã tin tưởng đặt hàng tại E'Mart");
     } else {
       // Thực hiện hành động khi người dùng từ chối
       alert("Đã hủy bỏ");
     }
   };
+  const postRowD = async (item) => {
+    try {
+      const response = await axios.post("http://localhost:3000/api/detailbill", item, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.error("Error sending data:", error.response || error);
+    }
+  };
+  //
+
+  const handleAddDetailBill = (DetailBill) => {
+    postRowD(DetailBill)
+      .then(() => {})
+      .catch((error) => console.error("Error adding Present event:", error));
+  };
 
   //Lựa chọn
 
   // Lấy các thông tin
-  const refName = useRef(null);
-  const refPhone = useRef(null);
-  const refLocation = useRef(null);
-  const refAddress = useRef(null);
+  const refName = useRef();
+  const refPhone = useRef();
+  const refLocation = useRef();
+  const refAddress = useRef();
   const refNote = useRef("");
-  const refCompanyName = useRef(null);
-  const refEmail = useRef(null);
-  const refTaxCode = useRef(null);
-  const refCompanyAddress = useRef(null);
-
+  const refCompanyName = useRef();
+  const refEmail = useRef();
+  const refTaxCode = useRef();
+  const refCompanyAddress = useRef();
   const [billInfor, setBillInfor] = useState();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -145,32 +176,53 @@ function Pay() {
       requireInfor4 = true;
     }
     if (requireInfor1 && requireInfor2 && requireInfor3 && requireInfor4) {
-      setBillInfor({
-        Name: Name,
-        PhoneNumber: PhoneNumber,
-        Location: Location,
-        Address: Address,
-        Date: `${selectedDay.getDate()}/${selectedDay.getMonth()}/${selectedDay.getFullYear()}`,
-        Time: selectedTime,
-        Payment: selectedPayment,
-        Note: Note,
-        CompanyName: CompanyName,
-        Email: Email,
-        TaxCode: TaxCode,
-        CompanyAddress: CompanyAddress,
-        totalCart: cartInfor.totalCart,
-        totalPresent: cartInfor.totalPresent,
-        ShipCost: shipCost,
-        totalReduce: cartInfor.totalReduce,
-        totalCost: getTotalCartAmount(shipCost),
-      });
-      console.log(billInfor);
-      handleDisplayBill();
+      const result = window.confirm("Bạn có chắc chắn muốn đặt đơn hàng?");
+      if (result) {
+        const newBill = {
+          BillID: nextID,
+          Name: Name,
+          PhoneNumber: PhoneNumber,
+          Location: Location,
+          Address: Address,
+          Date: `${selectedDay.getDate()}/${selectedDay.getMonth()}/${selectedDay.getFullYear()}`,
+          Time: selectedTime,
+          Payment: selectedPayment,
+          Note: Note,
+          CompanyName: CompanyName,
+          Email: Email,
+          TaxCode: TaxCode,
+          CompanyAddress: CompanyAddress,
+          totalCart: cartInfor.totalCart,
+          totalPresent: cartInfor.totalPresent,
+          ShipCost: shipCost,
+          totalReduce: cartInfor.totalReduce,
+          totalCost: getTotalCartAmount(shipCost),
+          Status: selectedPayment === "Online" ? 1 : 2,
+          Shipper: "",
+        };
+        setBillInfor(newBill);
+        handleAddBill(newBill);
+        cartInfor.listItems.map((obj) => {
+          handleAddDetailBill({ BillID: nextID, ProductID: obj.ProductID, Quantity: obj.Quantity });
+        });
+        alert("Đặt hàng thành công");
+        setIsDisplayBill(
+          <>
+            <Bill billInfor={newBill} listCartItems={listItem.current} />
+            <button onClick={routeMainPage} className={style.CloseBill}>
+              Close
+            </button>
+          </>
+        );
+        deleteCart();
+      } else {
+        // Thực hiện hành động khi người dùng từ chối
+        alert("Đã hủy bỏ");
+      }
     } else {
       alert("Vui lòng nhập đầy đủ thông tin!");
     }
   };
-
   return (
     <div className={style.PayContainer}>
       <div className={style.CheckoutBox}>
@@ -319,21 +371,15 @@ function Pay() {
         <div className={style.AcceptBox}>
           <input type="checkbox" id="Accept" checked={isAccept} onClick={() => setIsAccept(!isAccept)} />
           <p>
-            Bằng việc chọn vào Đặt Hàng, bạn đồng ý với <a>Điều khoản và điều kiện giao dịch trên E'Mart</a> và đồng ý trở thành Hội viên E'Mart theo <a>Điều khoản và điều kiện của Chương trình Hội viên E'Mart</a> sẽ được kích hoạt khi đơn hàng được giao thành công.
+            Bằng việc chọn vào Đặt Hàng, bạn đồng ý với <a>Điều khoản và điều kiện giao dịch trên E'Mart</a> và đồng ý trở thành Hội viên E'Mart theo{" "}
+            <a>Điều khoản và điều kiện của Chương trình Hội viên E'Mart</a> sẽ được kích hoạt khi đơn hàng được giao thành công.
           </p>
         </div>
         <div onClick={handleSubmit} className={style.Btn}>
           <p>XÁC NHẬN ĐẶT HÀNG</p>
         </div>
       </div>
-      {isDisplayBill && (
-        <>
-          <Bill billInfor={billInfor} listCartItems={cartInfor.listItems} />
-          <button onClick={routeMainPage} className={style.CloseBill}>
-            Close
-          </button>
-        </>
-      )}
+      {isDisplayBill}
       {isDisplayPinMap && <Location handleOnClick={handlePinMap} />}
     </div>
   );

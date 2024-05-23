@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import "./global.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ShopContextProvider from "./Contexts/CartContext";
+import { initializeData } from "./Components/Assets/data";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
