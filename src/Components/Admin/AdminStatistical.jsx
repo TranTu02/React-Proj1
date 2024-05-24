@@ -5,6 +5,7 @@ import { listBill, listDetailBill, listCategories, listBrand, listStock, listPro
 import BarChart from "./BarChart"; // Import thành phần biểu đồ
 
 export const AdminStatistical = () => {
+  let formatter = new Intl.NumberFormat("en-US");
   const [displayChart, setDisplayChart] = useState(true);
   let revenueMonth = [];
   let monthPrev = [];
@@ -13,13 +14,6 @@ export const AdminStatistical = () => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedDatasheet, setSelectedDataSheet] = useState("product");
-  if (selectedDatasheet === "product") {
-    listProducts.map((obj) => dataTemplate.push({ ProductID: obj.ProductID, Revenue: 0, StockCost: 0, Sold: 0, StockQuantity: 0, Inventory: 0 }));
-  } else if (selectedDatasheet === "category") {
-    listCategories.map((obj) => dataTemplate.push({ CategoryID: obj.CategoryID, Revenue: 0, StockCost: 0, Sold: 0, StockQuantity: 0, Inventory: 0 }));
-  } else {
-    listBrand.map((obj) => dataTemplate.push({ BrandID: obj.BrandID, Revenue: 0, StockCost: 0, Sold: 0, StockQuantity: 0, Inventory: 0 }));
-  }
   const refM = useRef("");
   const refY = useRef("");
   const refEM = useRef("");
@@ -88,6 +82,16 @@ export const AdminStatistical = () => {
   };
   const months = getPreviousMonths();
 
+  if (selectedDatasheet === "product") {
+    dataTemplate = [];
+    listProducts.map((obj) => dataTemplate.push({ ProductID: obj.ProductID, Revenue: 0, StockCost: 0, Sold: 0, StockQuantity: 0, Inventory: 0 }));
+  } else if (selectedDatasheet === "category") {
+    dataTemplate = [];
+    listCategories.map((obj) => dataTemplate.push({ CategoryID: obj.CategoryID, Revenue: 0, StockCost: 0, Sold: 0, StockQuantity: 0, Inventory: 0 }));
+  } else {
+    dataTemplate = [];
+    listBrand.map((obj) => dataTemplate.push({ BrandID: obj.BrandID, Revenue: 0, StockCost: 0, Sold: 0, StockQuantity: 0, Inventory: 0 }));
+  }
   months.forEach((month) => {
     let totalMonth = 0;
     listBill.forEach((obj) => {
@@ -208,7 +212,7 @@ export const AdminStatistical = () => {
       }
     });
     listStock.forEach((stock) => {
-      const stockDate = stock.Date.split("-");
+      const stockDate = stock.Date.toString().split("-");
       if (parseInt(stockDate[1]) === month.month && parseInt(stockDate[0]) === month.year) {
         //Du lieu cho bang
         if (selectedDatasheet === "product") {
@@ -305,24 +309,27 @@ export const AdminStatistical = () => {
         );
     }
   };
-  const [listRowDisplay, setListRowDisplay] = useState(dataFilter);
+  const [dataSort, setDataSort] = useState();
+  const filterTag = useRef("");
   const handleLowest = () => {
+    filterTag.current = selectedDatasheet;
     if (selectedType === "sold") {
-      setListRowDisplay(listRowDisplay.sort((a, b) => a.sold - b.sold));
+      setDataSort(dataFilter().sort((a, b) => a.sold - b.sold));
     } else if (selectedType === "inventory") {
-      setListRowDisplay(listRowDisplay.sort((a, b) => a.inventory - b.inventory));
+      setDataSort(dataFilter().sort((a, b) => a.inventory - b.inventory));
     } else {
-      setListRowDisplay(listRowDisplay.sort((a, b) => a.revenue - b.revenue));
+      setDataSort(dataFilter().sort((a, b) => a.revenue - b.revenue));
     }
     setDisplayChart(false);
   };
   const handleHighest = () => {
+    filterTag.current = selectedDatasheet;
     if (selectedType === "sold") {
-      setListRowDisplay(listRowDisplay.sort((a, b) => b.sold - a.sold));
+      setDataSort(dataFilter().sort((a, b) => b.sold - a.sold));
     } else if (selectedType === "inventory") {
-      setListRowDisplay(listRowDisplay.sort((a, b) => b.inventory - a.inventory));
+      setDataSort(dataFilter().sort((a, b) => b.inventory - a.inventory));
     } else {
-      setListRowDisplay(listRowDisplay.sort((a, b) => b.revenue - a.revenue));
+      setDataSort(dataFilter().sort((a, b) => b.revenue - a.revenue));
     }
     setDisplayChart(false);
   };
@@ -424,8 +431,8 @@ export const AdminStatistical = () => {
               <tr>
                 <td>{item.month}</td>
                 <td>{item.year}</td>
-                <td>{item.revenue}</td>
-                <td>{item.stockCost}</td>
+                <td>{formatter.format(item.revenue)}</td>
+                <td>{formatter.format(item.stockCost)}</td>
                 <td>{item.sold}</td>
                 <td>{item.stockQuantity}</td>
                 <td>{item.inventory}</td>
@@ -436,7 +443,7 @@ export const AdminStatistical = () => {
       ) : (
         <table>
           <thead>
-            <th>{selectedDatasheet}</th>
+            <th style={{ width: "150rem" }}>{filterTag.current === "product" ? "Mã sản phẩm" : filterTag.current === "category" ? "Mã danh mục" : "Mã thương hiệu"}</th>
             <th>Doanh số</th>
             <th>Giá trị nhập</th>
             <th>Số lượng bán</th>
@@ -444,11 +451,11 @@ export const AdminStatistical = () => {
             <th>Tồn kho</th>
           </thead>
           <tbody>
-            {listRowDisplay.map((item) => (
+            {dataSort.map((item) => (
               <tr>
                 <td>{item.tag}</td>
-                <td>{item.revenue}</td>
-                <td>{item.stockCost}</td>
+                <td>{formatter.format(item.revenue)}</td>
+                <td>{formatter.format(item.stockCost)}</td>
                 <td>{item.sold}</td>
                 <td>{item.stockQuantity}</td>
                 <td>{item.inventory}</td>

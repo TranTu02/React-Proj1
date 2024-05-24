@@ -20,8 +20,7 @@ function Detail({ Product }) {
   const [MainPhoto, setMainPhoto] = useState(0);
   const brand = Product !== undefined ? Product.BrandID : "";
   const discount = Product.Reduce !== undefined ? Product.Reduce : undefined;
-  const isPresent = Product.present !== undefined ? Product.present.Product : false;
-
+  const isPresent = Product.present !== undefined ? Product.present.ProductID : false;
   let lines = "\n";
   let cmts = DATA.listComment.filter((obj) => obj.ProductID === Product.ProductID);
   const isGroup = DATA.listGroupProducts.find((obj) => obj.ProductID === Product.ProductID) ? DATA.listGroupProducts.find((obj) => obj.ProductID === Product.ProductID).GroupID : false;
@@ -45,7 +44,7 @@ function Detail({ Product }) {
           {lines.map((text, index) => (
             <p key={index}>{text}</p>
           ))}
-          <h3 onClick={() => setIsExpanded(!isExpanded)}>{isExpanded ? "Thu gọn" : "Xem thêm"}</h3>
+          <h3 onClick={() => setIsExpanded(!isExpanded)}>{isExpanded ? "Thu gọn" : "Xem thêm..."}</h3>
         </div>
       ) : (
         <div className={style.CmtBox}>
@@ -120,7 +119,7 @@ function Detail({ Product }) {
                     Tình trạng: <a>{Product.Stock > 0 ? "Còn " + Product.Stock + " sản phẩm" : "Hết hàng"}</a>
                   </span>
                   <span className={style.Infor}>
-                    Thương hiệu: <a>{brand}</a>
+                    Thương hiệu: <a>{DATA.listBrand.find((obj) => obj.BrandID === parseInt(brand)).BrandName}</a>
                   </span>
                 </div>
                 <div className={style.DetailLayout}>

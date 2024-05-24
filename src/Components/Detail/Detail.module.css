@@ -350,6 +350,7 @@
   display: flex;
   width: 100%;
   align-items: center;
+  margin: 5px 0;
 }
 
 .ProductDetailContainer .Content .DelivelyBox .DelivelyItem img {
@@ -407,7 +408,7 @@
 }
 .DescriptionContainer .DescriptionBox h3 {
   position: absolute;
-  bottom: -10rem;
+  bottom: -20px;
   width: 100%;
   text-align: center;
   color: rgb(201, 78, 78);
@@ -425,7 +426,7 @@
 }
 .DescriptionContainer .DescriptionBoxFull h3 {
   position: absolute;
-  bottom: -10rem;
+  bottom: -20px;
   width: 100%;
   text-align: center;
   color: rgb(77, 77, 238);

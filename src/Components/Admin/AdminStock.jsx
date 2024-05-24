@@ -144,6 +144,7 @@ export const AdminStock = () => {
       Cost: refCost.current.value,
       SupplierTaxCode: refSTC.current.value,
     };
+    console.log(Stock);
     if (result) {
       postRow(Stock)
         .then(() => {
