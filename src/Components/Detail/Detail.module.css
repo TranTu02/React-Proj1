@@ -122,15 +122,15 @@
   min-width: 390px;
   flex-wrap: wrap;
   height: fit-content;
-  min-height: 570rem;
-  min-width: 420px;
+  height: fit-content;
+  min-height: 390px;
   padding: 0 15px;
 }
 .ProductDetailContainer .Content .DetailBox .PriceBox {
   display: flex;
   align-items: center;
   width: 550rem;
-  min-width: 390px;
+  min-width: 410px;
   height: 70rem;
   min-height: 50px;
   background-color: #fafafa;
@@ -171,7 +171,7 @@
   width: 550rem;
   min-width: 390px;
   font-size: 16px;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-left: 18px;
   word-wrap: break-word;
 }
@@ -180,10 +180,10 @@
   display: flex;
   align-items: center;
   width: 550rem;
-  min-width: 390px;
+  min-width: 410px;
   height: 70rem;
   min-height: 50px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .ProductDetailContainer .Content .DetailBox .Variant .Title {
@@ -395,13 +395,42 @@
 
 .DescriptionContainer .DescriptionBox {
   width: 100%;
-  height: fit-content;
+  height: 300rem; /* Chiều cao mặc định khi nội dung bị ẩn */
   margin-bottom: 10px;
   text-wrap: wrap;
   font-size: 14px;
   margin-left: 10px;
+  overflow: hidden; /* Ẩn nội dung vượt quá chiều cao */
+  transition: height 0.8s ease;
+  position: relative;
+  padding-bottom: 30rem;
 }
-
+.DescriptionContainer .DescriptionBox h3 {
+  position: absolute;
+  bottom: -10rem;
+  width: 100%;
+  text-align: center;
+  color: rgb(201, 78, 78);
+  cursor: pointer;
+}
+.DescriptionContainer .DescriptionBoxFull {
+  width: 100%;
+  height: auto; /* Mở rộng để phù hợp với nội dung */
+  margin-bottom: 10px;
+  text-wrap: wrap;
+  font-size: 14px;
+  position: relative;
+  transition: height 0.8s ease;
+  margin-left: 10px;
+}
+.DescriptionContainer .DescriptionBoxFull h3 {
+  position: absolute;
+  bottom: -10rem;
+  width: 100%;
+  text-align: center;
+  color: rgb(77, 77, 238);
+  cursor: pointer;
+}
 .DescriptionContainer .CmtBox {
   width: 100%;
   height: fit-content;

@@ -261,7 +261,7 @@ export const AdminStatistical = () => {
         stockCost: dataTemplate[i].StockCost,
         sold: dataTemplate[i].Sold,
         stockQuantity: dataTemplate[i].StockQuantity,
-        inventory: dataTemplate[i].Inventory,
+        inventory: dataTemplate[i].StockQuantity - dataTemplate[i].Sold,
       });
     }
     return rows;
@@ -335,7 +335,7 @@ export const AdminStatistical = () => {
           <th>End</th>
           <th>Category</th>
           <th>Brand</th>
-          <th>Type (Chart)</th>
+          <th>Type (Chart, Datasheet)</th>
           <th>Filter (Datasheet only)</th>
         </thead>
         <tbody>

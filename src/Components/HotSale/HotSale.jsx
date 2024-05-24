@@ -37,7 +37,18 @@ function HotSale({ DiscountID }) {
   const indexOfLastItem = currentPage * itemsPerPage > data.length ? (currentPage - 1) * itemsPerPage + (data.length % 6) : currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
+  const blankItem = () => {
+    let lst = [];
+    for (;;) {
+      if (data.length + lst.length < 6) {
+        console.log("a");
+        lst.push(<div style={{ width: "174rem", margin: "20rem 11rem", padding: "5rem" }}></div>);
+      } else {
+        break;
+      }
+    }
+    return lst;
+  };
   const nextPage = () => {
     if (currentPage < Math.ceil(data.length / itemsPerPage)) {
       setCurrentPage(currentPage + 1);
@@ -80,6 +91,7 @@ function HotSale({ DiscountID }) {
           {currentItems.map((item, index) => (
             <Item product={item} key={index} />
           ))}
+          {blankItem()}
         </div>
       </div>
     );

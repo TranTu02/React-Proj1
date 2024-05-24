@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./CategoryHome.module.css";
 import Item from "../Item/Item.jsx";
 import * as DATA from "../Assets/data.js";
@@ -13,6 +13,18 @@ function CategoryHome({ CategoryID, CategoryName, BrandID }) {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
+  const blankItem = () => {
+    let lst = [];
+    for (;;) {
+      if (data.length + lst.length < 6) {
+        console.log("a");
+        lst.push(<div style={{ width: "174rem", margin: "20rem 11rem", padding: "5rem" }}></div>);
+      } else {
+        break;
+      }
+    }
+    return lst;
+  };
   const nextPage = () => {
     if (currentPage < Math.ceil(data.length / itemsPerPage)) {
       setCurrentPage(currentPage + 1);
@@ -48,6 +60,7 @@ function CategoryHome({ CategoryID, CategoryName, BrandID }) {
         {currentItems.map((item, index) => (
           <Item product={item} key={index} />
         ))}
+        {blankItem()}
       </div>
     </div>
   );

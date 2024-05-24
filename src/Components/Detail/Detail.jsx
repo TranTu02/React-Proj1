@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import style from "./Detail.module.css";
 import CategoryHome from "../CategoryHome/CategoryHome.jsx";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,6 @@ import * as DATA from "../Assets/data.js";
 
 function Detail({ Product }) {
   const navigate = useNavigate();
-  // định dạng tiền tệ
   let formatter = new Intl.NumberFormat("en-US");
 
   let listPhoto = [
@@ -20,15 +19,11 @@ function Detail({ Product }) {
   ];
   const [MainPhoto, setMainPhoto] = useState(0);
   const brand = Product !== undefined ? Product.BrandID : "";
-  // Kiểm tra giảm giá
   const discount = Product.Reduce !== undefined ? Product.Reduce : undefined;
-  // Kiểm tra quà tặng
   const isPresent = Product.present !== undefined ? Product.present.Product : false;
 
-  // Mô tả và đánh giá
   let lines = "\n";
   let cmts = DATA.listComment.filter((obj) => obj.ProductID === Product.ProductID);
-  // Kiểm tra các sản phẩm tương tự (cùng group)
   const isGroup = DATA.listGroupProducts.find((obj) => obj.ProductID === Product.ProductID) ? DATA.listGroupProducts.find((obj) => obj.ProductID === Product.ProductID).GroupID : false;
   const group = isGroup ? DATA.listGroupProducts.filter((gr) => gr.GroupID === isGroup) : undefined;
   const listType = isGroup
@@ -36,19 +31,21 @@ function Detail({ Product }) {
         return group.find((obj) => obj.ProductID === type.ProductID);
       })
     : null;
-  // Chuyển đổi xem mô tả hoặc đánh giá
-  const [active, setActive] = useState("desc");
 
+  const [active, setActive] = useState("desc");
   const [display, setDisplay] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false); // State để quản lý việc mở rộng/thu gọn
+
   useEffect(() => {
     lines = Product.Description.split("\n");
     cmts = DATA.listComment.filter((obj) => obj.ProductID === Product.ProductID);
     setDisplay(
       active === "desc" ? (
-        <div className={style.DescriptionBox}>
+        <div className={isExpanded ? style.DescriptionBoxFull : style.DescriptionBox}>
           {lines.map((text, index) => (
             <p key={index}>{text}</p>
           ))}
+          <h3 onClick={() => setIsExpanded(!isExpanded)}>{isExpanded ? "Thu gọn" : "Xem thêm"}</h3>
         </div>
       ) : (
         <div className={style.CmtBox}>
@@ -62,30 +59,30 @@ function Detail({ Product }) {
         </div>
       )
     );
-  }, [Product, active]);
-  //Cart context
+  }, [Product, active, isExpanded]);
+
   const { allProduct, cartItems, addToCart, getTotalCartAmount } = useContext(ShopContext);
   const product = allProduct.find((obj) => obj.ProductID === Product.ProductID);
 
-  // handle
   const handleMainImg = (img) => {
     setMainPhoto(img);
   };
 
-  const handleType = (productID) => {
-    //
-  };
+  const handleType = (productID) => {};
 
   const handleDesc = () => {
     if (active !== "desc") setActive("desc");
   };
+
   const handleCmt = () => {
     if (active === "desc") setActive("cmt");
   };
+
   const [quantity, setQuantity] = useState(1);
   const handleUp = () => {
     setQuantity((prev) => prev + 1);
   };
+
   const handleDown = () => {
     if (quantity > 1) setQuantity((prev) => prev - 1);
   };
@@ -183,18 +180,15 @@ function Detail({ Product }) {
                         +
                       </button>
                     </div>
-                    {
-                      /* Kiểm tra có quà không */
-                      isPresent && (
-                        <div className={style.Present}>
-                          <img src={DATA.listProducts.find((obj) => obj.ProductID === Product.present.ProductID).Image} width={40} height={40} />
-                          <p>
-                            Mua {Product.Require} sản phẩm {Product.ProductName} để nhận {Product.present.Quantity} sản phẩm{" "}
-                            {DATA.listProducts.find((obj) => obj.ProductID === Product.present.ProductID).ProductName} miễn phí.
-                          </p>
-                        </div>
-                      )
-                    }
+                    {isPresent && (
+                      <div className={style.Present}>
+                        <img src={DATA.listProducts.find((obj) => obj.ProductID === Product.present.ProductID).Image} width={40} height={40} />
+                        <p>
+                          Mua {Product.Require} sản phẩm {Product.ProductName} để nhận {Product.present.Quantity} sản phẩm{" "}
+                          {DATA.listProducts.find((obj) => obj.ProductID === Product.present.ProductID).ProductName} miễn phí.
+                        </p>
+                      </div>
+                    )}
                     <div className={style.Action}>
                       <div
                         className={style.AddCart}
@@ -209,7 +203,6 @@ function Detail({ Product }) {
                       </div>
                     </div>
                   </div>
-                  {/* Fix */}
                   <div className={style.DelivelyBox}>
                     <span className={style.Title}>Chính sách bán hàng</span>
                     <div className={style.DelivelyItem}>

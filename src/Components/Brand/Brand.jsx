@@ -12,7 +12,7 @@ function Brand() {
   };
   return (
     <div className={style.BrandContainer}>
-      <h2>Thuơng hiệu nổi bật</h2>
+      <h2>Thương hiệu nổi bật</h2>
       <div className={style.ListBrand}>
         {data.map((item, index) => (
           <img src={item.Logo} onClick={() => routeBrand(item.BrandID)} key={index} />

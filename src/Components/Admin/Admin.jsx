@@ -68,38 +68,38 @@ export const Admin = () => {
   return (
     <div className={style.AdminContainer}>
       <div className={style.Sidebar}>
-        <div className={style.Task} onClick={() => setAdminPage(0)}>
+        <div className={adminPage !== 0 ? style.Task : style.TaskActive} onClick={() => setAdminPage(0)}>
           <h3>Sản phẩm</h3>
         </div>
-        <div className={style.Task} onClick={() => setAdminPage(1)}>
+        <div className={adminPage !== 1 ? style.Task : style.TaskActive} onClick={() => setAdminPage(1)}>
           <h3>Tài khoản</h3>
         </div>
-        <div className={style.Task} onClick={() => setAdminPage(9)}>
+        <div className={adminPage !== 9 ? style.Task : style.TaskActive} onClick={() => setAdminPage(9)}>
           <h3>Thương hiệu</h3>
         </div>
-        <div className={style.Task} onClick={() => setAdminPage(2)}>
+        <div className={adminPage !== 2 ? style.Task : style.TaskActive} onClick={() => setAdminPage(2)}>
           <h3>Danh mục</h3>
         </div>
-        <div className={style.Task} onClick={() => setAdminPage(3)}>
+        <div className={adminPage !== 3 ? style.Task : style.TaskActive} onClick={() => setAdminPage(3)}>
           <h3>Quà tặng </h3>
         </div>
-        <div className={style.Task} onClick={() => setAdminPage(4)}>
+        <div className={adminPage !== 4 ? style.Task : style.TaskActive} onClick={() => setAdminPage(4)}>
           <h3>Khuyến mại</h3>
         </div>
-        <div className={style.Task} onClick={() => setAdminPage(5)}>
+        <div className={adminPage !== 5 ? style.Task : style.TaskActive} onClick={() => setAdminPage(5)}>
           <h3>Hình ảnh</h3>
         </div>
-        <div className={style.Task} onClick={() => setAdminPage(6)}>
+        <div className={adminPage !== 6 ? style.Task : style.TaskActive} onClick={() => setAdminPage(6)}>
           <h3>Nhập kho</h3>
         </div>
-        {/* <div className={style.Task} onClick={() => setAdminPage(7)}>
+        {/* <div className={adminPage !== 0 ? style.Task : style.TaskActive} onClick={() => setAdminPage(7)}>
           <h3>Khu vực giao hàng</h3>
         </div> */}
-        <div className={style.Task} onClick={() => setAdminPage(8)}>
+        <div className={adminPage !== 8 ? style.Task : style.TaskActive} onClick={() => setAdminPage(8)}>
           <h3>Hóa đơn</h3>
         </div>
         {currentAuthorize.current >= 2 ? (
-          <div className={style.Task} onClick={() => setAdminPage(10)}>
+          <div className={adminPage !== 10 ? style.Task : style.TaskActive} onClick={() => setAdminPage(10)}>
             <h3>Thống kê</h3>
           </div>
         ) : (

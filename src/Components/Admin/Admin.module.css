@@ -132,6 +132,16 @@ textarea {
   cursor: pointer;
   border: 2rem solid #878787;
 }
+.AdminContainer .Sidebar .TaskActive {
+  min-width: 140rem;
+  height: 40rem;
+  margin: 10rem 0;
+  padding: 10rem;
+  border-radius: 10rem;
+  cursor: pointer;
+  border: 2rem solid red;
+  background: linear-gradient(225deg, rgba(255, 0, 0, 0.6) 10%, transparent 10%);
+}
 
 .AdminContainer .Main {
   width: 100%;
