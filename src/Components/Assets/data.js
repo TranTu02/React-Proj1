@@ -624,7 +624,7 @@ export const listComment = [
 ];
 
 export const listLocations = [
-  { LocationID: 0, Location: "Xuân Thủy, Cầu Giấy, Hà Nội", Distance: 0 },
+  { LocationID: 0, Location: "Xuân Thủy, Cầu Giấy, Hà Nội", Distance: 1 },
   { LocationID: 1, Location: "Nhổn, Nam Từ Liêm, Hà Nội", Distance: 7.7 },
   { LocationID: 2, Location: "Trung Hòa, Cầu Giấy, Hà Nội", Distance: 4 },
   { LocationID: 3, Location: "Hồ Tùng Mậu, Cầu Giấy, Hà Nội", Distance: 1.2 },

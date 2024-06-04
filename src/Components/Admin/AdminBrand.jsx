@@ -148,8 +148,8 @@ export const AdminBrand = () => {
       <table>
         <thead>
           <tr>
-            <th>BrandID</th>
-            <th>BrandName</th>
+            <th>Mã thương hiệu</th>
+            <th>Tên thương hiệu</th>
             <th>Logo</th>
           </tr>
         </thead>
@@ -178,8 +178,8 @@ export const AdminBrand = () => {
       <table className={style.TableContainer}>
         <thead className={style.TableHead}>
           <tr>
-            <th>BrandID</th>
-            <th>BrandName</th>
+            <th>Mã thương hiệu</th>
+            <th>Tên thương hiệu</th>
             <th>Logo</th>
           </tr>
         </thead>

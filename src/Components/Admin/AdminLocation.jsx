@@ -75,7 +75,7 @@ export const AdminLocation = () => {
         <button>Xóa</button>
         <button onClick={handleFindLocation}>Tìm</button>
       </div>
-      <h3>Danh sách tài khoản</h3>
+      <h3>Danh sách khu vực</h3>
       <table className={style.TableContainer}>
         <thead className={style.TableHead}>
           {Title().map((obj) => {

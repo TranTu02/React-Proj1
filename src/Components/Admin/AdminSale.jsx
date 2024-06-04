@@ -38,6 +38,7 @@ export const AdminSale = () => {
   const refReduce = useRef("");
 
   const handleGetSE = (se) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     refDiscountID.current.value = se.DiscountID;
     refDiscountTitle.current.value = se.DiscountTitle;
     refStartD.current.value = new Date(se.Start).getDate();
@@ -49,6 +50,7 @@ export const AdminSale = () => {
   };
 
   const handleGetDP = (se) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     refDiscountID.current.value = se.DiscountID;
     refProductID.current.value = se.ProductID;
     refReduce.current.value = se.Reduce;
@@ -148,15 +150,21 @@ export const AdminSale = () => {
   };
 
   const handleAddSaleEvent = () => {
+    const DS = new Date(parseInt(refStartY.current.value), parseInt(refStartM.current.value) - 1, parseInt(refStartD.current.value));
+    const DE = new Date(parseInt(refEndY.current.value), parseInt(refEndM.current.value) - 1, parseInt(refEndD.current.value));
     const saleEvent = {
       DiscountID: nextID,
       DiscountTitle: refDiscountTitle.current.value,
-      Start: new Date(parseInt(refStartY.current.value), parseInt(refStartM.current.value) - 1, parseInt(refStartD.current.value)).toString(),
-      End: new Date(parseInt(refEndY.current.value), parseInt(refEndM.current.value) - 1, parseInt(refEndD.current.value)).toString(),
+      Start: DS.toString(),
+      End: DE.toString(),
     };
     for (const key in saleEvent) {
       if (saleEvent[key] === "" || saleEvent[key] === undefined) {
         alert("Nhập đủ thông tin");
+        return false;
+      }
+      if (DE < DS) {
+        alert("Ngày kết thúc phải lớn hơn ngày bắt đầu!");
         return false;
       }
     }
@@ -178,9 +186,15 @@ export const AdminSale = () => {
       End: new Date(parseInt(refEndY.current.value), parseInt(refEndM.current.value) - 1, parseInt(refEndD.current.value)),
     };
 
+    const DS = new Date(parseInt(refStartY.current.value), parseInt(refStartM.current.value) - 1, parseInt(refStartD.current.value));
+    const DE = new Date(parseInt(refEndY.current.value), parseInt(refEndM.current.value) - 1, parseInt(refEndD.current.value));
     for (const key in updatedData) {
       if (updatedData[key] === "" || updatedData[key] === undefined) {
         alert("Nhập đủ thông tin");
+        return false;
+      }
+      if (DE < DS) {
+        alert("Ngày kết thúc phải lớn hơn ngày bắt đầu!");
         return false;
       }
     }
@@ -371,16 +385,16 @@ export const AdminSale = () => {
       <table>
         {active ? (
           <thead>
-            <th>DiscountID</th>
-            <th>DiscountTitle</th>
-            <th>Start</th>
-            <th>End</th>
+            <th>Mã sự kiện giảm giá</th>
+            <th>Tiêu đề </th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
           </thead>
         ) : (
           <thead>
-            <th>DiscountID</th>
-            <th>ProductID</th>
-            <th>Reduce</th>
+            <th>Mã sự kiện giảm giá</th>
+            <th>Mã sản phẩm</th>
+            <th>Giảm</th>
           </thead>
         )}
         {active ? (
@@ -446,10 +460,10 @@ export const AdminSale = () => {
           <h3>Danh sách sự kiện giảm giá</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              <th>DiscountID</th>
-              <th>DiscountTitle</th>
-              <th>Start</th>
-              <th>End</th>
+              <th>Mã sự kiện giảm giá</th>
+              <th>Tiêu đề </th>
+              <th>Ngày bắt đầu</th>
+              <th>Ngày kết thúc</th>
             </thead>
             <tbody>
               {listRowDisplay.map((Row) => {
@@ -470,9 +484,9 @@ export const AdminSale = () => {
           <h3>Danh sách sản phẩm giảm giá</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              <th>DiscountID</th>
-              <th>ProductID</th>
-              <th>Reduce</th>
+              <th>Mã sự kiện giảm giá</th>
+              <th>Mã sản phẩm</th>
+              <th>Giảm</th>
             </thead>
             <tbody>
               {listRowDisplay.map((Row) => {

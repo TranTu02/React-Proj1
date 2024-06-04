@@ -23,6 +23,7 @@ export const AdminProduct = () => {
   const refCalculationUnit = useRef("");
   const refWeight = useRef("");
   const handleGetInfor = (Product) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     refProductID.current.value = Product.ProductID;
     refProductName.current.value = Product.ProductName;
     refPrice.current.value = Product.Price;
@@ -36,7 +37,20 @@ export const AdminProduct = () => {
     setSelectedBrand(listBrand.find((obj) => obj.BrandID === Product.BrandID) === undefined ? 1 : listBrand.find((obj) => obj.BrandID === Product.BrandID).BrandID);
     setSelectedImage(Product.Image);
   };
-
+  const deleteForm = () => {
+    refProductID.current.value = "";
+    refProductName.current.value = "";
+    refPrice.current.value = "";
+    refDescription.current.value = "";
+    refStock.current.value = "";
+    refOverview.current.value = "";
+    refCalculationUnit.current.value = "";
+    refWeight.current.value = "";
+    setSelectedCategory(1);
+    setSelectedType(1);
+    setSelectedBrand(0);
+    setSelectedImage(null);
+  };
   const newProduct = (isAdd) => ({
     ProductID: isAdd ? nextID : parseInt(refProductID.current.value),
     ProductName: refProductName.current.value,
@@ -301,7 +315,7 @@ export const AdminProduct = () => {
       </div>
       <h3>Danh sách sản phẩm</h3>
       <table className={style.TableContainer}>
-        <thead className={style.TableHead}>
+        <thead className={style.TableHead} onClick={deleteForm}>
           <tr>
             <th>Mã SP</th>
             <th>Tên SP</th>

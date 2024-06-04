@@ -27,6 +27,7 @@ export const AdminPresent = () => {
   const refProductID = useRef("");
   const refRequire = useRef("");
   const getInfor = (item) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (active) {
       refPresentID.current.value = item.PresentID;
       refPID.current.value = item.ProductID;
@@ -111,6 +112,8 @@ export const AdminPresent = () => {
   };
   var nextID = listPresentEvents.length !== 0 ? listPresentEvents[listPresentEvents.length - 1].PresentID + 1 : 1;
   const handleAddPresentEvent = () => {
+    const DS = new Date(parseInt(refStartY.current.value), parseInt(refStartM.current.value) - 1, parseInt(refStartD.current.value));
+    const DE = new Date(parseInt(refEndY.current.value), parseInt(refEndM.current.value) - 1, parseInt(refEndD.current.value));
     const PresentEvent = {
       PresentID: nextID,
       ProductID: parseInt(refPID.current.value),
@@ -122,6 +125,10 @@ export const AdminPresent = () => {
     for (const key in PresentEvent) {
       if (PresentEvent[key] === "" || PresentEvent[key] === undefined) {
         alert("Nhập đủ thông tin!");
+        return false;
+      }
+      if (DE < DS) {
+        alert("Ngày kết thúc phải lớn hơn ngày bắt đầu!");
         return false;
       }
     }
@@ -136,6 +143,8 @@ export const AdminPresent = () => {
   };
 
   const handleUpdatePresentEvent = () => {
+    const DS = new Date(parseInt(refStartY.current.value), parseInt(refStartM.current.value) - 1, parseInt(refStartD.current.value));
+    const DE = new Date(parseInt(refEndY.current.value), parseInt(refEndM.current.value) - 1, parseInt(refEndD.current.value));
     const updatedData = {
       PresentID: parseInt(refPresentID.current.value),
       ProductID: parseInt(refPID.current.value),
@@ -146,6 +155,10 @@ export const AdminPresent = () => {
     for (const key in updatedData) {
       if (updatedData[key] === "" || updatedData[key] === undefined) {
         alert("Nhập đủ thông tin!");
+        return false;
+      }
+      if (DE < DS) {
+        alert("Ngày kết thúc phải lớn hơn ngày bắt đầu!");
         return false;
       }
     }
@@ -380,17 +393,17 @@ export const AdminPresent = () => {
       <table>
         {active ? (
           <thead>
-            <th>PresentID</th>
-            <th>ProductID</th>
-            <th>Quantity</th>
-            <th>Start</th>
-            <th>End</th>
+            <th>Mã sự kiện quà tặng</th>
+            <th>Mã sản phẩm tặng</th>
+            <th>Số lượng</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
           </thead>
         ) : (
           <thead>
-            <th>PresentID</th>
-            <th>ProductID</th>
-            <th>Require</th>
+            <th>Mã sự kiện quà tặng</th>
+            <th>Mã sản phẩm áp dụng</th>
+            <th>Số lượng yêu cầu</th>
           </thead>
         )}
 
@@ -460,11 +473,11 @@ export const AdminPresent = () => {
           <h3>Danh sách sự kiện quà tặng</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              <th>PresentID</th>
-              <th>ProductID</th>
-              <th>Quantity</th>
-              <th>Start</th>
-              <th>End</th>
+              <th>Mã sự kiện quà tặng</th>
+              <th>Mã sản phẩm tặng</th>
+              <th>Số lượng</th>
+              <th>Ngày bắt đầu</th>
+              <th>Ngày kết thúc</th>
             </thead>
             <tbody>
               {listRowDisplay.map((Row) => {
@@ -486,9 +499,9 @@ export const AdminPresent = () => {
           <h3>Danh sách sản phẩm quà tặng</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              <th>PresentID</th>
-              <th>ProductID</th>
-              <th>Require</th>
+              <th>Mã sự kiện quà tặng</th>
+              <th>Mã sản phẩm áp dụng</th>
+              <th>Số lượng yêu cầu</th>
             </thead>
             <tbody>
               {listRowDisplay.map((Row) => {

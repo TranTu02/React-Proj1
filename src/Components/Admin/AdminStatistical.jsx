@@ -189,21 +189,24 @@ export const AdminStatistical = () => {
               reduce = listDiscountProduct.find((discount) => discount.ProductID === bill.ProductID && discount.DiscountID === sale.DiscountID).Reduce;
           });
           //Du lieu cho bang
-          if (selectedDatasheet === "product") {
-            dataTemplate.find((obj) => obj.ProductID === bill.ProductID).Sold += bill.Quantity;
-            dataTemplate.find((obj) => obj.ProductID === bill.ProductID).Inventory -= bill.Quantity;
-            dataTemplate.find((obj) => obj.ProductID === bill.ProductID).Revenue += bill.Quantity * listProducts.find((prd) => prd.ProductID === bill.ProductID).Price * (1 - reduce);
-          } else if (selectedDatasheet === "category" && listProducts.find((prd) => prd.ProductID === bill.ProductID).CategoryID !== undefined) {
-            dataTemplate.find((obj) => obj.CategoryID === listProducts.find((prd) => prd.ProductID === bill.ProductID).CategoryID).Sold += bill.Quantity;
-            dataTemplate.find((obj) => obj.CategoryID === listProducts.find((prd) => prd.ProductID === bill.ProductID).CategoryID).Inventory -= bill.Quantity;
-            dataTemplate.find((obj) => obj.CategoryID === listProducts.find((prd) => prd.ProductID === bill.ProductID).CategoryID).Revenue +=
-              bill.Quantity * listProducts.find((prd) => prd.ProductID === bill.ProductID).Price * (1 - reduce);
-          } else if (listProducts.find((prd) => prd.ProductID === bill.ProductID) !== undefined) {
-            dataTemplate.find((obj) => obj.BrandID === listProducts.find((prd) => prd.ProductID === bill.ProductID).BrandID).Sold += bill.Quantity;
-            dataTemplate.find((obj) => obj.BrandID === listProducts.find((prd) => prd.ProductID === bill.ProductID).BrandID).Inventory -= bill.Quantity;
-            dataTemplate.find((obj) => obj.BrandID === listProducts.find((prd) => prd.ProductID === bill.ProductID).BrandID).Revenue +=
-              bill.Quantity * listProducts.find((prd) => prd.ProductID === bill.ProductID).Price * (1 - reduce);
+          if (bill.BillID === obj.BillID) {
+            if (selectedDatasheet === "product") {
+              dataTemplate.find((obj) => obj.ProductID === bill.ProductID).Sold += bill.Quantity;
+              dataTemplate.find((obj) => obj.ProductID === bill.ProductID).Inventory -= bill.Quantity;
+              dataTemplate.find((obj) => obj.ProductID === bill.ProductID).Revenue += bill.Quantity * listProducts.find((prd) => prd.ProductID === bill.ProductID).Price * (1 - reduce);
+            } else if (selectedDatasheet === "category" && listProducts.find((prd) => prd.ProductID === bill.ProductID).CategoryID !== undefined) {
+              dataTemplate.find((obj) => obj.CategoryID === listProducts.find((prd) => prd.ProductID === bill.ProductID).CategoryID).Sold += bill.Quantity;
+              dataTemplate.find((obj) => obj.CategoryID === listProducts.find((prd) => prd.ProductID === bill.ProductID).CategoryID).Inventory -= bill.Quantity;
+              dataTemplate.find((obj) => obj.CategoryID === listProducts.find((prd) => prd.ProductID === bill.ProductID).CategoryID).Revenue +=
+                bill.Quantity * listProducts.find((prd) => prd.ProductID === bill.ProductID).Price * (1 - reduce);
+            } else if (listProducts.find((prd) => prd.ProductID === bill.ProductID) !== undefined) {
+              dataTemplate.find((obj) => obj.BrandID === listProducts.find((prd) => prd.ProductID === bill.ProductID).BrandID).Sold += bill.Quantity;
+              dataTemplate.find((obj) => obj.BrandID === listProducts.find((prd) => prd.ProductID === bill.ProductID).BrandID).Inventory -= bill.Quantity;
+              dataTemplate.find((obj) => obj.BrandID === listProducts.find((prd) => prd.ProductID === bill.ProductID).BrandID).Revenue +=
+                bill.Quantity * listProducts.find((prd) => prd.ProductID === bill.ProductID).Price * (1 - reduce);
+            }
           }
+
           //du lieu cho bieu do
           if (obj.BillID === bill.BillID) {
             totalIventory = totalIventory - bill.Quantity;
@@ -338,12 +341,12 @@ export const AdminStatistical = () => {
       <h2>Thống kê</h2>
       <table>
         <thead>
-          <th>Start</th>
-          <th>End</th>
-          <th>Category</th>
-          <th>Brand</th>
-          <th>Type (Chart, Datasheet)</th>
-          <th>Filter (Datasheet only)</th>
+          <th>Bắt đầu</th>
+          <th>Kết thúc</th>
+          <th>Danh mục</th>
+          <th>Thương hiệu</th>
+          <th>Phân loại (Biểu đồ, Bảng)</th>
+          <th>Lọc (Bảng)</th>
         </thead>
         <tbody>
           <td>

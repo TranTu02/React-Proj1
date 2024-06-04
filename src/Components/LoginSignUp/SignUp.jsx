@@ -110,25 +110,35 @@ export default function SignUp() {
         <h2>Đăng ký hội viên</h2>
         <div className={style.Input}>
           <input type="text" ref={refPN} onChange={handleChangePN} placeholder="Số điện thoại" required />
-          <label>Số điện thoại</label>
+          <label>
+            Số điện thoại <span style={{ color: "red" }}>(*)</span>
+          </label>
         </div>
         <div className={style.Input}>
           <input type="text" ref={refName} onChange={handleChangeName} placeholder="Họ và tên" required />
-          <label>Họ và tên</label>
+          <label>
+            Họ và tên <span style={{ color: "red" }}>(*)</span>
+          </label>
         </div>
         <div className={style.Input}>
           <input type={isHidePassword ? "password" : "text"} ref={refPW} onChange={handleChangePW} placeholder="Mật khẩu" required />
-          <label>Mật khẩu</label>
+          <label>
+            Mật khẩu <span style={{ color: "red" }}>(*)</span>
+          </label>
           <div className={isHidePassword ? style.BtnHide : style.BtnLook} onClick={() => setHidePassword(!isHidePassword)}></div>
         </div>
         <div className={style.Input}>
           <input type={isHideConfirmPwd ? "password" : "text"} ref={refCF} onChange={handleChangeCF} placeholder="Nhập lại mật khẩu" required />
-          <label>Nhập lại mật khẩu</label>
+          <label>
+            Nhập lại mật khẩu <span style={{ color: "red" }}>(*)</span>
+          </label>
           <div className={isHideConfirmPwd ? style.BtnHide : style.BtnLook} onClick={() => setHideConfirmPwd(!isHideConfirmPwd)}></div>
         </div>
         <div className={style.Input}>
           <input type="text" ref={refBD} onChange={handleChangeBD} placeholder="Ngày sinh (dd/mm/yyyy)" required />
-          <label>Ngày sinh</label>
+          <label>
+            Ngày sinh <span style={{ color: "red" }}>(*)</span>
+          </label>
         </div>
         <a href="#">Ấn vào đăng ký để trở thành hội viên E'Mart</a>
         <button className={style.BtnActive} onClick={handleRegister}>

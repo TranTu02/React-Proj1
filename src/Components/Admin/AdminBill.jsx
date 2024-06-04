@@ -3,6 +3,38 @@ import style from "./Admin.module.css";
 import { listBill, listLocations, listDetailBill, updateListBill, updateListDetailBill } from "../Assets/data";
 import axios from "axios";
 export const AdminBill = () => {
+  const [time, setTime] = useState(Date.now());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTime(Date.now());
+      const updateApiBill = async () => {
+        try {
+          const response = await axios.get("http://localhost:3000/api/bills");
+          // Xử lý khi có kết quả trả về thành công
+          const presentevent = response.data; // Mảng sản phẩm từ phản hồi
+          // console.log(presentevent);
+          return presentevent;
+        } catch (error) {
+          // Xử lý khi có lỗi xảy ra
+          console.error("Lỗi khi lấy dữ liệu:", error);
+          throw error; // Để cho phép bên gọi xử lý lỗi nếu cần thiết
+        }
+      };
+
+      updateApiBill()
+        .then((items) => {
+          updateListBill(items);
+        })
+        .catch((error) => {
+          // Xử lý lỗi nếu cần
+          console.error("Lỗi khi cập nhật dữ liệu:", error);
+        });
+    }, 10000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   updateListBill(listBill.sort((a, b) => b.BillID - a.BillID));
   updateListDetailBill(listDetailBill.sort((a, b) => b.BillID - a.BillID));
   const [active, setActive] = useState(true);
@@ -39,6 +71,7 @@ export const AdminBill = () => {
   const refQuantity = useRef("");
 
   const getInfor = (item) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (active) {
       const locationID = listLocations.find((obj) => obj.Location === item.Location);
       refBillID.current.value = item.BillID;
@@ -59,11 +92,39 @@ export const AdminBill = () => {
       refReduce.current.value = item.totalReduce;
       refCost.current.value = item.totalCost;
       refStatus.current.value = item.Status;
-      refShipper.current.value = item.Shipper;
+      refShipper.current.value = item.Shipper || "";
     } else {
       refBillID.current.value = item.BillID;
       refProductID.current.value = item.ProductID;
       refQuantity.current.value = item.Quantity;
+    }
+  };
+
+  const deleteForm = () => {
+    if (active) {
+      refBillID.current.value = "";
+      refName.current.value = "";
+      refPhone.current.value = "";
+      setSelectedLocation(0);
+      refAddress.current.value = "";
+      refDate.current.value = "";
+      refTime.current.value = "";
+      refPayment.current.value = "";
+      refNote.current.value = "";
+      refCompanyName.current.value = "";
+      refEmail.current.value = "";
+      refTax.current.value = "";
+      refCompanyAddress.current.value = "";
+      refCart.current.value = "";
+      refPresent.current.value = "";
+      refReduce.current.value = "";
+      refCost.current.value = "";
+      refStatus.current.value = "";
+      refShipper.current.value = "";
+    } else {
+      refBillID.current.value = "";
+      refProductID.current.value = "";
+      refQuantity.current.value = "";
     }
   };
 
@@ -455,15 +516,15 @@ export const AdminBill = () => {
         <>
           <table>
             <thead>
-              <th>BillID</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Location</th>
-              <th>Address</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Payment</th>
-              <th>Note</th>
+              <th>Mã HĐ</th>
+              <th>Họ tên</th>
+              <th>Điện thoại</th>
+              <th>Khu vực</th>
+              <th>Địa chỉ</th>
+              <th>Ngày</th>
+              <th>Giờ</th>
+              <th>Phương thức</th>
+              <th>Ghi chú</th>
             </thead>
             <tbody>
               <td>
@@ -488,7 +549,7 @@ export const AdminBill = () => {
                 <input type="text" ref={refAddress} onChange={handleAddressChange} />
               </td>
               <td>
-                <input type="text" ref={refDate} onChange={handleDateChange} />
+                <input type="text" ref={refDate} onChange={handleDateChange} placeholder="yyyy-mm-dd" />
               </td>
               <td>
                 <input type="text" ref={refTime} onChange={handleTimeChange} />
@@ -504,17 +565,17 @@ export const AdminBill = () => {
 
           <table>
             <thead>
-              <th>CompanyName</th>
-              <th>Email</th>
-              <th>TaxCode</th>
-              <th>CompanyAddress</th>
-              <th>totalCart</th>
-              <th>totalPresent</th>
-              <th>ShipCost</th>
-              <th>totalReduce</th>
-              <th>totalCost</th>
-              <th>Shipper</th>
-              <th>Status</th>
+              <th>Tên công ty</th>
+              <th>Thư điện tử</th>
+              <th>Mã số thuế</th>
+              <th>Địa chỉ công ty</th>
+              <th>Tổng giỏ</th>
+              <th>Tổng quà</th>
+              <th>Phí vận chuyển</th>
+              <th>Tổng giảm</th>
+              <th>Tổng thanh toán</th>
+              <th>SĐT giao hàng</th>
+              <th>Trạng thái</th>
             </thead>
             <tbody>
               <td>
@@ -557,9 +618,9 @@ export const AdminBill = () => {
         <>
           <table>
             <thead>
-              <th>BillID</th>
-              <th>ProductID</th>
-              <th>Quantity</th>
+              <th>Mã hóa đơn</th>
+              <th>Mã sản phẩm</th>
+              <th>Số lượng</th>
             </thead>
             <tbody>
               <td>
@@ -586,27 +647,27 @@ export const AdminBill = () => {
         <>
           <h3>Danh sách hóa đơn</h3>
           <table className={style.TableContainer}>
-            <thead className={style.TableHead}>
-              <th>BillID</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Location</th>
-              <th>Address</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Payment</th>
-              <th>Note</th>
-              <th>CompanyName</th>
-              <th>Email</th>
-              <th>TaxCode</th>
-              <th>CompanyAddress</th>
-              <th>totalCart</th>
-              <th>totalPresent</th>
-              <th>ShipCost</th>
-              <th>totalReduce</th>
-              <th>totalCost</th>
-              <th>PhoneShipper</th>
-              <th>Status</th>
+            <thead className={style.TableHead} onClick={deleteForm}>
+              <th>Mã HĐ</th>
+              <th>Họ tên</th>
+              <th>Điện thoại</th>
+              <th>Khu vực</th>
+              <th>Địa chỉ</th>
+              <th>Ngày</th>
+              <th>Giờ</th>
+              <th>Phương thức</th>
+              <th>Ghi chú</th>
+              <th>Tên công ty</th>
+              <th>Thư điện tử</th>
+              <th>Mã số thuế</th>
+              <th>Địa chỉ công ty</th>
+              <th>Tổng giỏ</th>
+              <th>Tổng quà</th>
+              <th>Phí vận chuyển</th>
+              <th>Tổng giảm</th>
+              <th>Tổng thanh toán</th>
+              <th>SĐT giao hàng</th>
+              <th>Trạng thái</th>
             </thead>
             <tbody>
               {listRowDisplay.map((bill) => {
@@ -642,10 +703,10 @@ export const AdminBill = () => {
         <>
           <h3>Chi tiết hóa đơn</h3>
           <table className={style.TableContainer}>
-            <thead className={style.TableHead}>
-              <th>BillID</th>
-              <th>ProductID</th>
-              <th>Quantity</th>
+            <thead className={style.TableHead} onClick={deleteForm}>
+              <th>Mã hóa đơn</th>
+              <th>Mã sản phẩm</th>
+              <th>Số lượng</th>
             </thead>
             <tbody>
               {listRowDisplay.map((bill) => (

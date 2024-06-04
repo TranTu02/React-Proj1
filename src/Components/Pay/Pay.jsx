@@ -14,6 +14,8 @@ function Pay() {
     if ((refName.current.value = DATA.listAccount.find((obj) => obj.PhoneNumber === phoneNumber) !== undefined)) {
       refName.current.value = DATA.listAccount.find((obj) => obj.PhoneNumber === phoneNumber).Name;
       refPhone.current.value = phoneNumber;
+    } else {
+      refName.current.value = "";
     }
   }, []);
   const [isDisplayPinMap, setIsDisplayPinMap] = useState(false);
@@ -120,7 +122,9 @@ function Pay() {
 
   const handleAddDetailBill = (DetailBill) => {
     postRowD(DetailBill)
-      .then(() => {})
+      .then(() => {
+        DATA.updateListBill([...DATA.listBill, DetailBill]);
+      })
       .catch((error) => console.error("Error adding Present event:", error));
   };
 
@@ -184,7 +188,7 @@ function Pay() {
           PhoneNumber: PhoneNumber,
           Location: Location,
           Address: Address,
-          Date: `${selectedDay.getDate()}/${selectedDay.getMonth()}/${selectedDay.getFullYear()}`,
+          Date: `${selectedDay.getFullYear()}-${selectedDay.getMonth() + 1}-${selectedDay.getDate()}`,
           Time: selectedTime,
           Payment: selectedPayment,
           Note: Note,
@@ -228,45 +232,59 @@ function Pay() {
       <div className={style.CheckoutBox}>
         <h2 className={style.Heading}>Thông tin đặt hàng</h2>
         <div className={style.InputForm}>
-          <p>Họ tên người nhận</p>
+          <p>
+            Họ tên người nhận <span style={{ color: "red" }}>(*)</span>
+          </p>
           <input type="text" placeholder="Nhập họ tên đầy đủ" ref={refName} />
         </div>
         <div className={style.InputForm}>
-          <p>Số điện thoại</p>
+          <p>
+            Số điện thoại <span style={{ color: "red" }}>(*)</span>
+          </p>
           <input type="text" placeholder="Nhập số điện thoại" ref={refPhone} />
         </div>
         <div className={style.InputForm}>
           <p>
-            <b>Khu vực giao hàng</b>
+            <b>
+              Khu vực giao hàng <span style={{ color: "red" }}>(*)</span>
+            </b>
           </p>
           <div className={style.ChooseLocation}>
             <input type="text" value={currentLocation.Location} ref={refLocation} />
             <div className={style.Btn} onClick={handlePinMap}>
-              <p>Đổi địa điểm</p>
+              <p>
+                Đổi địa điểm <span style={{ color: "red" }}>(*)</span>
+              </p>
             </div>
           </div>
         </div>
         <div className={style.InputForm}>
-          <p>Địa chỉ</p>
+          <p>
+            Địa chỉ <span style={{ color: "red" }}>(*)</span>
+          </p>
           <input type="text" placeholder="Nhập số nhà, tên đường, ..." ref={refAddress} />
         </div>
       </div>
       <div className={style.CheckoutBox}>
         <h2 className={style.Heading}>Chọn thời gian giao hàng</h2>
-        <p className={style.Title}>Chọn ngày giao hàng</p>
+        <p className={style.Title}>
+          Chọn ngày giao hàng <span style={{ color: "red" }}>(*)</span>
+        </p>
         <div className={style.DeliveryDay}>
           <input type="radio" id={3} checked={isChecked()} name="Day" value={currentDate} onChange={handleChangeSelectedDay} />
           <label htmlFor={3}>
             <p>{dayName}</p>
-            <p>{currentDay + "/" + currentMonth + "/" + currentYear}</p>
+            <p>{currentDay + "/" + (currentMonth + 1) + "/" + currentYear}</p>
           </label>
           <input type="radio" id={4} name="Day" value={nextDate} onChange={handleChangeSelectedDay} />
           <label htmlFor={4}>
             <p>{nextDayName}</p>
-            <p>{nextDay + "/" + nextMonth + "/" + nextYear}</p>
+            <p>{nextDay + "/" + (nextMonth + 1) + "/" + nextYear}</p>
           </label>
         </div>
-        <p className={style.Title}>Chọn thời gian giao hàng</p>
+        <p className={style.Title}>
+          Chọn thời gian giao hàng <span style={{ color: "red" }}>(*)</span>
+        </p>
         <div className={style.DeliveryTime}>
           <div className={style.SelectForm}>
             <p className={style.Label}>Sáng</p>
@@ -316,7 +334,9 @@ function Pay() {
         </div>
       </div>
       <div className={style.PaymentMethod}>
-        <h2>Phương thức thanh toán</h2>
+        <h2>
+          Phương thức thanh toán <span style={{ color: "red" }}>(*)</span>
+        </h2>
         <div className={style.Method}>
           <input type="radio" id={1} name="paymentMethod" onChange={handleSelectedPayment} value={"Online"} />
           <label htmlFor={1}>Thanh toán online</label>

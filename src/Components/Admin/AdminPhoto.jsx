@@ -26,6 +26,7 @@ export const AdminPhoto = () => {
   const [selectedOther, setSelectedOther] = useState("Other");
   const [selectedOrder, setSelectedOrder] = useState(0);
   const getInfor = (item) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (active) {
       refPhotoID.current.value = item.PhotoID;
       refProductID.current.value = item.ProductID;
@@ -353,19 +354,19 @@ export const AdminPhoto = () => {
       <table>
         {active ? (
           <thead>
-            <th>PhotoID</th>
-            <th>ProductID</th>
-            <th>ImgSrc</th>
+            <th>Mã ảnh minh họa</th>
+            <th>Mã sản phẩm</th>
+            <th>Hình ảnh</th>
           </thead>
         ) : (
           <thead>
-            <th>BannerID</th>
-            <th>ImgSrc</th>
-            <th>CategoryID</th>
-            <th>BrandID</th>
-            <th>ProductTypeID</th>
-            <th>Other</th>
-            <th>Order</th>
+            <th>Mã biểu ngữ</th>
+            <th>Ảnh</th>
+            <th>Danh mục</th>
+            <th>Thương hiệu</th>
+            <th>Loại sản phẩm</th>
+            <th>Khác</th>
+            <th>Ưu tiên</th>
           </thead>
         )}
         {active ? (
@@ -465,9 +466,9 @@ export const AdminPhoto = () => {
           <h3>Danh sách minh họa</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              <th>PhotoID</th>
-              <th>ProductID</th>
-              <th>Image</th>
+              <th>Mã ảnh minh họa</th>
+              <th>Mã sản phẩm</th>
+              <th>Hình ảnh</th>
             </thead>
             <tbody>
               {listRowDisplay.map((photo) => {
@@ -490,13 +491,13 @@ export const AdminPhoto = () => {
           <h3>Danh sách biểu ngữ</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              <th>BannerID</th>
-              <th>Image</th>
-              <th>Category</th>
-              <th>BrandID</th>
-              <th>ProductTypeID</th>
-              <th>Other</th>
-              <th>Order</th>
+              <th>Mã biểu ngữ</th>
+              <th>Ảnh</th>
+              <th>Danh mục</th>
+              <th>Thương hiệu</th>
+              <th>Loại sản phẩm</th>
+              <th>Khác</th>
+              <th>Ưu tiên</th>
             </thead>
             <tbody>
               {listRowDisplay.map((photo) => {

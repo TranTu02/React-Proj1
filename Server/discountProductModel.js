@@ -1,22 +1,24 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Định nghĩa schema cho Present Event
-const discountProductSchema = new mongoose.Schema({
+const discountProductSchema = new mongoose.Schema(
+  {
     DiscountID: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
     ProductID: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
     Reduce: {
-        type: Number,
-        required: true,
-        min: 0 // Đảm bảo số lượng không âm
+      type: Number,
+      required: true,
+      min: 0, // Đảm bảo số lượng không âm
     },
-
-},{ collection: 'DiscountPoduct' });
+  },
+  { collection: "DiscountPoduct" }
+);
 
 // /// Tạo custom validator để kiểm tra sự tồn tại của cặp ProductID và DiscountID
 // discountProductSchema.path('ProductID').validate(async function(value, callback) {
@@ -26,9 +28,10 @@ const discountProductSchema = new mongoose.Schema({
 //     } catch (error) {
 //         return false; // Trả về false nếu có lỗi xảy ra
 //     }
+
 // }, 'ProductID và DiscountID phải là duy nhất.');
 
 // Tạo model từ schema
-const DiscountPoduct = mongoose.model('DiscountProduct', discountProductSchema);
+const DiscountPoduct = mongoose.model("DiscountProduct", discountProductSchema);
 
 module.exports = DiscountPoduct;

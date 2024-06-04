@@ -29,6 +29,7 @@ export const AdminAccount = () => {
   const refAuth = useRef("");
 
   const handleGetInfor = (Account) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (Account !== undefined) {
       refID.current.value = Account.AccountID;
       refPhone.current.value = Account.PhoneNumber;
@@ -202,12 +203,12 @@ export const AdminAccount = () => {
       <table>
         <thead>
           <tr>
-            <th>AccountID</th>
-            <th>PhoneNumber</th>
-            <th>Name</th>
-            <th>Password</th>
-            <th>Birthday</th>
-            <th>Authorize</th>
+            <th>Mã tài khoản</th>
+            <th>Số điện thoại</th>
+            <th>Họ tên</th>
+            <th>Mật khẩu</th>
+            <th>Ngày sinh</th>
+            <th>Phân quyền</th>
           </tr>
         </thead>
         <tbody>
@@ -243,12 +244,12 @@ export const AdminAccount = () => {
       <table className={style.TableContainer}>
         <thead className={style.TableHead}>
           <tr>
-            <th>AccountID</th>
-            <th>PhoneNumber</th>
-            <th>Name</th>
-            <th>Password</th>
-            <th>Birthday</th>
-            <th>Authorize</th>
+            <th>Mã tài khoản</th>
+            <th>Số điện thoại</th>
+            <th>Họ tên</th>
+            <th>Mật khẩu</th>
+            <th>Ngày sinh</th>
+            <th>Phân quyền</th>
           </tr>
         </thead>
         <tbody>

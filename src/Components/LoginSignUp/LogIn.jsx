@@ -35,11 +35,15 @@ export default function LogIn() {
         <h2>Đăng nhập</h2>
         <div className={style.Input}>
           <input type="text" placeholder="Số điện thoại" ref={refPhone} required />
-          <label>Số điện thoại</label>
+          <label>
+            Số điện thoại <span style={{ color: "red" }}>(*)</span>
+          </label>
         </div>
         <div className={style.Input}>
           <input type={isHidePassword ? "password" : "text"} ref={refPassword} placeholder="Mật khẩu" required />
-          <label>Mật khẩu</label>
+          <label>
+            Mật khẩu <span style={{ color: "red" }}>(*)</span>
+          </label>
           <div className={isHidePassword ? style.BtnHide : style.BtnLook} onClick={() => setHidePassword(!isHidePassword)}></div>
         </div>
         <button className={style.BtnActive} onClick={handleCheckInfor}>

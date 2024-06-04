@@ -30,6 +30,7 @@ export const AdminCategory = () => {
   const nextID = active ? (listCategories.length !== 0 ? listCategories[0].CategoryID + 1 : 1) : listCategory_Type.length !== 0 ? listCategory_Type[0].ProductTypeID + 1 : 1;
 
   const getInfor = (item) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (active) {
       refCategoryID.current.value = item.CategoryID;
       refCategoryName.current.value = item.CategoryName;
@@ -319,16 +320,16 @@ export const AdminCategory = () => {
       <table>
         {active ? (
           <thead>
-            <th>CategoryID</th>
-            <th>CategoryName</th>
-            <th>CategoryIllustration</th>
-            <th>Order</th>
+            <th>Mã danh mục</th>
+            <th>Tên danh mục</th>
+            <th>Minh họa danh mục</th>
+            <th>Ưu tiên</th>
           </thead>
         ) : (
           <thead>
-            <th>ProductTypeID</th>
-            <th>CategoryType</th>
-            <th>ProductType</th>
+            <th>Mã loại sản phẩm</th>
+            <th>Mã danh mục</th>
+            <th>Loại sản phẩm</th>
           </thead>
         )}
 
@@ -374,10 +375,10 @@ export const AdminCategory = () => {
           <h3>Danh sách danh mục</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              <th>CategoryID</th>
-              <th>CategoryName</th>
-              <th>CategoryIllustration</th>
-              <th>Order</th>
+              <th>Mã danh mục</th>
+              <th>Tên danh mục</th>
+              <th>Minh họa danh mục</th>
+              <th>Ưu tiên</th>
             </thead>
             <tbody>
               {listColumnDisplay.map((Category) => {
@@ -400,9 +401,9 @@ export const AdminCategory = () => {
           <h3>Danh sách thể loại sản phẩm</h3>
           <table className={style.TableContainer}>
             <thead className={style.TableHead}>
-              <th>ProductTypeID</th>
-              <th>CategoryID</th>
-              <th>ProductType</th>
+              <th>Mã loại sản phẩm</th>
+              <th>Mã danh mục</th>
+              <th>Loại sản phẩm</th>
             </thead>
             <tbody>
               {listColumnDisplay.map((Type) => {

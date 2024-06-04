@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function CategoryHome({ CategoryID, CategoryName, BrandID }) {
   const in4 = CategoryID !== undefined ? DATA.listProducts?.filter((obj) => obj.CategoryID === parseInt(CategoryID)) : DATA.listProducts?.filter((obj) => obj.BrandID === parseInt(BrandID));
-  const data = in4.slice(0, 20);
+  const data = in4.sort((a, b) => b.ProductID - a.ProductID).slice(0, 20);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const indexOfLastItem = currentPage * itemsPerPage > data.length ? (currentPage - 1) * itemsPerPage + (data.length % 6) : currentPage * itemsPerPage;

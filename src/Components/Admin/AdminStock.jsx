@@ -22,6 +22,7 @@ export const AdminStock = () => {
   const refCost = useRef("");
   const refSTC = useRef("");
   const getInfor = (item) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     refID.current.value = item.StockID;
     refProduct.current.value = item.ProductID;
     refQuantity.current.value = item.Quantity;
@@ -34,6 +35,20 @@ export const AdminStock = () => {
     refEY.current.value = new Date(item.ExpirationDate).getFullYear();
     refCost.current.value = item.Cost;
     refSTC.current.value = item.SupplierTaxCode;
+  };
+  const deleteForm = () => {
+    refID.current.value = "";
+    refProduct.current.value = "";
+    refQuantity.current.value = "";
+    refRemaining.current.value = "";
+    refD.current.value = "";
+    refM.current.value = "";
+    refY.current.value = "";
+    refED.current.value = "";
+    refEM.current.value = "";
+    refEY.current.value = "";
+    refCost.current.value = "";
+    refSTC.current.value = "";
   };
   // handle data
   const handleID = (event) => {
@@ -261,7 +276,9 @@ export const AdminStock = () => {
     ) {
       const dateStock = new Date(year, month - 1, date);
       setlistRowDisplay((prev) =>
-        prev?.filter((obj) => obj.Date.getFullYear() === dateStock.getFullYear() && obj.Date.getMonth() === dateStock.getMonth() && obj.Date.getDate() === dateStock.getDate())
+        prev?.filter(
+          (obj) => new Date(obj.Date).getFullYear() === dateStock.getFullYear() && new Date(obj.Date).getMonth() === dateStock.getMonth() && new Date(obj.Date).getDate() === dateStock.getDate()
+        )
       );
     }
   };
@@ -272,14 +289,14 @@ export const AdminStock = () => {
       <table>
         <thead>
           {" "}
-          <th>StockID</th>
-          <th>ProductID</th>
-          <th>Quantity</th>
-          <th>Remaining</th>
-          <th>Date</th>
-          <th>Expiration</th>
-          <th>Cost</th>
-          <th>SupplierTaxCode</th>
+          <th>Mã nhập kho</th>
+          <th>Mã sản phẩm</th>
+          <th>Số lượng nhập</th>
+          <th>Số lượng còn</th>
+          <th>Ngày nhập</th>
+          <th>Ngày hết hạn lô hàng</th>
+          <th>Giá</th>
+          <th>Mã nhà cung cấp</th>
         </thead>
 
         <tbody>
@@ -339,15 +356,15 @@ export const AdminStock = () => {
       </div>
       <h3>Danh sách nhập kho</h3>
       <table className={style.TableContainer}>
-        <thead className={style.TableHead}>
-          <th>StockID</th>
-          <th>ProductID</th>
-          <th>Quantity</th>
-          <th>Remaining</th>
-          <th>Date</th>
-          <th>ExpirationDate</th>
-          <th>Cost</th>
-          <th>SupplierTaxCode</th>
+        <thead className={style.TableHead} onClick={deleteForm}>
+          <th>Mã nhập kho</th>
+          <th>Mã sản phẩm</th>
+          <th>Số lượng nhập</th>
+          <th>Số lượng còn</th>
+          <th>Ngày nhập</th>
+          <th>Ngày hết hạn lô hàng</th>
+          <th>Giá</th>
+          <th>Mã nhà cung cấp</th>
         </thead>
         <tbody>
           {listRowDisplay.map((stock) => (
